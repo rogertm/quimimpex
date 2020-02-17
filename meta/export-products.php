@@ -28,9 +28,49 @@ function quimimpex_export_product_data_fields(){
 			'meta'		=> 'qm_product_external_url',
 			'type'		=> 'text',
 		),
+		'product'		=> array(
+			'label'		=> __( 'Is Product', 'quimimpex' ),
+			'meta'		=> 'qm_product_is_product',
+			'type'		=> 'select',
+			'options'	=> array(
+				'1'		=> __( 'Yes', 'quimimpex' ),
+				'00'	=> __( 'No', 'quimimpex' ),
+			),
+		),
 	);
 	return apply_filters( 'quimimpex_export_product_data_fields', $fields );
 }
+
+/**
+ * Merge the companies settings into Export Products Fields
+ * @todo 	Make it work
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_get_companies(){
+	$args = array(
+		'post_type'			=> 'qm-company',
+		'posts_per_page'	=> -1,
+		'post_status'		=> 'publish',
+	);
+	$companies = get_posts( $args );
+	$fields = array(
+		'companies'		=> array(
+			'label'		=> __( 'Companies', 'quimimpex' ),
+			'meta'		=> 'qm_product_company',
+			'type'		=> 'select',
+			'options'	=> array(),
+		),
+	);
+	$arr = array();
+	foreach ( $companies as $company ) :
+		$key = array( $company->ID => $company->post_title );
+		$arr = array_merge( $arr, $key );
+	endforeach;
+	$fields['companies']['options'] = array_merge( $fields['companies']['options'], $arr );
+	return $fields;
+}
+// add_filter( 'quimimpex_export_product_data_fields', 'quimimpex_get_companies' );
 
 /**
  * Export Product data callback
@@ -46,6 +86,7 @@ function quimimpex_export_product_data_callback( $post ){
 	);
 	$companies = get_posts( $args );
 	$product_company = get_post_meta( $post->ID, 'qm_product_company', true );
+	quimimpex_get_companies();
 ?>
 	<h4><label for="qm_product_company"><?php _e( 'Select the Company this product belong to', 'quimimpex' ) ?></label></h4>
 	<select id="qm_product_company" name="qm_product_company">
@@ -60,7 +101,15 @@ function quimimpex_export_product_data_callback( $post ){
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
 	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
+<?php if ( $value['type'] == 'text' ) : ?>
 	<input id="<?php echo $value['meta'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>">
+<?php elseif ( $value['type'] == 'select' ) : ?>
+	<select id="<?php echo $value['meta'] ?>" name="<?php echo $value['meta'] ?>">
+	<?php foreach ( $value['options'] as $key => $value ) : ?>
+		<option value="<?php echo $key ?>" <?php selected( $meta_value, $key, true ) ?>><?php echo $value ?></option>
+	<?php endforeach; ?>
+	</select>
+<?php endif; ?>
 <?php
 	endforeach;
 }
