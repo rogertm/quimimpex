@@ -68,6 +68,16 @@ function quimimpex_cpt(){
 			'rewrite'		=> _x( 'document', 'post type slug', 'quimimpex' ),
 			'public'		=> false,
 		),
+		'qm-contact'	=> array(
+			'post-type'		=> 'qm-contact',
+			'singular'		=> _x( 'Contact', 'post type singular name', 'quimimpex' ),
+			'plural'		=> _x( 'Contacts', 'post type general name', 'quimimpex' ),
+			'label'			=> _x( 'Contacts', 'post type general name', 'quimimpex' ),
+			'hierarchical'	=> false,
+			'supports'		=> array( 'title' ),
+			'rewrite'		=> _x( 'contact', 'post type slug', 'quimimpex' ),
+			'public'		=> false,
+		),
 	);
 
 	foreach ( $post_types as $post_type => $pt ) :

@@ -22,55 +22,87 @@ function quimimpex_export_product_data_fields(){
 			'label'		=> __( 'Code', 'quimimpex' ),
 			'meta'		=> 'qm_product_code',
 			'type'		=> 'text',
+			'order'		=> '10',
 		),
 		'code'			=> array(
 			'label'		=> __( 'External URL', 'quimimpex' ),
 			'meta'		=> 'qm_product_external_url',
 			'type'		=> 'text',
+			'order'		=> '20',
 		),
 		'product'		=> array(
 			'label'		=> __( 'Is Product', 'quimimpex' ),
 			'meta'		=> 'qm_product_is_product',
 			'type'		=> 'select',
 			'options'	=> array(
-				'1'		=> __( 'Yes', 'quimimpex' ),
-				'00'	=> __( 'No', 'quimimpex' ),
-			),
+								'1'		=> __( 'Yes', 'quimimpex' ),
+								'00'	=> __( 'No', 'quimimpex' ),
+							),
+			'order'		=> '30',
 		),
 	);
+	uasort( $fields, 't_em_sort_by_order' );
 	return apply_filters( 'quimimpex_export_product_data_fields', $fields );
 }
 
 /**
  * Merge the companies settings into Export Products Fields
- * @todo 	Make it work
+ * @return array 	Array of fields
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_get_companies(){
-	$args = array(
-		'post_type'			=> 'qm-company',
-		'posts_per_page'	=> -1,
-		'post_status'		=> 'publish',
-	);
-	$companies = get_posts( $args );
+function quimimpex_export_products_query_fields( $custom_fields = array() ){
 	$fields = array(
 		'companies'		=> array(
 			'label'		=> __( 'Companies', 'quimimpex' ),
 			'meta'		=> 'qm_product_company',
 			'type'		=> 'select',
 			'options'	=> array(),
+			'order'		=> '05',
+		),
+		'contacts'		=> array(
+			'label'		=> __( 'Contacts', 'quimimpex' ),
+			'meta'		=> 'qm_product_contact',
+			'type'		=> 'select',
+			'options'	=> array(),
+			'order'		=> '06',
 		),
 	);
-	$arr = array();
+
+	// Companies
+	$companies_args = array(
+		'post_type'			=> 'qm-company',
+		'posts_per_page'	=> -1,
+		'post_status'		=> 'publish',
+	);
+	$companies = get_posts( $companies_args );
+
+	$companies_options = array( '0' => __( '&mdash; Select Company &mdash;', 'quimimpex' ) );
 	foreach ( $companies as $company ) :
-		$key = array( $company->ID => $company->post_title );
-		$arr = array_merge( $arr, $key );
+		$key = array( '\''. $company->ID .'\'' => $company->post_title );
+		$companies_options = array_merge( $companies_options, $key );
 	endforeach;
-	$fields['companies']['options'] = array_merge( $fields['companies']['options'], $arr );
-	return $fields;
+
+	// Contacts
+	$contact_args = array(
+		'post_type'			=> 'qm-contact',
+		'posts_per_page'	=> -1,
+		'post_status'		=> 'publish',
+	);
+	$contacts = get_posts( $contact_args );
+
+	$contacts_options = array( '0' => __( '&mdash; Select Contact &mdash;', 'quimimpex' ) );
+	foreach ( $contacts as $contact ) :
+		$key = array( '\''. $contact->ID .'\'' => $contact->post_title );
+		$contacts_options = array_merge( $contacts_options, $key );
+	endforeach;
+
+	$fields['companies']['options'] = array_merge( $fields['companies']['options'], $companies_options );
+	$fields['contacts']['options'] = array_merge( $fields['contacts']['options'], $contacts_options );
+	uasort( $fields, 't_em_sort_by_order' );
+	return array_merge( $custom_fields, $fields );
 }
-// add_filter( 'quimimpex_export_product_data_fields', 'quimimpex_get_companies' );
+add_filter( 'quimimpex_export_product_data_fields', 'quimimpex_export_products_query_fields' );
 
 /**
  * Export Product data callback
@@ -79,24 +111,8 @@ function quimimpex_get_companies(){
  */
 function quimimpex_export_product_data_callback( $post ){
 	wp_nonce_field( 'qm_export_attr', 'qm_export_field' );
-	$args = array(
-		'post_type'			=> 'qm-company',
-		'posts_per_page'	=> -1,
-		'post_status'		=> 'publish',
-	);
-	$companies = get_posts( $args );
-	$product_company = get_post_meta( $post->ID, 'qm_product_company', true );
-	quimimpex_get_companies();
-?>
-	<h4><label for="qm_product_company"><?php _e( 'Select the Company this product belong to', 'quimimpex' ) ?></label></h4>
-	<select id="qm_product_company" name="qm_product_company">
-		<option value=""><?php _e( '&mdash; Select Company &mdash;', 'quimimpex' ) ?></option>
-<?php foreach ( $companies as $company ) : ?>
-		<option value="<?php echo $company->ID ?>" <?php selected( $product_company, $company->ID, true ) ?>><?php echo $company->post_title ?></option>
-<?php endforeach; ?>
-	</select>
-<?php
 	$fields = quimimpex_export_product_data_fields();
+
 	foreach ( $fields as $key => $value ) :
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
@@ -106,7 +122,7 @@ function quimimpex_export_product_data_callback( $post ){
 <?php elseif ( $value['type'] == 'select' ) : ?>
 	<select id="<?php echo $value['meta'] ?>" name="<?php echo $value['meta'] ?>">
 	<?php foreach ( $value['options'] as $key => $value ) : ?>
-		<option value="<?php echo $key ?>" <?php selected( $meta_value, $key, true ) ?>><?php echo $value ?></option>
+		<option value="<?php echo str_replace('\'', '', $key ) ?>" <?php selected( $meta_value, str_replace('\'', '', $key ), true ) ?>><?php echo $value ?></option>
 	<?php endforeach; ?>
 	</select>
 <?php endif; ?>
@@ -131,12 +147,6 @@ function quimimpex_save_export_product_meta( $post_id ){
 		return;
 
 	// Save the data
-	if ( isset( $_POST['qm_product_company'] ) && $_POST['qm_product_company'] ) :
-		update_post_meta( $post_id, 'qm_product_company', $_POST['qm_product_company'] );
-	else :
-		delete_post_meta( $post_id, 'qm_product_company' );
-	endif;
-
 	$fields = quimimpex_export_product_data_fields();
 	foreach ( $fields as $key => $value ) :
 		if ( isset( $_POST[$value['meta']] ) && $_POST[$value['meta']] ) :
