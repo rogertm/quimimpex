@@ -64,7 +64,7 @@ function quimimpex_cpt(){
 			'plural'		=> _x( 'Documents', 'post type general name', 'quimimpex' ),
 			'label'			=> _x( 'Documents', 'post type general name', 'quimimpex' ),
 			'hierarchical'	=> false,
-			'supports'		=> array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+			'supports'		=> array( 'title' ),
 			'rewrite'		=> _x( 'document', 'post type slug', 'quimimpex' ),
 			'public'		=> false,
 		),
