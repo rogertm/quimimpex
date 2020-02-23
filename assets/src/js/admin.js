@@ -1,15 +1,11 @@
 jQuery(document).ready(function($) {
 
 	// Media Upload
-	function quimimpexMediaUploader( container, button ){
-		var clicked_button = false;
-		var container_id = false;
-
+	function quimimpexMediaUploader( button, parent ){
 		$(button).click(function(event){
 			event.preventDefault();
-			var clicked_button = $(this);
-			var button_id = $(clicked_button).attr('id');
-			var container_id = $(clicked_button).siblings(container).attr('id');
+			var media_url = $(parent).find('.media-url');
+			var media_id = $(parent).find('.media-id');
 
 			// configuration of the media manager new instance
 			wp.media.frames.qm_frame = wp.media({
@@ -34,10 +30,8 @@ jQuery(document).ready(function($) {
 
 				// iterate through selected elements
 				selection.each(function(attachment){
-					var file = attachment.attributes.url;
-					var element = $('#'+container_id);
-					$(element).val(file);
-
+					media_url.val(attachment.attributes.url);
+					media_id.val(attachment.attributes.id);
 				})
 			};
 
@@ -50,5 +44,5 @@ jQuery(document).ready(function($) {
 
 		});
 	}
-	quimimpexMediaUploader( '.media-url', '.media-selector' );
+	quimimpexMediaUploader( '.media-selector', '#quimimpex-document-data' );
 });

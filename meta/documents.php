@@ -23,6 +23,18 @@ function quimimpex_document_data_fields(){
 			'meta'		=> 'qm_document_url',
 			'type'		=> 'url',
 			'upload'	=> true,
+			'attr'		=> array(
+								'class' => 'media-url',
+							),
+		),
+		'document_id'	=> array(
+			'label'		=> null,
+			'meta'		=> 'qm_document_id',
+			'type'		=> 'hidden',
+			'upload'	=> null,
+			'attr'		=> array(
+								'class' => 'media-id',
+							),
 		),
 	);
 	return apply_filters( 'quimimpex_document_data_fields', $fields );
@@ -41,7 +53,7 @@ function quimimpex_document_data_callback( $post ){
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
 	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
-	<input id="<?php echo $value['meta'] ?>" class="media-url" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>">
+	<input id="<?php echo $value['meta'] ?>" class="<?php echo $value['attr']['class'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>">
 	<?php if ( $value['upload'] ) : ?>
 		<a href="#" class="button media-selector"><?php _e( 'Upload Document', 'quimimpex' ) ?></a>
 	<?php endif; ?>
