@@ -24,7 +24,8 @@ function quimimpex_document_data_fields(){
 			'type'		=> 'url',
 			'upload'	=> true,
 			'attr'		=> array(
-								'class' => 'media-url',
+								'class' 	=> 'media-url',
+								'required'	=> 'required',
 							),
 		),
 		'document_id'	=> array(
@@ -34,6 +35,7 @@ function quimimpex_document_data_fields(){
 			'upload'	=> null,
 			'attr'		=> array(
 								'class' => 'media-id',
+								'required'	=> null,
 							),
 		),
 	);
@@ -53,7 +55,7 @@ function quimimpex_document_data_callback( $post ){
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
 	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
-	<input id="<?php echo $value['meta'] ?>" class="<?php echo $value['attr']['class'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>">
+	<input id="<?php echo $value['meta'] ?>" class="<?php echo $value['attr']['class'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>" required="<?php echo $value['attr']['required'] ?>">
 	<?php if ( $value['upload'] ) : ?>
 		<a href="#" class="button media-selector"><?php _e( 'Upload Document', 'quimimpex' ) ?></a>
 	<?php endif; ?>
