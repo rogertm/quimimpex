@@ -57,12 +57,13 @@ class Quimimpex_Newsletter_Subscribers extends WP_Widget{
 				<p><?php echo $description; ?></p>
 			<?php endif; ?>
 			<div class="form-row">
+				<div class="request-loading-wrapper <?php echo t_em_grid( 12 ) ?>"></div>
 				<div class="form-group <?php echo t_em_grid( 8 ) ?>">
 					<label for="qm_subscriber_email" class="sr-only"><?php _e( 'Email address', 'quimimpex' ); ?></label>
-					<input id="qm_subscriber_email" class="form-control" type="text" name="qm_subscriber_email" placeholder="<?php _e( 'Subscribe', 'quimimpex' ) ?>" required>
+					<input id="qm_subscriber_email" class="form-control" type="email" name="qm_subscriber_email" placeholder="<?php _e( 'Subscribe', 'quimimpex' ) ?>" required>
 				</div>
 				<div class="form-group <?php echo t_em_grid( 4 ) ?>">
-					<button class="btn btn-secondary btn-block" type="submit">
+					<button id="qm-newsletter-subscribe" class="btn btn-secondary btn-block" type="button">
 						<?php _e( 'Subscribe', 'quimimpex' ); ?>
 					</button>
 				</div>

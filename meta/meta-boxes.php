@@ -23,7 +23,10 @@ function quimimpex_meta_boxes(){
 	add_meta_box( 'quimimpex-expcontact-data', __( 'Contact Data' ), 'quimimpex_contact_data_callback', 'qm-contact', 'advanced', 'high' );
 
 	// Documents
-	add_meta_box( 'quimimpex-document-data', __( 'Document Data' ), 'quimimpex_document_data_callback', 'qm-document', 'advanced', 'high' );
+	add_meta_box( 'quimimpex-upload-data', __( 'Document Data' ), 'quimimpex_document_data_callback', 'qm-document', 'advanced', 'high' );
+
+	// Newsletter
+	add_meta_box( 'quimimpex-upload-data', __( 'Newsletter Data' ), 'quimimpex_newsletter_data_callback', 'qm-newsletter', 'advanced', 'high' );
 }
 add_action( 'add_meta_boxes', 'quimimpex_meta_boxes' );
 
@@ -33,4 +36,5 @@ add_action( 'add_meta_boxes', 'quimimpex_meta_boxes' );
 require( get_stylesheet_directory() . '/meta/export-products.php' );
 require( get_stylesheet_directory() . '/meta/contact.php' );
 require( get_stylesheet_directory() . '/meta/documents.php' );
+require( get_stylesheet_directory() . '/meta/newsletters.php' );
 ?>

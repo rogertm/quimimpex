@@ -68,6 +68,16 @@ function quimimpex_cpt(){
 			'rewrite'		=> _x( 'document', 'post type slug', 'quimimpex' ),
 			'public'		=> false,
 		),
+		'qm-newsletter'	=> array(
+			'post-type'		=> 'qm-newsletter',
+			'singular'		=> _x( 'Newsletter', 'post type singular name', 'quimimpex' ),
+			'plural'		=> _x( 'Newsletters', 'post type general name', 'quimimpex' ),
+			'label'			=> _x( 'Newsletters', 'post type general name', 'quimimpex' ),
+			'hierarchical'	=> false,
+			'supports'		=> array( 'title' ),
+			'rewrite'		=> _x( 'newsletter', 'post type slug', 'quimimpex' ),
+			'public'		=> false,
+		),
 		'qm-contact'	=> array(
 			'post-type'		=> 'qm-contact',
 			'singular'		=> _x( 'Contact', 'post type singular name', 'quimimpex' ),

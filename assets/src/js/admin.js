@@ -44,5 +44,5 @@ jQuery(document).ready(function($) {
 
 		});
 	}
-	quimimpexMediaUploader( '.media-selector', '#quimimpex-document-data' );
+	quimimpexMediaUploader( '.media-selector', '#quimimpex-upload-data' );
 });

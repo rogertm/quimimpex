@@ -50,25 +50,26 @@ add_action( 'init', 'quimimpex_hide_admin_bar' );
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_register_subscribers(){
-	// Check if the user intended to change this value.
-	if ( ! isset( $_POST['qm_newsletter_subscriber_field'] )
-			|| ! wp_verify_nonce( $_POST['qm_newsletter_subscriber_field'], 'qm_newsletter_subscriber_attr' ) )
-		return;
+function quimimpex_register_subscribers( $email ){
+	if ( ! isset( $email ) || empty( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'The email is required', 'quimimpex' );
+	elseif ( ! is_email( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'You should enter a valid email address', 'quimimpex' );
+	elseif ( email_exists( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'That email address already exists', 'quimimpex' );
+	else :
+		$status	= 'success';
+		$msg 	= __( 'Your email has been registered successfully', 'quimimpex' );
 
-	if ( ! isset( $_POST['qm_subscriber_email'] )
-			|| empty( $_POST['qm_subscriber_email'] )
-			|| ! is_email( $_POST['qm_subscriber_email'] )
-			|| email_exists( $email ) )
-		return;
+		$password 	= wp_generate_password();
+		wp_create_user( $email, $password, $email );
 
-	$email 		= $_POST['qm_subscriber_email'];
-	$password 	= wp_generate_password();
-	wp_create_user( $email, $password, $email );
-
-	// Notify via email
-	$sitename 	= wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-	$content	= __(
+		// Notify via email
+		$sitename 	= wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+		$content	= __(
 		'Hello.
 
 Your subscription to our newsletter has been successfully complete.
@@ -78,12 +79,16 @@ Thank you.
 ###SITENAME### team.
 ###SITEURL###' );
 
-	$content 	= str_replace( '###SITENAME###', $sitename, $content );
-	$content 	= str_replace( '###SITEURL###', home_url(), $content );
-	wp_mail( $email, sprintf( __( '[%s] Newsletter Subscription' ), $sitename ), $content );
+		$content 	= str_replace( '###SITENAME###', $sitename, $content );
+		$content 	= str_replace( '###SITEURL###', home_url(), $content );
+		wp_mail( $email, sprintf( __( '[%s] Newsletter Subscription' ), $sitename ), $content );
 
-	wp_redirect( home_url() );
-	exit;
+	endif;
+
+	$response = array(
+		'status'	=> $status,
+		'msg'		=> $msg,
+	);
+	wp_send_json( $response );
 }
-add_action( 'init', 'quimimpex_register_subscribers' );
 ?>
