@@ -11,12 +11,12 @@
  */
 
 /**
- * Export Products fields
+ * Import Products fields
  * @return array 	Array of fields
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_export_product_data_fields(){
+function quimimpex_import_product_data_fields(){
 	$fields = array(
 		'external_url'	=> array(
 			'label'		=> __( 'Code', 'quimimpex' ),
@@ -42,76 +42,17 @@ function quimimpex_export_product_data_fields(){
 		),
 	);
 	uasort( $fields, 't_em_sort_by_order' );
-	return apply_filters( 'quimimpex_export_product_data_fields', $fields );
+	return apply_filters( 'quimimpex_import_product_data_fields', $fields );
 }
 
 /**
- * Merge the companies settings into Export Products Fields
- * @return array 	Array of fields
+ * Import Product data callback
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_export_products_query_fields( $custom_fields = array() ){
-	$fields = array(
-		'companies'		=> array(
-			'label'		=> __( 'Companies', 'quimimpex' ),
-			'meta'		=> 'qm_product_company',
-			'type'		=> 'select',
-			'options'	=> array(),
-			'order'		=> '05',
-		),
-		'contacts'		=> array(
-			'label'		=> __( 'Contacts', 'quimimpex' ),
-			'meta'		=> 'qm_product_contact',
-			'type'		=> 'select',
-			'options'	=> array(),
-			'order'		=> '06',
-		),
-	);
-
-	// Companies
-	$companies_args = array(
-		'post_type'			=> 'qm-company',
-		'posts_per_page'	=> -1,
-		'post_status'		=> 'publish',
-	);
-	$companies = get_posts( $companies_args );
-
-	$companies_options = array( '0' => __( '&mdash; Select Company &mdash;', 'quimimpex' ) );
-	foreach ( $companies as $company ) :
-		$key = array( '\''. $company->ID .'\'' => $company->post_title );
-		$companies_options = array_merge( $companies_options, $key );
-	endforeach;
-
-	// Contacts
-	$contact_args = array(
-		'post_type'			=> 'qm-contact',
-		'posts_per_page'	=> -1,
-		'post_status'		=> 'publish',
-	);
-	$contacts = get_posts( $contact_args );
-
-	$contacts_options = array( '0' => __( '&mdash; Select Contact &mdash;', 'quimimpex' ) );
-	foreach ( $contacts as $contact ) :
-		$key = array( '\''. $contact->ID .'\'' => $contact->post_title );
-		$contacts_options = array_merge( $contacts_options, $key );
-	endforeach;
-
-	$fields['companies']['options'] = array_merge( $fields['companies']['options'], $companies_options );
-	$fields['contacts']['options'] = array_merge( $fields['contacts']['options'], $contacts_options );
-	uasort( $fields, 't_em_sort_by_order' );
-	return array_merge( $custom_fields, $fields );
-}
-add_filter( 'quimimpex_export_product_data_fields', 'quimimpex_export_products_query_fields' );
-
-/**
- * Export Product data callback
- *
- * @since Quimimpex 1.0
- */
-function quimimpex_export_product_data_callback( $post ){
-	wp_nonce_field( 'qm_export_attr', 'qm_export_field' );
-	$fields = quimimpex_export_product_data_fields();
+function quimimpex_import_product_data_callback( $post ){
+	wp_nonce_field( 'qm_import_attr', 'qm_import_field' );
+	$fields = quimimpex_import_product_data_fields();
 
 	foreach ( $fields as $key => $value ) :
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
@@ -135,19 +76,19 @@ function quimimpex_export_product_data_callback( $post ){
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_save_export_product_meta( $post_id ){
+function quimimpex_save_import_product_meta( $post_id ){
 	// Check if the current user is authorized to do this action.
 	if ( ! current_user_can( 'edit_posts' ) )
 		return;
 	// Check if the user intended to change this value.
-	if ( ! isset( $_POST['qm_export_field'] ) || ! wp_verify_nonce( $_POST['qm_export_field'], 'qm_export_attr' ) )
+	if ( ! isset( $_POST['qm_import_field'] ) || ! wp_verify_nonce( $_POST['qm_import_field'], 'qm_import_attr' ) )
 		return;
 	// If this is an autosave, our form has not been submitted, so we don't want to do anything.
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return;
 
 	// Save the data
-	$fields = quimimpex_export_product_data_fields();
+	$fields = quimimpex_import_product_data_fields();
 	foreach ( $fields as $key => $value ) :
 		if ( isset( $_POST[$value['meta']] ) && $_POST[$value['meta']] ) :
 			update_post_meta( $post_id, $value['meta'], $_POST[$value['meta']] );
@@ -156,14 +97,46 @@ function quimimpex_save_export_product_meta( $post_id ){
 		endif;
 	endforeach;
 }
-add_action( 'save_post', 'quimimpex_save_export_product_meta' );
+add_action( 'save_post', 'quimimpex_save_import_product_meta' );
+
+/**
+ * Data Sheet fields
+ * @return array 	Array of fields
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_data_sheet_data_fields(){
+	$fields = array(
+		'data_sheet_url'	=> array(
+			'label'		=> __( 'Data Sheet URL', 'quimimpex' ),
+			'meta'		=> 'qm_data_sheet_url',
+			'type'		=> 'url',
+			'upload'	=> true,
+			'attr'		=> array(
+								'class' 	=> 'media-url',
+								'required'	=> 'required',
+							),
+		),
+		'data_sheet_id'	=> array(
+			'label'		=> null,
+			'meta'		=> 'qm_data_sheet_id',
+			'type'		=> 'hidden',
+			'upload'	=> null,
+			'attr'		=> array(
+								'class' => 'media-id',
+								'required'	=> null,
+							),
+		),
+	);
+	return apply_filters( 'quimimpex_data_sheet_data_fields', $fields );
+}
 
 /**
  * Data Sheet data callback
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_export_data_sheet_callback( $post ){
+function quimimpex_import_data_sheet_callback( $post ){
 	wp_nonce_field( 'qm_data_sheet_attr', 'qm_data_sheet_field' );
 
 	$fields = quimimpex_data_sheet_data_fields();
@@ -184,7 +157,7 @@ function quimimpex_export_data_sheet_callback( $post ){
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_save_export_data_sheet_meta( $post_id ){
+function quimimpex_save_import_data_sheet_meta( $post_id ){
 	// Check if the current user is authorized to do this action.
 	if ( ! current_user_can( 'edit_posts' ) )
 		return;
@@ -205,5 +178,5 @@ function quimimpex_save_export_data_sheet_meta( $post_id ){
 		endif;
 	endforeach;
 }
-add_action( 'save_post', 'quimimpex_save_export_data_sheet_meta' );
+add_action( 'save_post', 'quimimpex_save_import_data_sheet_meta' );
 ?>

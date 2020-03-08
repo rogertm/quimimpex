@@ -43,7 +43,7 @@ function quimimpex_newsletter_data_fields(){
 }
 
 /**
- * Contact data callback
+ * Newsletter data callback
  *
  * @since Quimimpex 1.0
  */
