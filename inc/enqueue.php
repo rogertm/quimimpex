@@ -22,7 +22,7 @@ function quimimpex_enqueue(){
 	wp_register_script( 'child-app-utils', t_em_get_js( 'index', T_EM_CHILD_THEME_DIR_PATH .'/assets/dist/js', T_EM_CHILD_THEME_DIR_URL .'/assets/dist/js' ), array( 'jquery' ), t_em_theme( 'Version' ), true );
 	// l10n for index.js
 	$translation = array(
-		'ajaxurl' => T_EM_CHILD_THEME_DIR_URL .'/inc/ajax.php',
+		'_qmnonce'	=> wp_create_nonce( '_qmnonce' ),
 	);
 	wp_localize_script( 'child-app-utils', 'qm_l10n', $translation );
 	wp_enqueue_script( 'child-app-utils' );

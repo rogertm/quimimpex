@@ -52,7 +52,7 @@ class Quimimpex_Newsletter_Subscribers extends WP_Widget{
 		if ( $title ) echo $before_title . $title . $after_title;
 		?>
 		<form class="form-inline" method="post">
-			<?php wp_nonce_field( 'qm_newsletter_subscriber_attr', 'qm_newsletter_subscriber_field' ); ?>
+			<?php // wp_nonce_field( 'qm_newsletter_subscriber_attr', 'qm_newsletter_subscriber_field' ); ?>
 			<?php if ( $description ) : ?>
 				<p><?php echo $description; ?></p>
 			<?php endif; ?>
