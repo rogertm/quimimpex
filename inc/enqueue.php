@@ -30,6 +30,20 @@ function quimimpex_enqueue(){
 add_action( 'wp_enqueue_scripts', 'quimimpex_enqueue' );
 
 /**
+ * Define the 'ajaxurl' JS variable
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_ajax_url(){
+?>
+	<script type="text/javascript">
+		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+	</script>
+<?php
+}
+add_action( 'wp_head', 'quimimpex_ajax_url' );
+
+/**
  * Dequeue styles form parent theme
  *
  * @since Quimimpex 1.2

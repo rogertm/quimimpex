@@ -106,13 +106,16 @@ Thank you.
 	return wp_send_json( $response );
 }
 add_action( 'wp_ajax_email_subscriber', 'quimimpex_register_subscribers' );
+add_action( 'wp_ajax_nopriv_email_subscriber', 'quimimpex_register_subscribers' );
 
 /**
+ * Fill products list in Contact Form
  *
+ * @since Quimimpex 1.0
  */
 function quimimpex_ajax_get_products(){
 	$nonce = check_ajax_referer( '_qmnonce', '_qmnonce', false );
-	if ( !$ nonce ) :
+	if ( ! $nonce ) :
 		$status	= 'bad_request';
 		$msg 	= __( 'Unknown error. Refresh your page and try again', 'quimimpex' );
 
@@ -173,4 +176,113 @@ function quimimpex_ajax_get_products(){
 	return wp_send_json( $response );
 }
 add_action( 'wp_ajax_contact_form', 'quimimpex_ajax_get_products' );
+add_action( 'wp_ajax_nopriv_contact_form', 'quimimpex_ajax_get_products' );
+
+/**
+ * Process Contact Form
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_process_contact_form(){
+	if ( ! isset( $_POST['qm_contact_form_field'] )
+		|| ! wp_verify_nonce( $_POST['qm_contact_form_field'], 'qm_contact_form_attr' ) )
+		return;
+
+	$cpt 			= ( isset( $_POST['qm_product_cpt'] ) && ! empty( $_POST['qm_product_cpt'] ) ) ? $_POST['qm_product_cpt'] : null;
+	$tax 			= ( isset( $_POST['qm_product_tax'] ) && ! empty( $_POST['qm_product_tax'] ) ) ? $_POST['qm_product_tax'] : null;
+	$posts 			= ( isset( $_POST['qm_products'] ) && ! empty( $_POST['qm_products'] ) ) ? $_POST['qm_products'] : null;
+	$author			= ( isset( $_POST['qm_comment_author'] ) && ! empty( $_POST['qm_comment_author'] ) ) ? $_POST['qm_comment_author'] : null;
+	$author_email	= ( isset( $_POST['qm_comment_author_email'] ) && ! empty( $_POST['qm_comment_author_email'] ) ) ? $_POST['qm_comment_author_email'] : null;
+
+	if ( ! $cpt || ! $tax ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'bad-request',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	if ( ! $posts ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-products',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	if ( ! $author ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-author',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	if ( ! $author_email ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-author-email',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	$taxonomy = get_taxonomy( $tax );
+
+	$args = array(
+		'post_type'			=> $cpt,
+		'posts_per_page'	=> -1,
+		'post__in'			=> $posts,
+	);
+
+	$products = get_posts( $args );
+
+	$content  = '<h3>'. sprintf( __( '%1$s Product Request', 'quimimpex' ), $taxonomy->labels->name ) .'</h3>';
+	$content .= '<h5>'. __( 'Product List:', 'quimimpex' ) .'</h5>';
+	$content .= '<ul>';
+	foreach ( $products as $product ) :
+		$content .= '<li><a href="'. get_permalink( $product->ID ) .'" target="_blanck">'. $product->post_title .'</a></li>';
+	endforeach;
+	$content .= '</ul>';
+	$content .= '<h3>'. __( 'Comment:', 'quimimpex' ) .'</h3>';
+	$content .= ( $_POST['qm_comment_content'] != '' ) ? $_POST['qm_comment_content'] : __( 'No comment', 'quimimpex' );
+
+	$commentdata = array(
+		'comment_approved'		=> 0,
+		'comment_author'		=> $_POST['qm_comment_author'],
+		'comment_author_email'	=> $_POST['qm_comment_author_email'],
+		'comment_content'		=> $content,
+		'comment_post_ID'		=> $_POST['qm_post_id'],
+		'comment_type'			=> 'qm_product_request',
+		'comment_meta'			=> array( 'qm_products' => $_POST['qm_products'] ),
+	);
+	$comment = wp_insert_comment( $commentdata );
+
+	$query = array(
+		'do_action'	=> 'success',
+		'status'	=> 'requested',
+	);
+
+	wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+	exit;
+}
+add_action( 'template_redirect', 'quimimpex_process_contact_form' );
+
+/**
+ * Add custom Comment Types
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_comment_types( $comment_types ){
+	$comments = array_merge( $comment_types,
+					array(
+						'qm_product_request'	=> __( 'Product Requests', 'quimimpex' ),
+					)
+				);
+	return $comments;
+}
+add_action( 'admin_comment_types_dropdown', 'quimimpex_comment_types' );
 ?>
