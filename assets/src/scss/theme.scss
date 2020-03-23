@@ -1,7 +1,20 @@
 // Quimimpex scss source file
 
+
 //
 // Imports
 //
 @import "custom";
 @import "../../../../twenty-em/assets/src/scss/theme";
+
+/***************************************************************************************************
+ * FIX THIS ON FRAMEWORK
+ ***************************************************************************************************/
+.accordion{
+	.card{
+		@extend .mb-0;
+		&-header{
+			@extend .p-0;
+		}
+	}
+}

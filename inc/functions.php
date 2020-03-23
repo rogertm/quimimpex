@@ -46,139 +46,6 @@ function quimimpex_hide_admin_bar(){
 add_action( 'init', 'quimimpex_hide_admin_bar' );
 
 /**
- * Register users through Newsletter Subscriber widget form
- *
- * @since Quimimpex 1.0
- */
-function quimimpex_register_subscribers(){
-	$nonce = check_ajax_referer( '_qmnonce', '_qmnonce', false );
-	if ( ! $nonce ) :
-		$status	= 'error';
-		$msg 	= __( 'Unknown error. Please try again', 'quimimpex' );
-
-		$response = array(
-			'status'	=> $status,
-			'msg'		=> $msg,
-		);
-		return wp_send_json( $response );
-	endif;
-
-	$email = $_POST['email'];
-
-	if ( ! isset( $email ) || empty( $email ) ) :
-		$status	= 'error';
-		$msg 	= __( 'The email is required', 'quimimpex' );
-	elseif ( ! is_email( $email ) ) :
-		$status	= 'error';
-		$msg 	= __( 'You should enter a valid email address', 'quimimpex' );
-	elseif ( email_exists( $email ) ) :
-		$status	= 'error';
-		$msg 	= __( 'That email address already exists', 'quimimpex' );
-	else :
-		$status	= 'success';
-		$msg 	= __( 'Your email has been registered successfully', 'quimimpex' );
-
-		$password 	= wp_generate_password();
-		wp_create_user( $email, $password, $email );
-
-		// Notify via email
-		$sitename 	= wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-		$content	= __(
-		'Hello.
-
-Your subscription to our newsletter has been successfully complete.
-
-Thank you.
-
-###SITENAME### team.
-###SITEURL###' );
-
-		$content 	= str_replace( '###SITENAME###', $sitename, $content );
-		$content 	= str_replace( '###SITEURL###', home_url(), $content );
-		wp_mail( $email, sprintf( __( '[%s] Newsletter Subscription' ), $sitename ), $content );
-
-	endif;
-
-	$response = array(
-		'status'	=> $status,
-		'msg'		=> $msg,
-	);
-	return wp_send_json( $response );
-}
-add_action( 'wp_ajax_email_subscriber', 'quimimpex_register_subscribers' );
-add_action( 'wp_ajax_nopriv_email_subscriber', 'quimimpex_register_subscribers' );
-
-/**
- * Fill products list in Contact Form
- *
- * @since Quimimpex 1.0
- */
-function quimimpex_ajax_get_products(){
-	$nonce = check_ajax_referer( '_qmnonce', '_qmnonce', false );
-	if ( ! $nonce ) :
-		$status	= 'bad_request';
-		$msg 	= __( 'Unknown error. Refresh your page and try again', 'quimimpex' );
-
-		$response = array(
-			'status'	=> $status,
-			'msg'		=> $msg,
-		);
-		return wp_send_json( $response );
-	endif;
-
-	$cpt 		= $_POST['cpt'];
-	$tax 		= $_POST['tax'];
-	$term_id 	= $_POST['term_id'];
-
-	if ( $term_id == 0 ) :
-		$status	= 'empty';
-		$msg 	= null;
-
-		$response = array(
-			'status'	=> $status,
-			'msg'		=> $msg,
-		);
-		return wp_send_json( $response );
-	endif;
-
-	$args = array(
-		'post_type'			=> $cpt,
-		'posts_per_page'	=> -1,
-		'tax_query'			=> array(
-			array(
-				'taxonomy'	=> $tax,
-				'field'		=> 'id',
-				'terms'		=> array( $term_id ),
-			),
-		),
-	);
-	$products = get_posts( $args );
-	if ( $products ) :
-		$response = array(
-			'status'	=> 'success',
-			'data'		=> array(),
-			'msg'		=> __( 'Success', 'quimimpex' ),
-		);
-		foreach ( $products as $product ) :
-			$data = array(
-				'id'	=> $product->ID,
-				'title'	=> $product->post_title,
-			);
-			array_push( $response['data'], $data );
-		endforeach;
-	else :
-		$response = array(
-			'status'	=> 'error',
-			'data'		=> null,
-			'msg'		=> __( 'Unknown error. Please try again', 'quimimpex' ),
-		);
-	endif;
-	return wp_send_json( $response );
-}
-add_action( 'wp_ajax_contact_form', 'quimimpex_ajax_get_products' );
-add_action( 'wp_ajax_nopriv_contact_form', 'quimimpex_ajax_get_products' );
-
-/**
  * Process Contact Form
  *
  * @since Quimimpex 1.0
@@ -272,6 +139,88 @@ function quimimpex_process_contact_form(){
 add_action( 'template_redirect', 'quimimpex_process_contact_form' );
 
 /**
+ * Process products check in form
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_process_products_checkin_form(){
+	if ( ! isset( $_POST['qm_checkin_form_field'] )
+		|| ! wp_verify_nonce( $_POST['qm_checkin_form_field'], 'qm_checkin_form_attr' ) )
+		return;
+
+	$products 			= ( isset( $_POST['qm_checkin_product'] ) && ! empty( $_POST['qm_checkin_product'] ) ) ? $_POST['qm_checkin_product'] : null;
+	$author			= ( isset( $_POST['qm_comment_author'] ) && ! empty( $_POST['qm_comment_author'] ) ) ? $_POST['qm_comment_author'] : null;
+	$author_email	= ( isset( $_POST['qm_comment_author_email'] ) && ! empty( $_POST['qm_comment_author_email'] ) ) ? $_POST['qm_comment_author_email'] : null;
+
+	if ( ! $products ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-products',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	if ( ! $author ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-author',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	if ( ! $author_email ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-email',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
+
+	$args = array(
+		'post_type'			=> array( 'qm-import-product', 'qm-export-product' ),
+		'posts_per_page'	=> -1,
+		'post__in'			=> $products,
+	);
+
+	$products = get_posts( $args );
+
+	$content  = '<h3>'. __( 'Product Request', 'quimimpex' ) .'</h3>';
+	$content .= '<h5>'. __( 'Product List:', 'quimimpex' ) .'</h5>';
+	$content .= '<ul>';
+	foreach ( $products as $product ) :
+		$content .= '<li><a href="'. get_permalink( $product->ID ) .'" target="_blanck">'. $product->post_title .'</a></li>';
+	endforeach;
+	$content .= '</ul>';
+	$content .= '<h3>'. __( 'Comment:', 'quimimpex' ) .'</h3>';
+	$content .= ( $_POST['qm_comment_content'] != '' ) ? $_POST['qm_comment_content'] : __( 'No comment', 'quimimpex' );
+
+	$commentdata = array(
+		'comment_approved'		=> 0,
+		'comment_author'		=> $_POST['qm_comment_author'],
+		'comment_author_email'	=> $_POST['qm_comment_author_email'],
+		'comment_content'		=> $content,
+		'comment_post_ID'		=> $_POST['qm_post_id'],
+		'comment_type'			=> 'qm_product_request',
+		'comment_meta'			=> array( 'qm_products' => $_POST['qm_products'] ),
+	);
+	$comment = wp_insert_comment( $commentdata );
+
+	$query = array(
+		'do_action'	=> 'success',
+		'status'	=> 'requested',
+	);
+
+	$_SESSION['qm_checkin_products'] = null;
+
+	wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+	exit;
+}
+add_action( 'template_redirect', 'quimimpex_process_products_checkin_form' );
+
+/**
  * Add custom Comment Types
  *
  * @since Quimimpex 1.0
@@ -285,4 +234,19 @@ function quimimpex_comment_types( $comment_types ){
 	return $comments;
 }
 add_action( 'admin_comment_types_dropdown', 'quimimpex_comment_types' );
+
+/**
+ * Check in products
+ *
+ * @since Quimimpex 1.0
+ **/
+function quimimpex_checkin_product(){
+	global $post;
+	if ( get_post_type( $post->ID ) == 'qm-import-product'
+		|| get_post_type( $post->ID ) == 'qm-export-product' ) :
+		echo '<div class="small d-inline mr-3"><span class="icomoon-shopping-cart text-muted"></span> <a href="#" class="qm-checkin-product" data-product-id="'. $post->ID .'">'. __( 'Check in', 'quimimpex' ) .'</a></div>';
+	endif;
+}
+add_action( 't_em_action_entry_meta_footer', 'quimimpex_checkin_product', 15 );
+
 ?>

@@ -16,7 +16,7 @@
  * @since Quimimpex 1.0
  */
 function quimimpex_enqueue(){
-	wp_register_style( 'quimimpex-css', t_em_get_css( 'theme', T_EM_THEME_DIR_PATH .'/assets/dist/css', T_EM_THEME_DIR_URL .'/assets/dist/css' ), '', t_em_theme( 'Version' ), 'all' );
+	wp_register_style( 'quimimpex-css', t_em_get_css( 'theme', T_EM_CHILD_THEME_DIR_PATH .'/assets/dist/css', T_EM_CHILD_THEME_DIR_URL .'/assets/dist/css' ), '', t_em_theme( 'Version' ), 'all' );
 	wp_enqueue_style( 'quimimpex-css' );
 
 	wp_register_script( 'child-app-utils', t_em_get_js( 'index', T_EM_CHILD_THEME_DIR_PATH .'/assets/dist/js', T_EM_CHILD_THEME_DIR_URL .'/assets/dist/js' ), array( 'jquery' ), t_em_theme( 'Version' ), true );
@@ -46,7 +46,7 @@ add_action( 'wp_head', 'quimimpex_ajax_url' );
 /**
  * Dequeue styles form parent theme
  *
- * @since Quimimpex 1.2
+ * @since Quimimpex 1.0
  */
 function quimimpex_dequeue(){
 	wp_dequeue_style( 'twenty-em-style' );
