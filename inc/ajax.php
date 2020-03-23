@@ -188,7 +188,7 @@ function quimimpex_ajax_remove_checked_product(){
 		unset( $products[$key] );
 	endif;
 
-	$_SESSION['qm_checkin_products'] = $products;
+	$_SESSION['qm_checkin_products'] = ( ! empty( $products ) ) ? $products : null;
 
 	$response = array(
 		'status'	=> 'success',
