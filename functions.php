@@ -18,5 +18,5 @@
 require( get_stylesheet_directory() . '/admin/index.php' );
 require( get_stylesheet_directory() . '/inc/index.php' );
 require( get_stylesheet_directory() . '/meta/index.php' );
-// require( get_stylesheet_directory() . '/templates/index.php' );
+require( get_stylesheet_directory() . '/templates/index.php' );
 ?>
