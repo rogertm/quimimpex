@@ -172,7 +172,7 @@ function quimimpex_shortcode_contact_form( $atts, $content = null ){
 add_shortcode( 'qm_contact_form', 'quimimpex_shortcode_contact_form' );
 
 /**
- * Shorcode [qm_checkin]
+ * Shortcode [qm_checkin]
  * Behavior: [qm_checkin]
  *
  * @since Quimimpex 1.0
@@ -281,7 +281,53 @@ function quimimpex_shortcode_checkin(){
 	$output 	.= 	'<input type="hidden" name="qm_post_id" value="'. $post->ID .'">';
 	$output .= '</form>';
 	return $output;
-
 }
 add_shortcode( 'qm_checkin', 'quimimpex_shortcode_checkin' );
+
+/**
+ * Shortcode [qm_executives]
+ * Behavior: [qm_executives]
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_shortcode_executives(){
+	$args = array(
+		'post_type'			=> 'qm-executive',
+		'posts_per_page'	=> -1,
+		'meta_key'			=> '_thumbnail_id',
+		'orderby'			=> 'menu_order',
+		'order'				=> 'ASC',
+	);
+
+	$executives = get_posts( $args );
+	if ( $executives ) :
+		$output = '<section id="qm-executives">';
+		$output .=	'<h3 class="h1">'. __( 'Executives', 'quimimpex' ) .'</h3>';
+		$output .=	'<div class="row">';
+		foreach ( $executives as $executive ) :
+			$output .= '<div class="'. t_em_grid( 4 ) .'">';
+			$output .= 		'<div class="card text-center">';
+			$output .=			'<img src="'. t_em_image_resize( 600, 600, get_post_meta( $executive->ID, '_thumbnail_id', true ) ) .'" class="card-img-top">';
+			$output .=			'<div class="card-body">';
+			$output .=				'<h5 class="card-title">'. $executive->post_title .'</h5>';
+			$output .=				'<h6 class="card-subtitle mb-2 text-muted">'. get_post_meta( $executive->ID, 'qm_executive_position', true ) .'</h6>';
+			$output .=				'<hr>';
+			$output .=				'<a href="tel:'. get_post_meta( $executive->ID, 'qm_executive_phone', true ) .'" class="d-block">';
+			$output .=					'<i class="icomoon-phone mr-1"></i>';
+			$output .=					get_post_meta( $executive->ID, 'qm_executive_phone', true );
+			$output .=				'</a>';
+			$output .=				'<a href="tel:'. get_post_meta( $executive->ID, 'qm_executive_email', true ) .'" class="d-block">';
+			$output .=					'<i class="icomoon-mail mr-1"></i>';
+			$output .=					get_post_meta( $executive->ID, 'qm_executive_email', true );
+			$output .=				'</a>';
+			$output .=			'</div>';
+			$output .=		'</div>';
+			$output .=	'</div>';
+		endforeach;
+		$output .=	'</div>';
+		$output .=	'</section>';
+		return $output;
+	endif;
+}
+add_shortcode( 'qm_executives', 'quimimpex_shortcode_executives' );
 ?>

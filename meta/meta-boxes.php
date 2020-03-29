@@ -35,6 +35,11 @@ function quimimpex_meta_boxes(){
 
 	// Newsletter
 	add_meta_box( 'quimimpex-upload-data', __( 'Newsletter Data' ), 'quimimpex_newsletter_data_callback', 'qm-newsletter', 'advanced', 'high' );
+
+	// executives
+	add_meta_box( 'quimimpex-upload-data', __( 'executive Data' ), 'quimimpex_executive_data_callback', 'qm-executive', 'advanced', 'high' );
+
+
 }
 add_action( 'add_meta_boxes', 'quimimpex_meta_boxes' );
 
@@ -47,4 +52,5 @@ require( get_stylesheet_directory() . '/meta/company.php' );
 require( get_stylesheet_directory() . '/meta/contact.php' );
 require( get_stylesheet_directory() . '/meta/documents.php' );
 require( get_stylesheet_directory() . '/meta/newsletters.php' );
+require( get_stylesheet_directory() . '/meta/executives.php' );
 ?>
