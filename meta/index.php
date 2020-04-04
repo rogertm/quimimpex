@@ -14,5 +14,5 @@
  * Silents is gold... But we call the others
  */
 require( get_stylesheet_directory() . '/meta/meta-boxes.php' );
-
+require( get_stylesheet_directory() . '/meta/taxonomy-fields.php' );
 ?>
