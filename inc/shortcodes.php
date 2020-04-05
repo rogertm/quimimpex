@@ -303,10 +303,10 @@ function quimimpex_shortcode_executives(){
 	if ( $executives ) :
 		$output = '<section id="qm-executives">';
 		$output .=	'<h3 class="h1">'. __( 'Executives', 'quimimpex' ) .'</h3>';
-		$output .=	'<div class="row">';
+		$output .=	'<div class="row row-cols-3">';
 		foreach ( $executives as $executive ) :
-			$output .= '<div class="'. t_em_grid( 4 ) .'">';
-			$output .= 		'<div class="card text-center">';
+			$output .= '<div class="col mb-4">';
+			$output .= 		'<div class="card h-100 text-center">';
 			$output .=			'<img src="'. t_em_image_resize( 600, 600, get_post_meta( $executive->ID, '_thumbnail_id', true ) ) .'" class="card-img-top">';
 			$output .=			'<div class="card-body">';
 			$output .=				'<h5 class="card-title">'. $executive->post_title .'</h5>';
@@ -330,4 +330,61 @@ function quimimpex_shortcode_executives(){
 	endif;
 }
 add_shortcode( 'qm_executives', 'quimimpex_shortcode_executives' );
+
+/**
+ * Shortcode [qm_line]
+ * Behavior [qm_line line=""]
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_shortcode_line( $atts, $content = null ){
+	extract( shortcode_atts( array(
+		'line'	=> null,
+	), $atts ) );
+
+	if ( ! $line )
+		return;
+
+	if ( $line != 'import' && $line != 'export' ) :
+		if ( current_user_can( 'manage_options' ) ) :
+			return '<p class="text-danger">'. __( 'An error has occurred with the <code>qm_contact_form</code> shortcode. Please review the <code>line</code> parameter', 'quimimpex' ) .'</p>';
+		endif;
+		return;
+	endif;
+
+	$args = array(
+		'taxonomy'	=> 'qm-'. $line .'-line',
+	);
+	$lines = get_terms( $args );
+
+	if ( $lines ) :
+		$taxonomy = get_taxonomy( 'qm-'. $line .'-line' );
+
+		$output  = '<section id="qm-'. $line .'-line">';
+		$output .=	'<h3 class="h1">'. $taxonomy->labels->singular_name .'</h3>';
+		$output .=	'<div class="row row-cols-3">';
+		foreach ( $lines as $line ) :
+			$output .= '<div class="col mb-4">';
+			$output .= 		'<div class="card h-100 text-center">';
+			$output .=			'<div class="card-body">';
+			$output .=				'<span class="card-icon rounded-circle d-flex justify-content-center h2">';
+			$output .=					'<i class="'. get_term_meta( $line->term_id, 'qm_taxonomy_icon', true ) .'"></i>';
+			$output .=				'</span>';
+			$output .=				'<h5 class="card-title">'. $line->name .'</h5>';
+			$output .=				'<p class="card-text">'. $line->description .'</p>';
+			$output .=			'</div>';
+			$output .=			'<div class="card-footer">';
+			$output .=				'<a href="'. get_term_link( $line->term_id ) .'" class="btn btn-primary">'. __( 'See products', 'quimimpex' ) .'</a>';
+			$output .=			'</div>';
+			$output .=		'</div>';
+			$output .=	'</div>';
+		endforeach;
+		$output .=	'</div>';
+		$output .= '</section>';
+
+		return $output;
+	endif;
+
+}
+add_shortcode( 'qm_line', 'quimimpex_shortcode_line' );
 ?>
