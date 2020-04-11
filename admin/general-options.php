@@ -19,6 +19,12 @@ function quimimpex_custom_general_options(){
 ?>
 	<div class="sub-layout text-option general">
 		<label class="description single-option">
+			<p><?php _e( 'Company address', 'quimimpex' ) ?></p>
+			<input type="text" class="regular-text" name="t_em_theme_options[company_address]" value="<?php echo t_em( 'company_address' ) ?>" />
+		</label>
+	</div>
+	<div class="sub-layout text-option general">
+		<label class="description single-option">
 			<p><?php _e( 'Principal Contact Email', 'quimimpex' ) ?></p>
 			<input type="email" class="regular-text" name="t_em_theme_options[principal_contact_email]" value="<?php echo t_em( 'principal_contact_email' ) ?>" />
 		</label>

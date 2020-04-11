@@ -19,12 +19,13 @@
  */
 function quimimpex_default_theme_options( $default_theme_options ){
 	$quimimpex_default_options = array(
+		'company_address'				=> '',
 		'principal_contact_email'		=> '',
 		'commercial_contact_email'		=> '',
 		'principal_contact_phone'		=> '',
 		'commercial_contact_phone'		=> '',
-		'web_chat_url'						=> '',
-		'web_email_url'						=> '',
+		'web_chat_url'					=> '',
+		'web_email_url'					=> '',
 	);
 
 	$default_options = array_merge( $default_theme_options, $quimimpex_default_options );
@@ -47,8 +48,9 @@ function quimimpex_theme_options_validate( $input ){
 
 	// Text inputs
 	foreach ( array(
-		'principal_contact_phone',
-		'commercial_contact_phone',
+		'company_address',
+		'principal_contact_email',
+		'commercial_contact_email',
 		'principal_contact_phone',
 		'commercial_contact_phone',
 		'web_chat_url',
