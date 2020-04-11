@@ -98,6 +98,16 @@ function quimimpex_cpt(){
 			'rewrite'		=> _x( 'executive', 'post type slug', 'quimimpex' ),
 			'public'		=> false,
 		),
+		'qm-banner'	=> array(
+			'post-type'		=> 'qm-banner',
+			'singular'		=> _x( 'Banner', 'post type singular name', 'quimimpex' ),
+			'plural'		=> _x( 'Banners', 'post type general name', 'quimimpex' ),
+			'label'			=> _x( 'Banners', 'post type general name', 'quimimpex' ),
+			'hierarchical'	=> false,
+			'supports'		=> array( 'title', 'thumbnail', 'excerpt' ),
+			'rewrite'		=> _x( 'banner', 'post type slug', 'quimimpex' ),
+			'public'		=> false,
+		),
 	);
 
 	foreach ( $post_types as $post_type => $pt ) :

@@ -248,5 +248,4 @@ function quimimpex_checkin_product(){
 	endif;
 }
 add_action( 't_em_action_entry_meta_footer', 'quimimpex_checkin_product', 15 );
-
 ?>
