@@ -10,6 +10,49 @@
  */
 
 jQuery(document).ready(function($) {
+	// Hide header on scroll down, show on scroll up
+	// http://jsfiddle.net/mariusc23/s6mLJ/31/
+	function qmMenuScroll( target, height ){
+		var didScroll;
+		var lastScrollTop = 0;
+		var delta = 5;
+		var targetHeight = height;
+
+		$(window).scroll(function(event){
+		    didScroll = true;
+		});
+
+		setInterval(function() {
+		    if (didScroll) {
+		        hasScrolled();
+		        didScroll = false;
+		    }
+		}, 250);
+
+		function hasScrolled() {
+		    var st = $(this).scrollTop();
+
+		    // Make sure they scroll more than delta
+		    if(Math.abs(lastScrollTop - st) <= delta)
+		        return;
+
+		    // If they scrolled down and are past the target. Do stuff.
+		    // This is necessary so you never see what is "behind" the target.
+		    if (st > lastScrollTop && st > targetHeight){
+		        // Scroll Down
+		        $(target).fadeOut();
+		    } else {
+		        // Scroll Up
+		        if(st + $(window).height() < $(document).height()) {
+		            $(target).fadeIn();
+		        }
+		    }
+
+		    lastScrollTop = st;
+		}
+	}
+	qmMenuScroll( $('#top-menu'), 500 );
+
 	/**
 	 * Register subscribers via Ajax
 	 */

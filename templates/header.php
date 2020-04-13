@@ -57,7 +57,7 @@ function t_em_slider_bootstrap_carousel( $args ){
 			$slider_wrap = ( t_em( 'bootstrap_carousel_wrap' ) ) ? 'false' : 'true';
 			$slider_pause = ( t_em( 'bootstrap_carousel_pause' ) ) ? 'hover' : 'false';
 	?>
-			<section id="slider-carousel" class="carousel slide container-fluid <?php echo $slider_fade ?>" data-ride="carousel" data-wrap="<?php echo $slider_wrap; ?>" data-pause="<?php echo $slider_pause; ?>" data-interval="<?php echo t_em( 'bootstrap_carousel_interval' ) ?>">
+			<section id="slider-carousel" class="carousel slide container-fluid mt-8 <?php echo $slider_fade ?>" data-ride="carousel" data-wrap="<?php echo $slider_wrap; ?>" data-pause="<?php echo $slider_pause; ?>" data-interval="<?php echo t_em( 'bootstrap_carousel_interval' ) ?>">
 			<?php
 			/**
 			 * Fires before the slider carousel section. Full width;
@@ -87,10 +87,12 @@ function t_em_slider_bootstrap_carousel( $args ){
 					<div class="carousel-item">
 						<?php t_em_featured_post_thumbnail( 1200, t_em( 'slider_height' ), false, 'd-block w-100', $post->ID ); ?>
 						<div id="<?php echo $post->post_name ?>-<?php echo $post->ID; ?>" class="carousel-caption">
-							<h3 class="item-title">
-								<a href="<?php echo get_post_meta( $post->ID, 'quimimpex_banner_link', true ); ?>"><?php echo get_the_title(); ?></a>
-							</h3>
-							<p class="item-summary d-none d-md-block"><?php t_em_get_post_excerpt(); ?></p>
+							<div class="<?php echo t_em_grid( 8 ) ?> <?php echo t_em_grid( 2, '', true ) ?>">
+								<h3 class="item-title text-uppercase">
+									<a href="<?php echo get_post_meta( $post->ID, 'quimimpex_banner_link', true ); ?>"><?php echo get_the_title(); ?></a>
+								</h3>
+								<p class="item-summary d-none d-md-block"><?php t_em_get_post_excerpt(); ?></p>
+							</div>
 						</div>
 					</div><!-- .item -->
 				<?php endforeach; wp_reset_postdata(); ?>

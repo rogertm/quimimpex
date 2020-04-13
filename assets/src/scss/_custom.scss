@@ -2,3 +2,59 @@
 
 // Your variable overrides
 $icomoon-font-path: 		"../../../../twenty-em/assets/dist/vendor/@themingisprose/icon-pack/fonts";
+
+//
+// Variables
+//
+$link-hover-decoration: none;
+
+//
+// Container
+//
+$container-max-widths:(
+	xl: 1400px
+);
+
+//
+// Fonts
+//
+$font-family-sans-serif: 'Roboto', sans-serif;
+
+//
+// QM Colors
+//
+$qm-gray:			#808080 !default;
+$qm-white-light:	#f5f5f5 !default;
+$qm-gray-dark:		#4f4f4f !default;
+$qm-red:			#ff4c4c !default;
+$qm-red-dark:		#c63232 !default;
+$qm-blue:			#292464 !default;
+$qm-blue-light:		#726f99 !default;
+
+$primary:			$qm-red;
+$secondary:			$qm-blue;
+$light:				$qm-white-light;
+$dark:				$qm-gray-dark;
+$body-color:		$qm-gray;
+$line-height-base:  1.8;
+
+$theme-colors:(
+	"qm-gray": 			$qm-gray,
+	"qm-white-light": 	$qm-white-light,
+	"qm-gray-dark": 	$qm-gray-dark,
+	"qm-red": 			$qm-red,
+	"qm-red-dark": 		$qm-red-dark,
+	"qm-blue-light":	$qm-blue-light
+);
+
+//
+// Spacers
+//
+$spacer: 1rem;
+$spacers: (
+    6: ($spacer * 6),
+    7: ($spacer * 7),
+    8: ($spacer * 8),
+    9: ($spacer * 10),
+    10: ($spacer * 15)
+);

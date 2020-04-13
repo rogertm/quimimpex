@@ -18,3 +18,147 @@
 		}
 	}
 }
+
+//
+// Navigation
+//
+body.admin-bar{
+	#top-menu{
+		top: 30px !important;
+	}
+}
+#top-menu{
+	@extend .fixed-top;
+	@extend .shadow-sm;
+	> .navbar{
+		@extend .bg-white;
+		@extend .pb-0;
+		@extend .pt-1;
+		@extend .position-relative;
+		&-collapse{
+			@include media-breakpoint-down(md){
+				margin-right: 1rem;
+				position: absolute;
+				top: 65px;
+				right: 0;
+			}
+		}
+		#menu-top-menu{
+			@extend .ml-auto;
+			@include media-breakpoint-down(md){
+				text-align: left;
+				width: 200px;
+				background-color: #f8f9fa;
+				border-radius: 3px;
+			}
+			.nav-item{
+				@extend .mr-2;
+				@extend .ml-4;
+				@extend .py-4;
+				@include media-breakpoint-down(md){
+					border-bottom: 1px solid #dee2e6;
+					margin-right: 0px;
+					color: red !important;
+				}
+			}
+		}
+	}
+	a{
+		@extend .text-body;
+		&:hover{
+			@extend .text-primary;
+			transition: all 0.5s ease;
+		}
+	}
+	.active{
+		a{
+			@extend .text-primary;
+		}
+	}
+	li.active{
+		border-bottom: 3px solid $primary !important;
+		&:hover{
+			transition: none !important;
+			-webkit-transition: none !important;
+			-o-transition: none !important;
+			&:before{
+				@extend .bg-transparent;
+				transition: none !important;
+				-webkit-transition: none !important;
+				-o-transition: none !important;
+			}
+		}
+	}
+	@include media-breakpoint-down(md){
+		padding-top: .5rem !important;
+		padding-bottom: .5rem !important;
+	}
+	.navbar-brand{
+		.custom-logo{
+			height: 45px;
+		}
+		#site-title{
+			@extend .d-none;
+		}
+	}
+}
+#top-bar{
+	.nav-link{
+		@extend .text-white;
+		&:hover{
+			color: rgba(255,255,255, .5) !important;
+		}
+	}
+	.btn-sm{
+		padding-top: .16rem !important;
+		padding-bottom: .16rem !important;
+		&:focus{
+			box-shadow: none !important;
+		}
+
+	}
+	.form-control-sm{
+		height: calc(1.3em + .5rem + 2px)!important;
+	}
+	.form-control{
+		&::placeholder{
+			@extend .text-white;
+			opacity: 0.7;
+		}
+		&:focus{
+			@extend .text-white;
+			box-shadow: none !important;
+		}
+	}
+}
+
+//
+// Slider
+//
+.carousel{
+	&-control{
+		&-prev,
+		&-next{
+			top: 70% !important;
+		}
+	}
+	&-indicators{
+		.active{
+			@extend .bg-primary;
+		}
+	}
+	&-caption{
+		right: 0;
+		bottom: 0;
+		left: 0;
+		padding-top: 40px;
+		padding-bottom: 40px;
+		background-color: rgba( $secondary, .7 );
+		a{
+			@extend .text-white;
+			&:hover{
+				@extend .text-primary;
+			}
+		}
+	}
+}

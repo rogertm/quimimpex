@@ -248,4 +248,15 @@ function quimimpex_checkin_product(){
 	endif;
 }
 add_action( 't_em_action_entry_meta_footer', 'quimimpex_checkin_product', 15 );
+
+/**
+ * Add custom mime types to upload
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_custom_mime_types( $mime_types ){
+	$mime_types['svg'] = 'image/svg+xml';
+	return $mime_types;
+}
+add_filter( 'upload_mimes', 'quimimpex_custom_mime_types' );
 ?>
