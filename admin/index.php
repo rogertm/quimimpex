@@ -16,4 +16,5 @@
 require( get_stylesheet_directory() . '/admin/queue.php' );
 require( get_stylesheet_directory() . '/admin/functions.php' );
 require( get_stylesheet_directory() . '/admin/general-options.php' );
+require( get_stylesheet_directory() . '/admin/custom-content-options.php' );
 ?>
