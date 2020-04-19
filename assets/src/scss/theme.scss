@@ -286,3 +286,12 @@ body{
 		@extend .border-white;
 	}
 }
+
+//
+// WP
+//
+.wp{
+	&-block-gallery{
+		@extend .full-width;
+	}
+}
