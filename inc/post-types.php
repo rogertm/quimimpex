@@ -217,4 +217,14 @@ function quimimpex_rewrite_flush(){
 	flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'quimimpex_rewrite_flush' );
+
+/**
+ * Add excerpt to pages
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_pages_support(){
+	add_post_type_support( 'page', 'excerpt' );
+}
+add_action( 'init', 'quimimpex_pages_support' );
 ?>

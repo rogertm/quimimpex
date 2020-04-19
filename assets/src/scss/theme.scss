@@ -1,15 +1,38 @@
 // Quimimpex scss source file
 
-
 //
 // Imports
 //
 @import "custom";
+@import 'ihover';
 @import "../../../../twenty-em/assets/src/scss/theme";
+@import '../../dist/vendor/hover.css/scss/hover.scss';
 
-/***************************************************************************************************
- * FIX THIS ON FRAMEWORK
- ***************************************************************************************************/
+//
+// Scaffolding
+//
+*{
+	transition: 250ms;
+}
+body{
+	overflow-x: hidden;
+	&.admin-bar{
+		#top-menu{
+			top: 30px !important;
+		}
+	}
+}
+
+.full-width {
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	max-width: none;
+}
+
 .accordion{
 	.card{
 		@extend .mb-0;
@@ -22,11 +45,6 @@
 //
 // Navigation
 //
-body.admin-bar{
-	#top-menu{
-		top: 30px !important;
-	}
-}
 #top-menu{
 	@extend .fixed-top;
 	@extend .shadow-sm;
@@ -55,10 +73,47 @@ body.admin-bar{
 				@extend .mr-2;
 				@extend .ml-4;
 				@extend .py-4;
-				@include media-breakpoint-down(md){
-					border-bottom: 1px solid #dee2e6;
-					margin-right: 0px;
-					color: red !important;
+				@extend .hvr-underline-from-center;
+				overflow: inherit !important;
+				&:before{
+					height: 3px;
+				}
+				&.active{
+					border-bottom: 3px solid $primary !important;
+					-o-transform: none !important;
+					-webkit-transform: none !important;
+			  		transform: none !important;
+					&:hover{
+						transition: none !important;
+						-webkit-transition-property: none !important;
+						-o-transition-property: none !important;
+						transition-property: none !important;
+						&:before{
+							@extend .bg-transparent;
+							transition: none !important;
+							-webkit-transition-property: none !important;
+							-o-transition-property: none !important;
+							transition-property: none !important;
+						}
+					}
+				}
+			}
+			.dropdown-menu{
+				.menu-item{
+					@extend .py-2;
+					@extend .mx-2;
+					@extend .border-0;
+					&:before{
+						@extend .border-0;
+						height: 0;
+					}
+					&.active{
+						@extend .border-0;
+						&:before{
+							@extend .border-0;
+							height: 0;
+						}
+					}
 				}
 			}
 		}
@@ -160,5 +215,74 @@ body.admin-bar{
 				@extend .text-primary;
 			}
 		}
+	}
+}
+
+//
+// Front Page
+//
+.about-us{
+	&-title{
+		margin-top: -200px;
+		margin-left: 200px;
+		p{
+			background-color: rgba($primary, 0.8);
+		}
+		.hvr-outline-in::before{
+			border: rgba($primary, 0.8) solid 3px !important;
+		}
+	}
+}
+.services{
+	background-image: url('../../images/bg-services.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center top;
+	background-attachment: fixed;
+	min-height: 30vh;
+	.jumbotron{
+		@extend .bg-transparent;
+		@extend .text-center;
+		@extend .w-75;
+		@extend .mx-auto;
+	}
+	a:hover{
+		.jumbo-widget-heading{
+			@extend .text-secondary;
+		}
+	}
+}
+
+//
+// Footer
+//
+#footer{
+	background-image: url('../../images/bg-footer.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center top;
+	background-attachment: fixed;
+	@extend .position-relative;
+	*:not(input){
+		@extend .text-white;
+		a{
+			&:hover{
+				@extend .text-primary;
+			}
+		}
+	}
+	&:before{
+		@extend .position-absolute;
+		content: "";
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		@extend .bg-secondary;
+		mix-blend-mode: multiply;
+	}
+	#colophon{
+		@extend .border-bottom;
+		@extend .border-white;
 	}
 }
