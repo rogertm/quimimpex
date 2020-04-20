@@ -254,6 +254,53 @@ body{
 }
 
 //
+// Content
+//
+body{
+	&:not(.home){
+		#main{
+			@extend .mt-7;
+		}
+	}
+	&.page{
+		&-has-thumbnail{
+			.featured-post-thumbnail{
+				&.wp-post-image{
+					@extend .w-100;
+				}
+				&-wrapper{
+					@extend .full-width;
+					@extend .position-relative;
+					@extend .d-block;
+					&:after{
+						@extend .position-absolute;
+						content: "";
+						left: 0;
+						bottom: 1rem;
+						right: 0;
+						min-height: 8rem;
+						@extend .bg-secondary;
+						mix-blend-mode: multiply;
+					}
+				}
+			}
+			article{
+				header{
+					margin-top: -6.5rem;
+					min-height: 6rem;
+					margin-bottom: 5rem;
+					@extend .position-relative;
+					.entry-title{
+						@extend .text-white;
+					}
+				}
+			}
+
+		}
+	}
+}
+
+//
 // Footer
 //
 #footer{

@@ -46,6 +46,45 @@ function quimimpex_hide_admin_bar(){
 add_action( 'init', 'quimimpex_hide_admin_bar' );
 
 /**
+ * Override Function: Display featured post thumbnail on top of a single post if it is set by the
+ * user in "General Options" in the admin options page. This function is attached to the
+ * do_action( 't_em_action_post_inside_before' ) action hook.
+ *
+ * @since Twenty'em 1.0
+ */
+function t_em_single_post_thumbnail(){
+	if ( is_page_template( 'page-templates/template-blog-excerpt.php' ) )
+		return;
+	if ( ! is_page() )
+		return;
+	global $post;
+	if ( t_em( 'single_featured_img' )
+		&& ( is_singular() && has_post_thumbnail() )
+		|| ( t_em( 'archive_set' ) == 'the-content'
+			&& ( is_home() || is_front_page() || is_archive() )
+		)
+		|| ( is_page_template( 'page-templates/template-blog-content.php' ) )
+	) :
+		$open	= '<span href="'. get_permalink( $post->ID ) .'" class="featured-post-thumbnail-wrapper">';
+		$close	= '</span>';
+		$attr = array(
+			'class'	=> 'featured-post-thumbnail',
+			'alt'	=> $post->post_title,
+		);
+		echo $open . get_the_post_thumbnail( $post->ID, 'full', $attr ) . $close;
+	endif;
+}
+
+function quimimpex_body_class( $classes ){
+	global $post;
+	if ( is_page() && has_post_thumbnail( $post->id ) ) :
+		$classes[] = 'page-has-thumbnail';
+	endif;
+	return $classes;
+}
+add_action( 'body_class', 'quimimpex_body_class' );
+
+/**
  * Process Contact Form
  *
  * @since Quimimpex 1.0
