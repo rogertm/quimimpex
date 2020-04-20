@@ -84,7 +84,7 @@ function quimimpex_front_posts_section(){
 	<section id="latest-news" class="py-5">
 		<h3 class="h1 text-center mb-4"><?php _e( 'Latest news', 'quimimpex' ) ?></h3>
 		<div class="row">
-			<div class="card-deck <?php echo t_em_grid( 9 ) ?> mx-auto">
+			<div class="card-deck <?php echo t_em_grid( 10 ) ?> mx-auto">
 <?php foreach ( $featured_posts as $featured ) : ?>
 				<div class="card text-center">
 					<?php t_em_featured_post_thumbnail( 600, 700, true, 'card-img-top', $featured->ID ) ?>
@@ -92,7 +92,8 @@ function quimimpex_front_posts_section(){
 						<h5 class="card-title"><?php echo $featured->post_title ?></h5>
 						<time class="d-block"><i class="icomoon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
 						<?php t_em_get_post_excerpt( $featured->ID ) ?>
-						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
+						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block stretched-link"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
+						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="icomoon-link"></i></span>
 					</div>
 				</div>
 <?php endforeach; ?>

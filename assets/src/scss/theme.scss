@@ -252,6 +252,60 @@ body{
 		}
 	}
 }
+#latest-news{
+	.card{
+		a{
+			@extend .d-block;
+			@extend .overflow-hidden;
+		}
+		img{
+			transform: scale(1.1);
+			will-change: transform;
+			transition: all .25s ease;
+		}
+		&-body{
+			padding-top: 15%;
+			margin-top: -11.2%;
+			@extend .position-relative;
+			z-index: 1;
+			&:before{
+				content: "";
+				@extend .position-absolute;
+				top: 0;
+				right: 0;
+				bottom: 50%;
+				left: 0;
+				@extend .bg-white;
+				transform-origin: 100% 50%;
+				transform: skewY(-6deg);
+				transition: all .3s ease;
+				pointer-events: none;
+				z-index: -1;
+			}
+		}
+		&-link{
+			top: -8%;
+			right: 10%;
+			will-change: transform;
+			transition: all .3s ease;
+		}
+		&:hover{
+			img{
+				transform: none;
+			}
+			.card-body{
+				&:before{
+					transform: none;
+				}
+			}
+			.card-link{
+				transform: translate3d(-50%,-50%,0);
+				top: 0;
+				right: 30%;
+			}
+		}
+	}
+}
 
 //
 // Content
