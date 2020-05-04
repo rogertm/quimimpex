@@ -360,8 +360,8 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 	if ( $lines ) :
 		$taxonomy = get_taxonomy( 'qm-'. $line .'-line' );
 
-		$output  = '<section id="qm-'. $line .'-line">';
-		$output .=	'<h3 class="h1">'. $taxonomy->labels->singular_name .'</h3>';
+		$output  = '<section id="qm-'. $line .'-line" class="mt-6">';
+		$output .=	'<h3 class="h1 mb-5 text-center">'. $taxonomy->labels->singular_name .'</h3>';
 		$output .=	'<div class="row row-cols-3">';
 		foreach ( $lines as $product_line ) :
 			$products_args = array(
@@ -377,28 +377,28 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			);
 			$products = get_posts( $products_args );
 
-			$output .= '<div id="line-'. $product_line->term_id .'" class="col mb-4">';
-			$output .= 		'<div class="card h-100">';
+			$output .= '<div id="line-'. $product_line->term_id .'" class="col mb-4 mt-8">';
+			$output .= 		'<div class="card">';
+			$output .= 			'<div class="bg-white rounded-circle mx-auto d-flex align-items-center justify-content-center cicle-one">';
+			$output .=				'<i class="'. get_term_meta( $product_line->term_id, 'qm_taxonomy_icon', true ) .' rounded-circle display-2 bg-white border d-flex align-items-center justify-content-center cicle-two text-primary"></i>';
+			$output .=			'</div>';
 			$output .=			'<div class="card-body">';
-			$output .=				'<span class="card-icon rounded-circle d-flex justify-content-center h2">';
-			$output .=					'<i class="'. get_term_meta( $product_line->term_id, 'qm_taxonomy_icon', true ) .'"></i>';
-			$output .=				'</span>';
 			$output .=				'<h5 id="line-heading-'. $product_line->term_id .'" class="card-title text-center">'. $product_line->name .'</h5>';
 			$output .=				'<p class="card-text text-center">'. $product_line->description .'</p>';
-			$output .=				'<h5 class="mt-5">'. __( 'List of products', 'quimimpex' ) .'</h5>';
-			$output .=				'<ul class="list-group list-group-flush border-bottom">';
-									foreach( $products as $product ) :
-			$output .=					'<li class="list-group-item d-flex justify-content-between align-items-start px-0">';
-			$output .=						'<a href="#" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'">'. $product->post_title .'</a>';
-			$output .=						'<div class="d-flex justify-content-center">';
-			$output .=							'<a href="#" class="badge badge-light ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
-			$output .=							'<a href="#" class="qm-checkin-product badge badge-light ml-3" data-product-id="'. $product->ID .'"><i class="icomoon-shopping-cart"></i></a>';
-			$output .=							'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" class="badge badge-light ml-3" target="_blank"><i class="icomoon-link"></i></a>';
-			$output .=						'</div>';
-			$output .=					'</li>';
-									endforeach;
-			$output .=				'</ul>';
 			$output .=			'</div>';
+			$output .=			'<h5 class="mt-5 p-3 bg-light">'. __( 'List of products', 'quimimpex' ) .'</h5>';
+			$output .=			'<ul class="list-group list-group-flush border-bottom">';
+								foreach( $products as $product ) :
+			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
+			$output .=					'<a href="#" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'">'. $product->post_title .'</a>';
+			$output .=					'<div class="d-flex justify-content-center">';
+			$output .=						'<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
+			$output .=						'<a href="#" class="qm-checkin-product text-muted ml-3" data-product-id="'. $product->ID .'"><i class="icomoon-shopping-cart"></i></a>';
+			$output .=						'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" class="text-muted ml-3" target="_blank"><i class="icomoon-link"></i></a>';
+			$output .=					'</div>';
+			$output .=				'</li>';
+								endforeach;
+			$output .=			'</ul>';
 			$output .=		'</div>';
 			$output .=	'</div>';
 		endforeach;

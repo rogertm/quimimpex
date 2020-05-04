@@ -354,6 +354,33 @@ body{
 	}
 }
 
+.card{
+	.cicle{
+		&-one{
+			border: 2px solid $gray-300 !important;
+			width: 200px;
+			height: 200px;
+			margin-top: -100px;
+		}
+		&-two{
+			width: 170px;
+			height: 170px;
+		}
+	}
+	&:hover{
+		.cicle{
+			&-one{
+				@extend .bg-primary;
+				@extend .border-0;
+				transition: all 1.5s ease;
+			}
+			&-two{
+				@extend .border-0;
+			}
+		}
+	}
+}
+
 //
 // Footer
 //
