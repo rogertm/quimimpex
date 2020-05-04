@@ -138,4 +138,40 @@ function quimimpex_companies_section(){
 	endif;
 }
 add_action( 't_em_action_main_after', 'quimimpex_companies_section' );
+
+/**
+ * Common Modal
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_modal(){
+?>
+	<div id="qm-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qm-modal-label" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="<?php _e( 'Close', 'quimimpex' ) ?>">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="<?php echo t_em_grid( 4 ) ?>">
+								<div class="modal-thumbnail"></div>
+							</div>
+							<div class="<?php echo t_em_grid( 8 ) ?>">
+								<h5 id="qm-modal-label" class="modal-title"></h5>
+								<div class="modal-post-content"></div>
+								<div class="modal-post-contact d-flex flex-column"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+}
+add_action( 't_em_action_top', 'quimimpex_modal' );
 ?>

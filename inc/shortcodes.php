@@ -363,18 +363,41 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 		$output  = '<section id="qm-'. $line .'-line">';
 		$output .=	'<h3 class="h1">'. $taxonomy->labels->singular_name .'</h3>';
 		$output .=	'<div class="row row-cols-3">';
-		foreach ( $lines as $line ) :
-			$output .= '<div class="col mb-4">';
-			$output .= 		'<div class="card h-100 text-center">';
+		foreach ( $lines as $product_line ) :
+			$products_args = array(
+				'post_type'			=> 'qm-'. $line .'-product',
+				'posts_per_page'	=> -1,
+				'tax_query'			=> array(
+					array(
+						'taxonomy'	=> $product_line->taxonomy,
+						'field'		=> 'id',
+						'terms'		=> array( $product_line->term_id ),
+					),
+				),
+			);
+			$products = get_posts( $products_args );
+
+			$output .= '<div id="line-'. $product_line->term_id .'" class="col mb-4">';
+			$output .= 		'<div class="card h-100">';
 			$output .=			'<div class="card-body">';
 			$output .=				'<span class="card-icon rounded-circle d-flex justify-content-center h2">';
-			$output .=					'<i class="'. get_term_meta( $line->term_id, 'qm_taxonomy_icon', true ) .'"></i>';
+			$output .=					'<i class="'. get_term_meta( $product_line->term_id, 'qm_taxonomy_icon', true ) .'"></i>';
 			$output .=				'</span>';
-			$output .=				'<h5 class="card-title">'. $line->name .'</h5>';
-			$output .=				'<p class="card-text">'. $line->description .'</p>';
-			$output .=			'</div>';
-			$output .=			'<div class="card-footer">';
-			$output .=				'<a href="'. get_term_link( $line->term_id ) .'" class="btn btn-primary">'. __( 'See products', 'quimimpex' ) .'</a>';
+			$output .=				'<h5 id="line-heading-'. $product_line->term_id .'" class="card-title text-center">'. $product_line->name .'</h5>';
+			$output .=				'<p class="card-text text-center">'. $product_line->description .'</p>';
+			$output .=				'<h5 class="mt-5">'. __( 'List of products', 'quimimpex' ) .'</h5>';
+			$output .=				'<ul class="list-group list-group-flush border-bottom">';
+									foreach( $products as $product ) :
+			$output .=					'<li class="list-group-item d-flex justify-content-between align-items-start px-0">';
+			$output .=						'<a href="#" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'">'. $product->post_title .'</a>';
+			$output .=						'<div class="d-flex justify-content-center">';
+			$output .=							'<a href="#" class="badge badge-light ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
+			$output .=							'<a href="#" class="qm-checkin-product badge badge-light ml-3" data-product-id="'. $product->ID .'"><i class="icomoon-shopping-cart"></i></a>';
+			$output .=							'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" class="badge badge-light ml-3" target="_blank"><i class="icomoon-link"></i></a>';
+			$output .=						'</div>';
+			$output .=					'</li>';
+									endforeach;
+			$output .=				'</ul>';
 			$output .=			'</div>';
 			$output .=		'</div>';
 			$output .=	'</div>';

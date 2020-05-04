@@ -198,4 +198,55 @@ function quimimpex_ajax_remove_checked_product(){
 }
 add_action( 'wp_ajax_remove_checkin_product', 'quimimpex_ajax_remove_checked_product' );
 add_action( 'wp_ajax_nopriv_remove_checkin_product', 'quimimpex_ajax_remove_checked_product' );
+
+/**
+ * Render modal
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_ajax_modal(){
+	$nonce = check_ajax_referer( '_qmnonce', '_qmnonce', false );
+	if ( ! $nonce ) :
+		$status	= 'bad_request';
+		$msg 	= __( 'Unknown error. Refresh your page and try again', 'quimimpex' );
+
+		$response = array(
+			'status'	=> $status,
+			'msg'		=> $msg,
+		);
+		return wp_send_json( $response );
+	endif;
+
+	$post_id		= $_POST['post_id'];
+	$title 			= get_the_title( $post_id );
+	$thumbnail		= get_the_post_thumbnail( $post_id );
+	$contact_id		= get_post_meta( $post_id, 'qm_product_contact', true );
+	$land_phone		= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_land_phones', true ) )
+						? '<span class="w-100 py-1"><i class="icomoon-phone mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'</span>'
+						: null;
+	$mobil_phone	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) )
+						? '<span class="w-100 py-1"><i class="icomoon-phone mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'</span>'
+						: null;
+	$email			= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_email', true ) )
+						? '<span class="w-100 py-1"><i class="icomoon-mail mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'</span>'
+						: null;
+	$request_email	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_request_email', true ) )
+						? '<span class="w-100 py-1"><i class="icomoon-mail mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'</span>'
+						: null;
+
+	$response = array(
+		'status'		=> 'success',
+		'title'			=> $title,
+		'thumbnail'		=> $thumbnail,
+		'content'		=> t_em_wrap_paragraph( get_post_field( 'post_content', $post_id ) ),
+		'checkin'		=> '<a href="#" class="btn btn-sm btn-primary qm-checkin-product" data-product-id="'. $post_id .'">'. __( 'Checkin', 'quimimpex' ) .'</a>',
+		'land_phone' 	=> $land_phone,
+		'mobil_phone' 	=> $mobil_phone,
+		'email' 		=> $email,
+		'request_email' => $request_email,
+	);
+	return wp_send_json( $response );
+}
+add_action( 'wp_ajax_qm_modal', 'quimimpex_ajax_modal' );
+add_action( 'wp_ajax_nopriv_qm_modal', 'quimimpex_ajax_modal' );
 ?>

@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Check in products
 	 */
-	$('.qm-checkin-product').click(function(e){
+	$(document).on('click', '.qm-checkin-product', function(e){
 		e.preventDefault();
 		var item 		= $(this);
 		var product_id	= item.attr('data-product-id');
@@ -261,5 +261,52 @@ jQuery(document).ready(function($) {
 			}
 		});
 		$(target).remove();
+	});
+
+	/**
+	 * Modal
+	 */
+	$('#qm-modal').modal('handleUpdate');
+	$('#qm-modal').on('shown.bs.modal', function(e){
+		var obj 	= $(e.relatedTarget);
+		var post_id	= obj.data('id');
+		var loading	= '<div class="modal-loading text-center py-6 text-muted"><i class="icomoon-cycle h1"></i></div>';
+		$('.modal-body').append(loading);
+
+		$.ajax({
+			url: ajaxurl,
+			type: 'post',
+			data: {
+				post_id: post_id,
+				action: 'qm_modal',
+				_qmnonce: qm_l10n._qmnonce,
+			},
+			success: function(response){
+				switch (response.status){
+					case 'success':
+						$('.modal-loading').remove();
+						$('.modal-title').append(response.title);
+						$('.modal-thumbnail').append(response.thumbnail);
+						$('.modal-post-content').append(response.content);
+						$('.modal-post-content').append(response.checkin);
+						$('.modal-post-contact').append(response.land_phone);
+						$('.modal-post-contact').append(response.mobil_phone);
+						$('.modal-post-contact').append(response.email);
+						$('.modal-post-contact').append(response.request_email);
+						break;
+					case 'error':
+						console.log(response.msg);
+						break;
+				}
+			}
+		});
+	});
+
+	$('#qm-modal').on('hidden.bs.modal', function(e){
+		$('.modal-title').empty();
+		$('.modal-loading').empty();
+		$('.modal-thumbnail').empty();
+		$('.modal-post-content').empty();
+		$('.modal-post-contact').empty();
 	})
 });

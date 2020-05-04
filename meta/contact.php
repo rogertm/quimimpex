@@ -35,7 +35,7 @@ function quimimpex_contact_data_fields(){
 		),
 		'request_email'	=> array(
 			'label'		=> __( 'Email to send requests and services', 'quimimpex' ),
-			'meta'		=> 'qm_contact_request',
+			'meta'		=> 'qm_contact_request_email',
 			'type'		=> 'email',
 		),
 	);
