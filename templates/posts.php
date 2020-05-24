@@ -113,14 +113,14 @@ add_action( 't_em_action_custom_front_page_after', 'quimimpex_front_posts_sectio
 function quimimpex_companies_section(){
 	$args = array(
 		'post_type'			=> 'qm-company',
-		'posts_per_page'	=> '5',
+		'posts_per_page'	=> '7',
 		'orderby'				=> 'rand',
 	);
 
 	$companies = get_posts( $args );
 	if ( $companies ) :
 		$attr = array(
-			'class'	=> 'card-img-top',
+			'class'	=> 'card-img-top py-5',
 		);
 ?>
 	<section id="featured-companies">
@@ -128,7 +128,9 @@ function quimimpex_companies_section(){
 			<div class="card-group">
 <?php foreach ( $companies as $company ) : ?>
 				<div class="card border-0">
-					<?php echo get_the_post_thumbnail( $company->ID, 'full', $attr ) ?>
+					<div class="card-wrapper">
+						<?php echo get_the_post_thumbnail( $company->ID, 'full', $attr ) ?>
+					</div>
 				</div>
 <?php endforeach; ?>
 			</div>

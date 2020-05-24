@@ -310,6 +310,9 @@ body{
 //
 // Content
 //
+#main{
+	@extend .m-0;
+}
 body{
 	&:not(.home){
 		#main{
@@ -386,6 +389,27 @@ body{
 		@extend .text-muted;
 		&:hover{
 			@extend .text-primary;
+		}
+	}
+}
+
+#featured-companies{
+	box-shadow: 0 .125rem .25rem .25rem rgba(0,0,0,.075);
+	.card{
+		&-wrapper{
+			@extend .hvr-overline-from-center;
+			filter: grayscale(100%);
+			opacity: 0.3;
+			transition: all .25s ease;
+			&:hover{
+				filter: none;
+				opacity: 1;
+				transition: all .25s ease;
+			}
+			&:before{
+				z-index: 1 !important;
+				@extend .bg-qm-blue-light;
+			}
 		}
 	}
 }
