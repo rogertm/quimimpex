@@ -383,14 +383,14 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=				'<i class="'. get_term_meta( $product_line->term_id, 'qm_taxonomy_icon', true ) .' rounded-circle display-2 bg-white border d-flex align-items-center justify-content-center cicle-two text-primary"></i>';
 			$output .=			'</div>';
 			$output .=			'<div class="card-body">';
-			$output .=				'<h5 id="line-heading-'. $product_line->term_id .'" class="card-title text-center">'. $product_line->name .'</h5>';
+			$output .=				'<h3 id="line-heading-'. $product_line->term_id .'" class="card-title text-center mt-3">'. $product_line->name .'</h3>';
 			$output .=				'<p class="card-text text-center">'. $product_line->description .'</p>';
 			$output .=			'</div>';
 			$output .=			'<h5 class="mt-5 p-3 bg-light">'. __( 'List of products', 'quimimpex' ) .'</h5>';
 			$output .=			'<ul class="list-group list-group-flush border-bottom">';
 								foreach( $products as $product ) :
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
-			$output .=					'<a href="#" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'">'. $product->post_title .'</a>';
+			$output .=					'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" target="_blank">'. $product->post_title .'</a>';
 			$output .=					'<div class="d-flex justify-content-center">';
 			$output .=						'<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
 			$output .=						'<a href="#" class="qm-checkin-product text-muted ml-3" data-product-id="'. $product->ID .'"><i class="icomoon-shopping-cart"></i></a>';

@@ -381,6 +381,15 @@ body{
 	}
 }
 
+.modal{
+	&-contact-link{
+		@extend .text-muted;
+		&:hover{
+			@extend .text-primary;
+		}
+	}
+}
+
 //
 // Footer
 //

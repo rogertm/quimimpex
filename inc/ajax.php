@@ -219,27 +219,35 @@ function quimimpex_ajax_modal(){
 
 	$post_id		= $_POST['post_id'];
 	$title 			= get_the_title( $post_id );
-	$thumbnail		= get_the_post_thumbnail( $post_id );
+	$attachment_id 	= get_post_thumbnail_id( $post_id );
+	$thumbnail		= '<img src="'. t_em_image_resize( 700, 460, $attachment_id ) .'" class="m-0">';
 	$contact_id		= get_post_meta( $post_id, 'qm_product_contact', true );
 	$land_phone		= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_land_phones', true ) )
-						? '<span class="w-100 py-1"><i class="icomoon-phone mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'</span>'
+						? '<span class="py-1 d-block"><i class="icomoon-phone mr-3 text-primary"></i> <a href="tel:'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'</a></span>'
 						: null;
 	$mobil_phone	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) )
-						? '<span class="w-100 py-1"><i class="icomoon-phone mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'</span>'
+						? '<span class="py-1 d-block"><i class="icomoon-phone mr-3 text-primary"></i> <a href="tel:'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'</a></span>'
 						: null;
 	$email			= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_email', true ) )
-						? '<span class="w-100 py-1"><i class="icomoon-mail mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'</span>'
+						? '<span class="py-1 d-block"><i class="icomoon-mail mr-3 text-primary"></i> <a href="mailto:'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'</a></span>'
 						: null;
 	$request_email	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_request_email', true ) )
-						? '<span class="w-100 py-1"><i class="icomoon-mail mr-3"></i>'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'</span>'
+						? '<span class="py-1 d-block"><i class="icomoon-mail mr-3 text-primary"></i> <a href="mailto:'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'</a></span>'
+						: null;
+	$checkin 		= '<a href="#" class="btn btn-light rounded-circle mr-3 qm-checkin-product" data-product-id="'. $post_id .'" aria-label="'. __( 'Checkin', 'quimimpex' ) .'"><i class="icomoon-shopping-cart text-muted h6 mb-0"></i></a>';
+	$data_sheet		= ( get_post_meta( $post_id, 'qm_data_sheet_url' ) )
+						? '<a href="'. get_post_meta( $post_id, 'qm_data_sheet_url', true ) .'" class="btn btn-light rounded-circle mr-3" aria-label="'. __( 'Data sheet', 'quimimpex' ) .'" download><i class="icomoon-text-document text-muted h6 mb-0"></i></a>'
 						: null;
 
 	$response = array(
 		'status'		=> 'success',
 		'title'			=> $title,
 		'thumbnail'		=> $thumbnail,
+		'title_description' => __( 'Product Description', 'quimimpex' ),
+		'title_contact' => __( 'Contact information', 'quimimpex' ),
 		'content'		=> t_em_wrap_paragraph( get_post_field( 'post_content', $post_id ) ),
-		'checkin'		=> '<a href="#" class="btn btn-sm btn-primary qm-checkin-product" data-product-id="'. $post_id .'">'. __( 'Checkin', 'quimimpex' ) .'</a>',
+		'checkin'		=> $checkin,
+		'data_sheet'	=> $data_sheet,
 		'land_phone' 	=> $land_phone,
 		'mobil_phone' 	=> $mobil_phone,
 		'email' 		=> $email,

@@ -150,20 +150,28 @@ function quimimpex_modal(){
 		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="<?php _e( 'Close', 'quimimpex' ) ?>">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<h3 id="qm-modal-label" class="modal-title"></h3>
+					<div class="ml-auto">
+						<div class="modal-actions d-inline"></div>
+						<a href="#" class="btn btn-light rounded-circle" data-dismiss="modal" aria-label="<?php _e( 'Close', 'quimimpex' ) ?>">
+							<i class="icomoon-cross text-muted h6 mb-0"></i>
+						</a>
+					</div>
 				</div>
 				<div class="modal-body">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="<?php echo t_em_grid( 4 ) ?>">
+							<div class="<?php echo t_em_grid( 5 ) ?> p-0">
 								<div class="modal-thumbnail"></div>
 							</div>
-							<div class="<?php echo t_em_grid( 8 ) ?>">
-								<h5 id="qm-modal-label" class="modal-title"></h5>
-								<div class="modal-post-content"></div>
-								<div class="modal-post-contact d-flex flex-column"></div>
+							<div class="<?php echo t_em_grid( 7 ) ?> py-1">
+								<h6 class="font-weight-bold modal-title-description"></h6>
+								<div class="modal-post-content mb-3"></div>
+								<h6 class="font-weight-bold modal-title-contact border-bottom pb-2"></h6>
+								<div class="modal-post-contact row">
+									<div class="contact-phone <?php echo t_em_grid( 6 ) ?>"></div>
+									<div class="contact-email <?php echo t_em_grid( 6 ) ?>"></div>
+								</div>
 							</div>
 						</div>
 					</div>

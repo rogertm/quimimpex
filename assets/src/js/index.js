@@ -286,13 +286,16 @@ jQuery(document).ready(function($) {
 					case 'success':
 						$('.modal-loading').remove();
 						$('.modal-title').append(response.title);
+						$('.modal-actions').append(response.checkin);
+						$('.modal-actions').append(response.data_sheet);
 						$('.modal-thumbnail').append(response.thumbnail);
+						$('.modal-title-description').append(response.title_description);
+						$('.modal-title-contact').append(response.title_contact);
 						$('.modal-post-content').append(response.content);
-						$('.modal-post-content').append(response.checkin);
-						$('.modal-post-contact').append(response.land_phone);
-						$('.modal-post-contact').append(response.mobil_phone);
-						$('.modal-post-contact').append(response.email);
-						$('.modal-post-contact').append(response.request_email);
+						$('.contact-phone').append(response.land_phone);
+						$('.contact-phone').append(response.mobil_phone);
+						$('.contact-email').append(response.email);
+						$('.contact-email').append(response.request_email);
 						break;
 					case 'error':
 						console.log(response.msg);
@@ -304,9 +307,13 @@ jQuery(document).ready(function($) {
 
 	$('#qm-modal').on('hidden.bs.modal', function(e){
 		$('.modal-title').empty();
+		$('.modal-actions').empty();
 		$('.modal-loading').empty();
 		$('.modal-thumbnail').empty();
+		$('.modal-title-description').empty();
+		$('.modal-title-contact').empty();
 		$('.modal-post-content').empty();
-		$('.modal-post-contact').empty();
+		$('.contact-phone').empty();
+		$('.contact-email').empty();
 	})
 });
