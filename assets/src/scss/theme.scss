@@ -454,5 +454,23 @@ body{
 .wp{
 	&-block-gallery{
 		@extend .full-width;
+		@extend .mt-5;
+		.blocks-gallery{
+			&-item{
+				@extend .m-0;
+				@extend .overflow-hidden;
+				border: solid 1px $white;
+				figure{
+					transform: scale(1.1);
+					transition: ease-in-out all .5s;
+					&:hover{
+						transform: scale(1);
+					}
+					figcaption{
+						@extend .d-none;
+					}
+				}
+			}
+		}
 	}
 }
