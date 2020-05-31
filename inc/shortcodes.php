@@ -394,7 +394,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=					'<div class="d-flex justify-content-center">';
 			$output .=						'<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
 			$output .=						'<a href="#" class="qm-checkin-product text-muted ml-3" data-product-id="'. $product->ID .'"><i class="icomoon-shopping-cart"></i></a>';
-			$output .=						'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" class="text-muted ml-3" target="_blank"><i class="icomoon-link"></i></a>';
+			$output .=						'<a href="'. get_permalink( $product->ID ) .'" class="text-muted ml-3"><i class="icomoon-link"></i></a>';
 			$output .=					'</div>';
 			$output .=				'</li>';
 								endforeach;

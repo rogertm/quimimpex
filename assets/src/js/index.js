@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
 		    lastScrollTop = st;
 		}
 	}
-	qmMenuScroll( $('#top-menu'), 500 );
+	// qmMenuScroll( $('#top-menu'), 500 );
 
 	/**
 	 * Register subscribers via Ajax

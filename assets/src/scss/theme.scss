@@ -316,7 +316,7 @@ body{
 body{
 	&:not(.home){
 		#main{
-			@extend .mt-7;
+			@extend .mt-8;
 		}
 	}
 	&.page{
@@ -353,6 +353,28 @@ body{
 				}
 			}
 
+		}
+	}
+}
+#content{
+	article{
+		@extend .mt-0;
+		&.qm{
+			&-export-product,
+			&-import-product{
+				header{
+					@extend .bg-secondary;
+					@extend .text-light;
+				}
+			}
+		}
+	}
+}
+#related-posts{
+	a{
+		@extend .text-muted;
+		&:hover{
+			@extend .text-primary;
 		}
 	}
 }

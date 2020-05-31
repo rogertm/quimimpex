@@ -184,4 +184,94 @@ function quimimpex_modal(){
 <?php
 }
 add_action( 't_em_action_top', 'quimimpex_modal' );
+
+/**
+ * Override Function: Related posts output
+ *
+ * @since Quimimpex 1.0
+ */
+function t_em_single_related_posts(){
+	if ( is_single() && t_em( 'single_related_posts' ) ) :
+		global $post;
+		$post_id = $post->ID;
+		$taxonomies = get_taxonomies( array( 'public' => true ), 'object' );
+		$post_type = get_post_type( $post_id );
+		$labels = get_post_type_object( $post_type );
+		$taxonomy = array();
+
+		foreach ( $taxonomies as $key => $value ) :
+			if ( in_array( $post_type, $value->object_type ) ) :
+				array_push( $taxonomy, $key );
+			endif;
+		endforeach;
+
+		/**
+		 * Filter the amount of related post to display
+		 *
+		 * @param int Number of posts to display
+		 * @since Twenty'em 1.0
+		 */
+		$limit = apply_filters( 't_em_filter_single_limit_related_posts', 3 );
+
+		$query_args = array(
+			'post_type'			=> $post_type,
+			'posts_per_page'	=> $limit,
+			'post__not_in'		=> array( $post_id ),
+			'post_status'		=> 'publish',
+			'tax_query'			=> array(
+				'relation'		=> 'OR',
+			),
+		);
+		foreach ( $taxonomy as $tax ) :
+			$terms = get_the_terms( $post_id, $tax );
+			if ( ! $terms ) continue;
+			$terms_ids = array();
+			foreach ( $terms as $term ) :
+				array_push( $terms_ids, $term->term_id );
+			endforeach;
+			$key = array(
+				'taxonomy'	=> $tax,
+				'field'		=> 'id',
+				'terms'		=> $terms_ids,
+			);
+			array_push( $query_args['tax_query'], $key );
+		endforeach;
+
+		/**
+		 * Filter the related post query arguments
+		 * @param array 	Query arguments
+		 *
+		 * @since Twenty'em 1.2
+		 */
+		$all_posts = apply_filters( 't_em_filter_single_related_post_query', get_posts( $query_args ) );
+?>
+		<section id="related-posts">
+			<div class="my-5 border-top">
+<?php 	if ( ! empty( $all_posts ) ) : ?>
+			<h3 class="related-posts-title my-5"><?php printf( _x( 'Similar %s', 'similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
+			<div class="card-columns">
+		<?php foreach( $all_posts as $post ) : setup_postdata( $post ); ?>
+				<div class="card text-center shadow-sm border-0">
+					<?php t_em_featured_post_thumbnail( 700, 460, true, 'featured-post-thumbnail card-img-top', $post->ID ) ?>
+					<div class="card-body">
+						<h5 class="card-title font-weight-superbold mt-2 mb-3">
+							<a href="<?php echo get_permalink() ?>"><?php echo get_the_title() ?></a>
+						</h5>
+						<div class="d-flex justify-content-center">
+							<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="<?php echo $post->ID ?>"><i class="icomoon-eye"></i></a>
+							<a href="#" class="qm-checkin-product text-muted ml-3" data-product-id="<?php echo $post->ID ?>"><i class="icomoon-shopping-cart"></i></a>
+							<a href="<?php echo get_permalink() ?>" class="text-muted ml-3"><i class="icomoon-link"></i></a>
+						</div>
+					</div>
+				</div>
+		<?php endforeach; wp_reset_query(); ?>
+			</div>
+<?php 	else : ?>
+			<h3 class="no-related-posts-title"><?php printf( _x( 'No Similar %s', 'no similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
+<?php 	endif; ?>
+			</div>
+		</section>
+<?php
+	endif;
+}
 ?>
