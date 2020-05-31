@@ -259,7 +259,7 @@ function t_em_single_related_posts(){
 						</h5>
 						<div class="d-flex justify-content-center">
 							<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="<?php echo $post->ID ?>"><i class="icomoon-eye"></i></a>
-							<a href="#" class="qm-checkin-product text-muted ml-3" data-product-id="<?php echo $post->ID ?>"><i class="icomoon-shopping-cart"></i></a>
+							<?php echo quimimpex_checkin_btn( $post->ID ); ?>
 							<a href="<?php echo get_permalink() ?>" class="text-muted ml-3"><i class="icomoon-link"></i></a>
 						</div>
 					</div>
@@ -273,5 +273,17 @@ function t_em_single_related_posts(){
 		</section>
 <?php
 	endif;
+}
+
+/**
+ * Check in product button
+ * @param int $product_id 	Product ID
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_checkin_btn( $product_id ){
+	$products = ( $_SESSION['qm_checkin_products'] ) ? $_SESSION['qm_checkin_products'] : array();
+	$checked = ( in_array( $product_id, $products ) ) ? 'qm-product-checked' : 'qm-product-unchecked';
+	return '<a href="#" class="qm-checkin-product ml-3 '. $checked .'" data-product-id="'. $product_id .'"><i class="icomoon-shopping-cart"></i></a>';
 }
 ?>

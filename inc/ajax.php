@@ -168,6 +168,7 @@ function quimimpex_ajax_checkin_products(){
 
 	$response = array(
 		'status'	=> 'success',
+		'counter'	=> count( $_SESSION['qm_checkin_products'] ),
 		'session'	=> $_SESSION['qm_checkin_products'],
 	);
 	return wp_send_json( $response );
@@ -189,9 +190,11 @@ function quimimpex_ajax_remove_checked_product(){
 	endif;
 
 	$_SESSION['qm_checkin_products'] = ( ! empty( $products ) ) ? $products : null;
+	$counter = ( ! empty( $products ) ) ? count( $products ) : 0;
 
 	$response = array(
 		'status'	=> 'success',
+		'counter'	=> $counter,
 		'session'	=> $products,
 	);
 	return wp_send_json( $response );

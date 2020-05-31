@@ -88,6 +88,8 @@ jQuery(document).ready(function($) {
 
 	/**
 	 * Select products via Ajax
+	 *
+	 * DEPRECATED
 	 */
 	$('#qm-select-line').change(function(e){
 		e.preventDefault();
@@ -153,6 +155,8 @@ jQuery(document).ready(function($) {
 
 	/**
 	 * Send products to the right panel
+	 *
+	 * DEPRECATED
 	 */
 	$(document).on('click', '#qm-contact-form .qm-request-product', function(){
 		var item 			= $(this);
@@ -195,6 +199,8 @@ jQuery(document).ready(function($) {
 
 	/**
 	 * Delete products from the list
+	 *
+	 * DEPRECATED
 	 */
 	$(document).on('click', '#qm-contact-form .qm-delete-product', function(){
 		var item 			= $(this);
@@ -210,6 +216,8 @@ jQuery(document).ready(function($) {
 		e.preventDefault();
 		var item 		= $(this);
 		var product_id	= item.attr('data-product-id');
+		var counter		= $('#checkin-counter .counter');
+		var counter_btn	= $('#checkin-counter .btn');
 
 		$.ajax({
 			url: ajaxurl,
@@ -222,9 +230,15 @@ jQuery(document).ready(function($) {
 			success: function(response){
 				switch (response.status){
 					case 'success':
-						console.log(response.session);
+						item.addClass('qm-product-checked')
+							.removeClass('qm-product-unchecked')
+						if( response.counter > 0 ){
+							counter_btn.removeClass('btn-qm-blue-light')
+										.addClass('btn-primary');
+						}
+						counter.text(response.counter);
 						break;
-					case 'error':
+					case 'bad_request':
 						console.log(response.msg);
 						break;
 				}
@@ -240,6 +254,8 @@ jQuery(document).ready(function($) {
 		var item 		= $(this);
 		var target 		= item.attr('data-target');
 		var product_id	= item.attr('data-product-id');
+		var counter		= $('#checkin-counter .counter');
+		var counter_btn	= $('#checkin-counter .btn');
 
 		$.ajax({
 			url: ajaxurl,
@@ -252,7 +268,11 @@ jQuery(document).ready(function($) {
 			success: function(response){
 				switch (response.status){
 					case 'success':
-						console.log(response);
+						if( response.counter == 0 ){
+							counter_btn.removeClass('btn-primary')
+										.addClass('btn-qm-blue-light');
+						}
+						counter.text(response.counter);
 						break;
 					case 'error':
 						console.log(response);

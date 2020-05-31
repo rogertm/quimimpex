@@ -32,9 +32,31 @@ function quimimpex_top_bar(){
 				<button class="btn btn-qm-blue-light btn-sm" type="submit"><i class="icomoon-search"></i></button>
 			</form>
 			<div class="offset-1"><?php t_em_user_social_network( 'quimimpex', '', 'navbar-nav navbar-dark', 'nav-item', 'nav-link mr-2' ) ?></div>
+			<?php echo quimimpex_cart_counter() ?>
 		</div>
 	</div>
 <?php
 }
 add_action( 't_em_action_top_menu_before', 'quimimpex_top_bar', 0 );
+
+/**
+ * Check in cart counter
+ * @return int
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_cart_counter(){
+	if ( t_em( 'page_checkin' ) ) :
+		$counter 	= ( $_SESSION['qm_checkin_products'] ) ? $_SESSION['qm_checkin_products'] : array();
+		$style 		= ( count( $counter ) > 0 ) ? 'primary' : 'qm-blue-light';
+?>
+	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 pr-3">
+		<a href="<?php echo get_permalink( t_em( 'page_checkin' ) ) ?>" class="btn btn-<?php echo $style ?> btn-sm">
+			<span class="text-white counter"><?php echo count( $counter ) ?></span>
+			<i class="icomoon-shopping-cart text-white"></i>
+		</a>
+	</div>
+<?php
+	endif;
+}
 ?>
