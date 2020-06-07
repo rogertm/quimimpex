@@ -38,7 +38,7 @@ function quimimpex_ajax_register_subscribers(){
 		$msg 	= __( 'You should enter a valid email address', 'quimimpex' );
 	elseif ( email_exists( $email ) ) :
 		$status	= 'error';
-		$msg 	= __( 'That email address already exists', 'quimimpex' );
+		$msg 	= __( 'That email address already exists in our system', 'quimimpex' );
 	else :
 		$status	= 'success';
 		$msg 	= __( 'Your email has been registered successfully', 'quimimpex' );
@@ -72,6 +72,81 @@ Thank you.
 }
 add_action( 'wp_ajax_email_subscriber', 'quimimpex_ajax_register_subscribers' );
 add_action( 'wp_ajax_nopriv_email_subscriber', 'quimimpex_ajax_register_subscribers' );
+
+/**
+ * Cancel subscription
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_ajax_cancel_subscription(){
+	$nonce = check_ajax_referer( '_qmnonce', '_qmnonce', false );
+	if ( ! $nonce ) :
+		$status	= 'error';
+		$msg 	= __( 'Unknown error. Please try again', 'quimimpex' );
+
+		$response = array(
+			'status'	=> $status,
+			'msg'		=> $msg,
+		);
+		return wp_send_json( $response );
+	endif;
+
+	$email = $_POST['email'];
+
+	if ( ! isset( $email ) || empty( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'The email is required', 'quimimpex' );
+	elseif ( ! is_email( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'You should enter a valid email address', 'quimimpex' );
+	elseif ( ! email_exists( $email ) ) :
+		$status	= 'error';
+		$msg 	= __( 'That email address do not exists in our system', 'quimimpex' );
+	else :
+		$status	= 'success';
+		$msg 	= __( 'We send you an email with some instruction to finish cancellation', 'quimimpex' );
+
+		// Notify via email
+		$sitename 	= wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+		$content	= __(
+		'Hello.
+
+You have requested to unsubscribe from our newsletter. To end this process you must follow the following link:
+
+###LINK###
+
+This link is valid for 24 hours.
+
+If it wasn\'t you, just ignore this message.
+
+Thank you.
+
+###SITENAME### team.
+###SITEURL###' );
+
+		$args = array(
+			'do_action'		=> 'unsubscribe',
+			'email'			=> $email,
+			'_qmnonce'		=> wp_create_nonce( $email ),
+		);
+		$url = add_query_arg( $args, get_permalink( t_em( 'page_cancel_subscription' ) ) );
+
+		$content 	= str_replace( '###LINK###', $url, $content );
+		$content 	= str_replace( '###SITENAME###', $sitename, $content );
+		$content 	= str_replace( '###SITEURL###', home_url(), $content );
+		wp_mail( $email, sprintf( __( '[%s] Cancel Subscription' ), $sitename ), $content );
+
+
+	endif;
+
+	$response = array(
+		'status'	=> $status,
+		'msg'		=> $msg,
+	);
+	return wp_send_json( $response );
+}
+add_action( 'wp_ajax_email_cancel_subscription', 'quimimpex_ajax_cancel_subscription' );
+add_action( 'wp_ajax_nopriv_email_cancel_subscription', 'quimimpex_ajax_cancel_subscription' );
 
 /**
  * Fill products list in Contact Form

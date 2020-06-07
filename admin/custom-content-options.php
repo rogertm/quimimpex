@@ -72,6 +72,12 @@ function quimimpex_custom_pages(){
 			'public_label'	=> __( 'Check In', 'quimimpex' ),
 			'type'			=> 'page',
 		),
+		'page_cancel_subscription'	=> array(
+			'value'			=> 'page_cancel_subscription',
+			'label'			=> __( 'Page Cancel Subscription', 'quimimpex' ),
+			'public_label'	=> __( 'Cancel Subscription', 'quimimpex' ),
+			'type'			=> 'page',
+		),
 	);
 	return apply_filters( 'quimimpex_custom_pages', $custom_pages );
 }

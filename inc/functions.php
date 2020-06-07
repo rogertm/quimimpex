@@ -46,35 +46,10 @@ function quimimpex_hide_admin_bar(){
 add_action( 'init', 'quimimpex_hide_admin_bar' );
 
 /**
- * Override Function: Display featured post thumbnail on top of a single post if it is set by the
- * user in "General Options" in the admin options page. This function is attached to the
- * do_action( 't_em_action_post_inside_before' ) action hook.
+ * Add custom body classes
  *
- * @since Twenty'em 1.0
+ * @since Quimimpex 1.0
  */
-function t_em_single_post_thumbnail(){
-	if ( is_page_template( 'page-templates/template-blog-excerpt.php' ) )
-		return;
-	if ( ! is_page() )
-		return;
-	global $post;
-	if ( t_em( 'single_featured_img' )
-		&& ( is_singular() && has_post_thumbnail() )
-		|| ( t_em( 'archive_set' ) == 'the-content'
-			&& ( is_home() || is_front_page() || is_archive() )
-		)
-		|| ( is_page_template( 'page-templates/template-blog-content.php' ) )
-	) :
-		$open	= '<span href="'. get_permalink( $post->ID ) .'" class="featured-post-thumbnail-wrapper">';
-		$close	= '</span>';
-		$attr = array(
-			'class'	=> 'featured-post-thumbnail',
-			'alt'	=> $post->post_title,
-		);
-		echo $open . get_the_post_thumbnail( $post->ID, 'full', $attr ) . $close;
-	endif;
-}
-
 function quimimpex_body_class( $classes ){
 	global $post;
 	if ( is_page() && has_post_thumbnail( $post->id ) ) :
@@ -258,6 +233,30 @@ function quimimpex_process_products_checkin_form(){
 	exit;
 }
 add_action( 'template_redirect', 'quimimpex_process_products_checkin_form' );
+
+/**
+ * Process cancel subscription
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_do_cancel_subscription(){
+	if ( ! is_page( t_em( 'page_cancel_subscription' ) ) )
+		return;
+	$email = ( isset( $_GET['email'] ) ) ? $_GET['email'] : null;
+	if ( ! $email && ! wp_verify_nonce( $email, '_qmnonce' ) )
+		return;
+
+	$user = get_user_by( 'email', $email );
+	wp_delete_user( $user->id );
+
+	$args = array(
+		'unsubscribed'	=> 'success',
+	);
+	wp_safe_redirect( add_query_arg( $args, get_permalink( t_em( 'page_cancel_subscription' ) ) ) );
+	// wp_safe_redirect( get_permalink( t_em( 'page_cancel_subscription' ) ) );
+	exit;
+}
+add_action( 'template_redirect', 'quimimpex_do_cancel_subscription' );
 
 /**
  * Add custom Comment Types

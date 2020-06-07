@@ -87,6 +87,39 @@ jQuery(document).ready(function($) {
 	});
 
 	/**
+	 * Cancel subscription
+	 */
+	$('#qm-newsletter-cancel').click(function(e){
+		e.preventDefault();
+		var button	= $(e.relatedTarget);
+		var widget	= $('.qm_newsletter_subscriber');
+		var email 	= widget.find('input[name=qm_subscriber_email]').val();
+		var loading	= '<div class="request-loading text-muted"><i class="icomoon-cycle"></i></div>';
+		widget.find('.request-loading-wrapper').append(loading);
+
+		$.ajax({
+			url: ajaxurl,
+			type: 'post',
+			data: {
+				email: email,
+				action: 'email_cancel_subscription',
+				_qmnonce: qm_l10n._qmnonce,
+			},
+			success: function(response){
+				switch (response.status){
+					case 'success':
+						widget.find('.request-loading-wrapper').html(response.msg);
+						widget.find('input[name=qm_subscriber_email]').val('');
+                        break;
+                    case 'error':
+						widget.find('.request-loading-wrapper').html(response.msg);
+						break;
+				}
+			},
+		});
+	})
+
+	/**
 	 * Select products via Ajax
 	 *
 	 * DEPRECATED
