@@ -191,7 +191,7 @@ add_action( 't_em_action_top', 'quimimpex_modal' );
  * @since Quimimpex 1.0
  */
 function t_em_single_related_posts(){
-	if ( is_single() && t_em( 'single_related_posts' ) ) :
+	if ( is_singular( array( 'qm-export-product', 'qm-import-product' ) ) && t_em( 'single_related_posts' ) ) :
 		global $post;
 		$post_id = $post->ID;
 		$taxonomies = get_taxonomies( array( 'public' => true ), 'object' );
