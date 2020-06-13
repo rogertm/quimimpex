@@ -72,29 +72,9 @@ function quimimpex_process_contact_form(){
 		|| ! wp_verify_nonce( $_POST['qm_contact_form_field'], 'qm_contact_form_attr' ) )
 		return;
 
-	$cpt 			= ( isset( $_POST['qm_product_cpt'] ) && ! empty( $_POST['qm_product_cpt'] ) ) ? $_POST['qm_product_cpt'] : null;
-	$tax 			= ( isset( $_POST['qm_product_tax'] ) && ! empty( $_POST['qm_product_tax'] ) ) ? $_POST['qm_product_tax'] : null;
-	$posts 			= ( isset( $_POST['qm_products'] ) && ! empty( $_POST['qm_products'] ) ) ? $_POST['qm_products'] : null;
 	$author			= ( isset( $_POST['qm_comment_author'] ) && ! empty( $_POST['qm_comment_author'] ) ) ? $_POST['qm_comment_author'] : null;
 	$author_email	= ( isset( $_POST['qm_comment_author_email'] ) && ! empty( $_POST['qm_comment_author_email'] ) ) ? $_POST['qm_comment_author_email'] : null;
-
-	if ( ! $cpt || ! $tax ) :
-		$query = array(
-			'do_action'	=> 'error',
-			'status'	=> 'bad-request',
-		);
-		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
-		exit;
-	endif;
-
-	if ( ! $posts ) :
-		$query = array(
-			'do_action'	=> 'error',
-			'status'	=> 'empty-products',
-		);
-		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
-		exit;
-	endif;
+	$comment 		= ( isset( $_POST['qm_comment_content'] ) && ! empty( $_POST['qm_comment_content'] ) ) ? $_POST['qm_comment_content'] : null;
 
 	if ( ! $author ) :
 		$query = array(
@@ -108,37 +88,26 @@ function quimimpex_process_contact_form(){
 	if ( ! $author_email ) :
 		$query = array(
 			'do_action'	=> 'error',
-			'status'	=> 'empty-author-email',
+			'status'	=> 'empty-email',
 		);
 		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
 		exit;
 	endif;
 
-	$taxonomy = get_taxonomy( $tax );
-
-	$args = array(
-		'post_type'			=> $cpt,
-		'posts_per_page'	=> -1,
-		'post__in'			=> $posts,
-	);
-
-	$products = get_posts( $args );
-
-	$content  = '<h3>'. sprintf( __( '%1$s Product Request', 'quimimpex' ), $taxonomy->labels->name ) .'</h3>';
-	$content .= '<h5>'. __( 'Product List:', 'quimimpex' ) .'</h5>';
-	$content .= '<ul>';
-	foreach ( $products as $product ) :
-		$content .= '<li><a href="'. get_permalink( $product->ID ) .'" target="_blanck">'. $product->post_title .'</a></li>';
-	endforeach;
-	$content .= '</ul>';
-	$content .= '<h3>'. __( 'Comment:', 'quimimpex' ) .'</h3>';
-	$content .= ( $_POST['qm_comment_content'] != '' ) ? $_POST['qm_comment_content'] : __( 'No comment', 'quimimpex' );
+	if ( ! $comment ) :
+		$query = array(
+			'do_action'	=> 'error',
+			'status'	=> 'empty-comment',
+		);
+		wp_redirect( add_query_arg( $query, get_permalink( $_POST['qm_post_id'] ) ) );
+		exit;
+	endif;
 
 	$commentdata = array(
 		'comment_approved'		=> 0,
 		'comment_author'		=> $_POST['qm_comment_author'],
 		'comment_author_email'	=> $_POST['qm_comment_author_email'],
-		'comment_content'		=> $content,
+		'comment_content'		=> $comment,
 		'comment_post_ID'		=> $_POST['qm_post_id'],
 		'comment_type'			=> 'qm_product_request',
 		'comment_meta'			=> array( 'qm_products' => $_POST['qm_products'] ),

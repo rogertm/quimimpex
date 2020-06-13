@@ -46,29 +46,7 @@ add_shortcode( 'qm_documents', 'quimimpex_shortcode_documents' );
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_shortcode_contact_form( $atts, $content = null ){
-	extract( shortcode_atts( array(
-		'line'	=> null,
-	), $atts ) );
-
-	if ( ! $line )
-		return;
-
-	if ( $line != 'import' && $line != 'export' ) :
-		if ( current_user_can( 'manage_options' ) ) :
-			return '<p class="text-danger">'. __( 'An error has occurred with the <code>qm_contact_form</code> shortcode. Please review the <code>line</code> parameter', 'quimimpex' ) .'</p>';
-		endif;
-		return;
-	endif;
-
-	global $post;
-	$args = array(
-		'taxonomy'		=> 'qm-'. $line .'-line',
-		'fields'		=> 'id=>name',
-	);
-	$lines = get_terms( $args );
-
-	$taxonomy = get_taxonomy( 'qm-'. $line .'-line' );
+function quimimpex_shortcode_contact_form(){
 
 	$do_action 	= ( isset( $_GET['do_action'] ) && ! empty( $_GET['do_action'] ) ) ? $_GET['do_action'] : null;
 	$status 	= ( isset( $_GET['status'] ) && ! empty( $_GET['status'] ) ) ? $_GET['status'] : null;
@@ -92,14 +70,14 @@ function quimimpex_shortcode_contact_form( $atts, $content = null ){
 		case 'bad-request':
 			$msg = __( 'An error has occurred. Refresh your page and try again', 'quimimpex' );
 			break;
-		case 'empty-products':
-			$msg = __( 'You should select at least one product from the list', 'quimimpex' );
-			break;
 		case 'empty-author':
 			$msg = __( 'You should specify your name', 'quimimpex' );
 			break;
 		case 'empty-email':
 			$msg = __( 'You should specify your email', 'quimimpex' );
+			break;
+		case 'empty-comment':
+			$msg = __( 'You should send a comment', 'quimimpex' );
 			break;
 		case 'requested':
 			$msg = __( 'Your massage has been send successfully', 'quimimpex' );
@@ -119,51 +97,22 @@ function quimimpex_shortcode_contact_form( $atts, $content = null ){
 		$alert  = null;
 	endif;
 
-	$form  = '<form id="qm-contact-form" method="post">';
+	$form  = '<form id="qm-contact-form" class="mb-4" method="post">';
 	$form .= 	$alert;
 	$form .= 	wp_nonce_field( 'qm_contact_form_attr', 'qm_contact_form_field' );
-	$form .= 	'<div class="form-group">';
-	$form .= 		'<label for="qm-select-line">'. $taxonomy->label .'</label>';
-	$form .= 		'<select id="qm-select-line" class="custom-select" name="qm_select_line">';
-						$form .= '<option value="0">'. sprintf( __( '&mdash; Select %s &mdash;', 'quimimpex' ), $taxonomy->labels->singular_name ) .'</option>';
-					foreach ( $lines as $id => $name ) :
-						$form .= '<option value="'. $id .'">'. $name .'</option>';
-					endforeach;
-	$form .= 		'</select>';
-	$form .= 	'</div>';
-	$form .= 	'<div class="row">';
-	$form .= 		'<div class="'. t_em_grid( 6 ) .'">';
-	$form .=			'<div class="card">';
-	$form .=				'<div class="card-body">';
-	$form .=					'<h6 class="card-title">'. __( 'Some Title', 'quimimpex' ) .'</h6>';
-	$form .=				'</div>';
-	$form .=				'<ul id="qm-list-products" class="list-group list-group-flush" style="height:15rem; overflow:auto;"></ul>';
-	$form .=			'</div>';
-	$form .= 		'</div>';
-	$form .= 		'<div class="'. t_em_grid( 6 ) .'">';
-	$form .=			'<div class="card">';
-	$form .=				'<div class="card-body">';
-	$form .=					'<h6 class="card-title">'. __( 'Some Title', 'quimimpex' ) .'</h6>';
-	$form .=				'</div>';
-	$form .=				'<ul id="qm-list-selected-products" class="list-group list-group-flush" style="height:15rem; overflow:auto;"></ul>';
-	$form .=			'</div>';
-	$form .= 		'</div>';
-	$form .= 	'</div>';
+
 	$form .= 	'<div class="form-group">';
 	$form .= 		'<label for="qm-user-name">'. __( 'Your Name', 'quimimpex' ) .'</label>';
-	$form .= 		'<input type="text" id="qm-user-name" class="form-control" name="qm_comment_author">';
+	$form .= 		'<input type="text" id="qm-user-name" class="form-control" name="qm_comment_author" required>';
 	$form .= 	'</div>';
 	$form .= 	'<div class="form-group">';
 	$form .= 		'<label for="qm-user-email">'. __( 'Email', 'quimimpex' ) .'</label>';
-	$form .= 		'<input type="email" id="qm-user-email" class="form-control" name="qm_comment_author_email">';
+	$form .= 		'<input type="email" id="qm-user-email" class="form-control" name="qm_comment_author_email" required>';
 	$form .= 	'</div>';
 	$form .= 	'<div class="form-group">';
 	$form .= 		'<label for="qm-comment">'. __( 'Leave a comment', 'quimimpex' ) .'</label>';
-	$form .=		'<textarea id="qm-comment" class="form-control" rows="5" name="qm_comment_content"></textarea>';
+	$form .=		'<textarea id="qm-comment" class="form-control" rows="5" name="qm_comment_content" required></textarea>';
 	$form .= 	'</div>';
-	$form .= 	'<input type="hidden" name="qm_product_cpt" value="qm-'. $line .'-product">';
-	$form .= 	'<input type="hidden" name="qm_product_tax" value="qm-'. $line .'-line">';
-	$form .= 	'<input type="hidden" name="qm_post_id" value="'. $post->ID .'">';
 	$form .= 	'<button type="submit" class="btn btn-primary" name="qm_submit_contact_form">'. __( 'Send Request', 'quimimpex' ) .'</button>';
 	$form .= '</form>';
 
