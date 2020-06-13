@@ -18,6 +18,9 @@
 function quimimpex_setup(){
 	// Make Quimimpex available for translation.
 	load_child_theme_textdomain( 'quimimpex', get_stylesheet_directory() . '/languages' );
+
+	// Hooks
+	// remove_action( 't_em_action_entry_meta_footer', 't_em_edit_post_link' );
 }
 add_action( 'after_setup_theme', 'quimimpex_setup' );
 

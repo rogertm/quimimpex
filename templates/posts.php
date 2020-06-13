@@ -316,4 +316,11 @@ function quimimpex_checkin_btn( $product_id ){
 	$checked = ( in_array( $product_id, $products ) ) ? 'qm-product-checked' : 'qm-product-unchecked';
 	return '<a href="#" class="qm-checkin-product ml-3 '. $checked .'" data-product-id="'. $product_id .'"><i class="icomoon-shopping-cart"></i></a>';
 }
+
+/**
+ * Override Function
+ */
+function t_em_edit_post_link(){
+	return;
+}
 ?>

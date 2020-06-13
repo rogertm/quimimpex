@@ -385,6 +385,7 @@ body{
 #content{
 	article{
 		@extend .mt-0;
+		@extend .mb-0;
 		&.qm{
 			&-export-product,
 			&-import-product{
@@ -393,6 +394,9 @@ body{
 					@extend .text-light;
 				}
 			}
+		}
+		footer{
+			@extend .m-0;
 		}
 	}
 }
@@ -443,6 +447,7 @@ body{
 
 #featured-companies{
 	box-shadow: 0 .125rem .25rem .25rem rgba(0,0,0,.075);
+	@extend .position-relative;
 	.card{
 		&-wrapper{
 			@extend .hvr-overline-from-center;
