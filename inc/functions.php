@@ -21,6 +21,11 @@ function quimimpex_setup(){
 
 	// Hooks
 	// remove_action( 't_em_action_entry_meta_footer', 't_em_edit_post_link' );
+	remove_action( 't_em_action_entry_meta_header', 't_em_post_author' );
+	remove_action( 't_em_action_entry_meta_footer', 't_em_posted_in' );
+	remove_action( 't_em_action_entry_meta_footer', 't_em_post_shortlink' );
+	remove_action( 't_em_action_entry_meta_footer', 't_em_comments_link' );
+	remove_filter( 'get_the_excerpt', 't_em_custom_excerpt_more' );
 }
 add_action( 'after_setup_theme', 'quimimpex_setup' );
 
@@ -58,6 +63,11 @@ function quimimpex_body_class( $classes ){
 	if ( is_page() && has_post_thumbnail( $post->id ) ) :
 		$classes[] = 'page-has-thumbnail';
 	endif;
+
+	if ( is_page( t_em( 'page_blog' ) ) || is_search() || is_archive() ) :
+		$classes[] = 'qm-page-archive';
+	endif;
+
 	return $classes;
 }
 add_action( 'body_class', 'quimimpex_body_class' );

@@ -212,6 +212,10 @@ body{
 		}
 	}
 }
+#site-pagination{
+	@extend .justify-content-center;
+	@extend .my-6;
+}
 
 //
 // Slider
@@ -471,6 +475,24 @@ body{
 // QM
 //
 .qm{
+	&-page{
+		&-archive{
+			article.post{
+				@extend .mb-4;
+				header{
+					.entry-title{
+						@extend .h4;
+						a{
+							@extend .text-qm-gray;
+							&:hover{
+								@extend .text-primary;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	&-product{
 		&-checked{
 			i{
