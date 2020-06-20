@@ -86,13 +86,43 @@ function t_em_single_post_thumbnail(){
 		)
 		|| ( is_page_template( 'page-templates/template-blog-content.php' ) )
 	) :
-		$open	= '<span href="'. get_permalink( $post->ID ) .'" class="featured-post-thumbnail-wrapper">';
-		$close	= '</span>';
 		$attr = array(
 			'class'	=> 'featured-post-thumbnail',
 			'alt'	=> $post->post_title,
 		);
-		echo $open . get_the_post_thumbnail( $post->ID, 'full', $attr ) . $close;
+		echo '<span class="featured-post-thumbnail-wrapper">' . get_the_post_thumbnail( $post->ID, 'full', $attr ) . '</span>';
+?>
+		<header>
+			<h1 class="entry-title"><?php the_title(); ?></h1>
+		</header>
+<?php
+	else :
+?>
+	<div class="full-width bg-secondary mb-5">
+		<header class="<?php echo t_em_container() ?> py-5">
+			<h1 class="entry-title text-white"><?php the_title(); ?></h1>
+		</header>
+	</div>
+<?php
+	endif;
+}
+
+/**
+ * Override Function: Display Page title and content for custom pages templates.
+ * This function is attached to the t_em_action_content_before action hook.
+ *
+ * @since Twenty'em 1.0
+ */
+function t_em_custom_template_content(){
+	if ( is_page_template() && is_page() && get_post_meta( get_the_ID(), '_wp_page_template', true ) != 'page-templates/template-one-column.php' ) :
+	$template_data = get_page( get_the_ID() );
+?>
+	<div id="featured-header-template-<?php the_ID(); ?>" <?php post_class( 'featured-header featured-header-template custom-template-content full-width bg-secondary mb-5' ); ?>>
+		<header class="<?php echo t_em_container() ?> py-5">
+			<h1 class="entry-title text-white"><?php echo apply_filters( 'the_title', $template_data->post_title ); ?></h1>
+		</header>
+	</div><!-- .featured-header -->
+<?php
 	endif;
 }
 
