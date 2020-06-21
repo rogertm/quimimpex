@@ -25,6 +25,8 @@ function quimimpex_setup(){
 	remove_action( 't_em_action_entry_meta_footer', 't_em_posted_in' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_post_shortlink' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_comments_link' );
+	remove_action( 't_em_action_post_after', 't_em_single_navigation', 5 );
+
 	remove_filter( 'get_the_excerpt', 't_em_custom_excerpt_more' );
 }
 add_action( 'after_setup_theme', 'quimimpex_setup' );

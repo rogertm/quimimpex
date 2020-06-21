@@ -14,11 +14,7 @@
  */
 
 /**
- * The template for displaying all pages.
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages and that other 'pages' on your
- * WordPress site will use a different template.
+ * The template for displaying all single posts.
  *
  * @link http://codex.wordpress.org/Template_Hierarchy
  */
@@ -33,11 +29,24 @@ get_header(); ?>
 
 		<?php do_action( 't_em_action_post_before' ); ?>
 
-		<article id="post-<?php the_ID(); ?>" <?php post_class( ( is_page( [t_em( 'page_docs' ), t_em( 'page_checkin' ), t_em( 'page_contact' )] ) ) ? t_em_grid( 8 ) .' mx-auto' : null ); ?>>
+		<article id="post-<?php the_ID(); ?>" <?php post_class( t_em_grid( 8 ) .' mx-auto' ); ?>>
 			<?php do_action( 't_em_action_post_inside_before' ); ?>
+			<div class="full-width bg-secondary mb-5">
+				<header class="<?php echo t_em_container() ?> py-5">
+					<h1 class="entry-title h2 text-white mx-auto <?php echo t_em_grid( 8 ) ?>"><?php the_title(); ?></h1>
+				</header>
+			</div>
+			<figure class="mb-4">
+			<?php if ( has_post_thumbnail() ) the_post_thumbnail(); ?>
+			</figure>
+			<div class="entry-meta entry-meta-header mb-3">
+				<?php do_action( 't_em_action_entry_meta_header' ) ?>
+			</div>
 
 			<?php do_action( 't_em_action_post_content_before' ); ?>
-
+			<?php if ( ! empty( get_post_field( 'post_excerpt' ) ) ) : ?>
+			<div class="entry-excerpt"><?php echo t_em_wrap_paragraph( $post->post_excerpt ) ?></div>
+			<?php endif; ?>
 			<div class="entry-content">
 				<?php the_content(); ?>
 			</div><!-- .entry-content -->
@@ -45,16 +54,17 @@ get_header(); ?>
 			<?php do_action( 't_em_action_post_content_after' ); ?>
 
 			<footer class="entry-meta entry-meta-footer mb-3">
-				<?php t_em_edit_post_link(); ?>
-			</footer>
+				<?php do_action( 't_em_action_entry_meta_footer' ) ?>
+			</footer><!-- .entry-meta .entry-meta-footer -->
+
 			<?php do_action( 't_em_action_post_inside_after' ); ?>
 		</article><!-- #post-## -->
+		<hr class="my-5">
+		<?php do_action( 't_em_action_post_after' ); ?>
 
-		<?php do_action( 't_em_action_post_after' ) ?>
+<?php endwhile; // end of the loop. ?>
 
-<?php endwhile; ?>
-
-				<?php t_em_comments_template(); ?>
+				<?php // t_em_comments_template(); ?>
 				<?php do_action( 't_em_action_content_after' ); ?>
 			</section><!-- #content -->
 			<?php get_sidebar(); ?>

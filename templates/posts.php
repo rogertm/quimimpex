@@ -246,11 +246,11 @@ function quimimpex_modal(){
 add_action( 't_em_action_top', 'quimimpex_modal' );
 
 /**
- * Override Function: Related posts output
+ * Show related products
  *
  * @since Quimimpex 1.0
  */
-function t_em_single_related_posts(){
+function quimimpex_products_related_posts(){
 	if ( is_singular( array( 'qm-export-product', 'qm-import-product' ) ) && t_em( 'single_related_posts' ) ) :
 		global $post;
 		$post_id = $post->ID;
@@ -305,13 +305,13 @@ function t_em_single_related_posts(){
 		 */
 		$all_posts = apply_filters( 't_em_filter_single_related_post_query', get_posts( $query_args ) );
 ?>
-		<section id="related-posts">
+		<section id="related-products">
 			<div class="my-5 border-top">
 <?php 	if ( ! empty( $all_posts ) ) : ?>
 			<h3 class="related-posts-title my-5"><?php printf( _x( 'Similar %s', 'similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
-			<div class="card-columns">
+			<div class="row">
 		<?php foreach( $all_posts as $post ) : setup_postdata( $post ); ?>
-				<div class="card text-center shadow-sm border-0">
+				<div class="card text-center shadow-sm border-0 <?php echo t_em_grid( 4 ) ?>">
 					<?php t_em_featured_post_thumbnail( 700, 460, true, 'featured-post-thumbnail card-img-top', $post->ID ) ?>
 					<div class="card-body">
 						<h5 class="card-title font-weight-superbold mt-2 mb-3">
@@ -330,6 +330,100 @@ function t_em_single_related_posts(){
 			<h3 class="no-related-posts-title"><?php printf( _x( 'No Similar %s', 'no similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
 <?php 	endif; ?>
 			</div>
+		</section>
+<?php
+	endif;
+}
+add_action( 't_em_action_post_after', 'quimimpex_products_related_posts' );
+
+/**
+ * Override Function: Show related posts to the current single post if it's set by the user in
+ * "General Options" in admin theme options page.
+ * This function is attached to the t_em_action_post_after action hook.
+ *
+ * @return string HTML list of items
+ *
+ * @since Twenty'em 1.0
+ * @since Twenty'em 1.2		Support for custom post types
+ */
+function t_em_single_related_posts(){
+	if ( is_singular( 'post' ) && t_em( 'single_related_posts' ) ) :
+		global $post;
+		$post_id = $post->ID;
+		$taxonomies = get_taxonomies( array( 'public' => true ), 'object' );
+		$post_type = get_post_type( $post_id );
+		$labels = get_post_type_object( $post_type );
+		$taxonomy = array();
+
+		foreach ( $taxonomies as $key => $value ) :
+			if ( in_array( $post_type, $value->object_type ) ) :
+				array_push( $taxonomy, $key );
+			endif;
+		endforeach;
+
+		/**
+		 * Filter the amount of related post to display
+		 *
+		 * @param int Number of posts to display
+		 * @since Twenty'em 1.0
+		 */
+		$limit = apply_filters( 't_em_filter_single_limit_related_posts', 3 );
+
+		$query_args = array(
+			'post_type'			=> $post_type,
+			'posts_per_page'	=> $limit,
+			'post__not_in'		=> array( $post_id ),
+			'post_status'		=> 'publish',
+			'tax_query'			=> array(
+				'relation'		=> 'OR',
+			),
+		);
+		foreach ( $taxonomy as $tax ) :
+			$terms = get_the_terms( $post_id, $tax );
+			if ( ! $terms ) continue;
+			$terms_ids = array();
+			foreach ( $terms as $term ) :
+				array_push( $terms_ids, $term->term_id );
+			endforeach;
+			$key = array(
+				'taxonomy'	=> $tax,
+				'field'		=> 'id',
+				'terms'		=> $terms_ids,
+			);
+			array_push( $query_args['tax_query'], $key );
+		endforeach;
+
+		/**
+		 * Filter the related post query arguments
+		 * @param array 	Query arguments
+		 *
+		 * @since Twenty'em 1.2
+		 */
+		$all_posts = apply_filters( 't_em_filter_single_related_post_query', get_posts( $query_args ) );
+?>
+		<section id="related-posts">
+<?php 	if ( ! empty( $all_posts ) ) : ?>
+			<h3 class="related-posts-title text-center mb-4"><?php printf( _x( 'Similar %s', 'similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
+
+		<div class="card-deck <?php echo t_em_grid( 10 ) ?> mx-auto">
+			<div class="row no-gutters">
+<?php foreach ( $all_posts as $featured ) : ?>
+				<div class="card text-center <?php echo t_em_grid( 4 ) ?>">
+					<?php t_em_featured_post_thumbnail( 600, 700, true, 'card-img-top', $featured->ID ) ?>
+					<div class="card-body">
+						<h5 class="card-title"><?php echo $featured->post_title ?></h5>
+						<time class="d-block"><i class="icomoon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
+						<?php t_em_get_post_excerpt( $featured->ID ) ?>
+						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block stretched-link"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
+						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="icomoon-link"></i></span>
+					</div>
+				</div>
+<?php endforeach; ?>
+			</div>
+		</div>
+<?php 	else : ?>
+			<h3 class="no-related-posts-title"><?php printf( _x( 'No Similar %s', 'no similar custom post type label', 't_em' ), $labels->labels->name ); ?></h3>
+<?php 	endif; ?>
 		</section>
 <?php
 	endif;

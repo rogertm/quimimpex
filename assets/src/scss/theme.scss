@@ -282,7 +282,8 @@ body{
 		}
 	}
 }
-#latest-news{
+#latest-news,
+#related-posts{
 	.card{
 		a{
 			@extend .d-block;
