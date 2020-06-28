@@ -80,11 +80,11 @@ add_action( 'body_class', 'quimimpex_body_class' );
  * @since Quimimpex 1.0
  */
 function quimimpex_redirect(){
-	if ( is_post_type_archive( 'qm-export-product' ) ) :
+	if ( ! is_admin() && is_post_type_archive( 'qm-export-product' ) ) :
 		wp_redirect( get_permalink( t_em( 'page_export_lines' ) ) );
 		exit;
 	endif;
-	if ( is_post_type_archive( 'qm-import-product' ) ) :
+	if ( ! is_admin() && is_post_type_archive( 'qm-import-product' ) ) :
 		wp_redirect( get_permalink( t_em( 'page_import_lines' ) ) );
 		exit;
 	endif;
