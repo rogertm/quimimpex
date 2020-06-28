@@ -127,18 +127,9 @@ add_shortcode( 'qm_contact_form', 'quimimpex_shortcode_contact_form' );
  * @since Quimimpex 1.0
  */
 function quimimpex_shortcode_checkin(){
-	$checked_products = ( isset( $_SESSION['qm_checkin_products'] ) ) ? $_SESSION['qm_checkin_products'] : null;
-	if ( ! isset( $checked_products ) ) :
-		$alert 	= '<div class="alert alert-warning" role="alert">';
-		$alert .= 	'<strong>'. __( 'Warning', 'quimimpex' ) .'</strong>';
-		$alert .= 	'<p>'. __( 'You have not selected any product yet', 'quimimpex' ) .'</p>';
-		$alert .= '</div>';
-		return $alert;
-	endif;
-
-	global $post;
-	$do_action 	= ( isset( $_GET['do_action'] ) && ! empty( $_GET['do_action'] ) ) ? $_GET['do_action'] : null;
-	$status 	= ( isset( $_GET['status'] ) && ! empty( $_GET['status'] ) ) ? $_GET['status'] : null;
+	$checked_products 	= ( isset( $_SESSION['qm_checkin_products'] ) && $_SESSION['qm_checkin_products'] ) ? $_SESSION['qm_checkin_products'] : null;
+	$do_action 			= ( isset( $_GET['do_action'] ) && ! empty( $_GET['do_action'] ) ) ? $_GET['do_action'] : null;
+	$status 			= ( isset( $_GET['status'] ) && ! empty( $_GET['status'] ) ) ? $_GET['status'] : null;
 
 	switch ( $do_action ) :
 		case 'error':
@@ -157,7 +148,7 @@ function quimimpex_shortcode_checkin(){
 
 	switch ( $status ) :
 		case 'empty-products':
-			$msg = __( 'You should select at least one product from the list', 'quimimpex' );
+			$msg = __( 'You should select at least one product', 'quimimpex' );
 			break;
 		case 'empty-author':
 			$msg = __( 'You should specify your name', 'quimimpex' );
@@ -174,9 +165,15 @@ function quimimpex_shortcode_checkin(){
 	endswitch;
 
 	if ( $do_action && $status ) :
-		$alert 	= '<div class="alert alert-'. $class .' alert-dismissible fade show" role="alert">';
+		$alert 	= '<div class="alert alert-'. $class .' mb-5 alert-dismissible fade show" role="alert">';
 		$alert .= 	'<strong>'. $label .'</strong>';
 		$alert .= 	'<p>'. $msg .'</p>';
+		$alert .= 	'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+		$alert .= '</div>';
+	elseif ( ! isset( $checked_products ) ) :
+		$alert 	= '<div class="alert alert-warning mb-5 alert-dismissible fade show" role="alert">';
+		$alert .= 	'<strong>'. __( 'Warning', 'quimimpex' ) .'</strong>';
+		$alert .= 	'<p>'. __( 'You have not selected any product yet', 'quimimpex' ) .'</p>';
 		$alert .= 	'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 		$alert .= '</div>';
 	else :
@@ -188,46 +185,41 @@ function quimimpex_shortcode_checkin(){
 		'posts_per_page'	=> -1,
 		'post__in'			=> $checked_products,
 	);
-	$products = get_posts( $args );
+	$products = ( $checked_products ) ? get_posts( $args ) : null;
 
-	$output  = '<form id="qm-checkin-form" method="post">';
+	$output  = '<form id="qm-checkin-form" method="post" class="mb-5">';
 	$output  	.= $alert;
 	$output  	.= wp_nonce_field( 'qm_checkin_form_attr', 'qm_checkin_form_field' );
-	$output  	.= '<h3 class="h4">'. __( 'List of products', 'quimimpex' ) .'</h3>';
-	$output  	.= '<div id="qm-checkin-accordion" class="accordion mb-3">';
-	foreach ( $products as $product ) :
-		$output .= 	'<div id="checkin-product-'. $product->ID .'" class="card mb-0">';
-		$output .=	 	'<div id="product-heading-'. $product->ID .'" class="card-header">';
-		$output .=	 		'<h5 class="mb-0">';
-		$output .=	 			'<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-product-'. $product->ID .'" aria-expanded="false" aria-controls="collapse-product-'. $product->ID .'">';
-		$output .=	 				$product->post_title;
-		$output .=	 			'</button>';
-		$output .=	 			'<a href="#" class="delete-checkin-product border float-right m-1 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="icomoon-cross"></i></a>';
-		$output .=	 		'</h5>';
-		$output .=	 	'</div>';
-		$output .=	 	'<div id="collapse-product-'. $product->ID .'" class="collapse" aria-labelledby="product-heading-'. $product->ID .'" data-parent="#qm-checkin-accordion">';
-		$output .=	 		'<div class="card-body">';
-		$output .=	 			t_em_get_post_excerpt( $product->ID, false );
-		$output .=	 		'</div>';
-		$output .= 			'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
-		$output .=	 	'</div>';
-		$output .= '</div>';
-	endforeach;
-	$output 	.= 	'</div>';
+	if ( $products ) :
+		$output  	.= '<h3 class="h2 mb-4">'. __( 'List of products', 'quimimpex' ) .'</h3>';
+		$output 	.= '<ul class="list-group list-group-flush">';
+		foreach ( $products as $product ) :
+			$service_page = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? t_em( 'page_export_lines' ) : t_em( 'page_import_lines' );
+			$taxonomy = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
+			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0">';
+			$output .=	 	$product->post_title;
+			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
+			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="icomoon-trash"></i></a>';
+			$output .=	'</li>';
+			$output .= 	'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
+		endforeach;
+		$output 	.= '</ul>';
+	endif;
+	$output 	.= '<h4 class="mt-5 mb-3">'. __( 'Send request', 'quimimpex' ) .'</h4>';
 	$output 	.= 	'<div class="form-group">';
 	$output 	.= 		'<label for="qm-user-name">'. __( 'Your Name', 'quimimpex' ) .'</label>';
-	$output 	.= 		'<input type="text" id="qm-user-name" class="form-control" name="qm_comment_author">';
+	$output 	.= 		'<input type="text" id="qm-user-name" class="form-control" name="qm_comment_author" required>';
 	$output 	.= 	'</div>';
 	$output 	.= 	'<div class="form-group">';
 	$output 	.= 		'<label for="qm-user-email">'. __( 'Email', 'quimimpex' ) .'</label>';
-	$output 	.= 		'<input type="email" id="qm-user-email" class="form-control" name="qm_comment_author_email">';
+	$output 	.= 		'<input type="email" id="qm-user-email" class="form-control" name="qm_comment_author_email" required>';
 	$output 	.= 	'</div>';
 	$output 	.= 	'<div class="form-group">';
 	$output 	.= 		'<label for="qm-comment">'. __( 'Leave a comment', 'quimimpex' ) .'</label>';
 	$output 	.=		'<textarea id="qm-comment" class="form-control" rows="5" name="qm_comment_content"></textarea>';
 	$output 	.= 	'</div>';
-	$output 	.= 	'<button type="submit" class="btn btn-primary" name="qm_submit_contact_form">'. __( 'Send Request', 'quimimpex' ) .'</button>';
-	$output 	.= 	'<input type="hidden" name="qm_post_id" value="'. $post->ID .'">';
+	$output 	.= 	'<button type="submit" class="btn btn-primary" name="qm_submit_contact_form">'. __( 'Send', 'quimimpex' ) .'</button>';
+	$output 	.= 	'<input type="hidden" name="qm_post_id" value="'. t_em( 'page_checkin' ) .'">';
 	$output .= '</form>';
 	return $output;
 }

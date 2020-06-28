@@ -48,8 +48,8 @@ function quimimpex_custom_pages(){
 			'public_label'	=> __( 'About Us', 'quimimpex' ),
 			'type'			=> 'page',
 		),
-		'page_inport_lines'	=> array(
-			'value'			=> 'page_inport_lines',
+		'page_import_lines'	=> array(
+			'value'			=> 'page_import_lines',
 			'label'			=> __( 'Page Import Lines', 'quimimpex' ),
 			'public_label'	=> __( 'Import Lines', 'quimimpex' ),
 			'type'			=> 'page',
