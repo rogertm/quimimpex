@@ -202,10 +202,18 @@ function quimimpex_process_products_checkin_form(){
 
 	$products = get_posts( $args );
 
+	$import_products = [];
+	$export_products = [];
+
 	$content  = '<h3>'. __( 'Product Request', 'quimimpex' ) .'</h3>';
 	$content .= '<h5>'. __( 'Product List:', 'quimimpex' ) .'</h5>';
 	$content .= '<ul>';
 	foreach ( $products as $product ) :
+		if ( get_post_type( $product->ID ) == 'qm-import-product' )
+			array_push( $import_products, $product->ID );
+		if ( get_post_type( $product->ID ) == 'qm-export-product' )
+			array_push( $export_products, $product->ID );
+
 		$content .= '<li><a href="'. get_permalink( $product->ID ) .'" target="_blanck">'. $product->post_title .'</a></li>';
 	endforeach;
 	$content .= '</ul>';
@@ -222,6 +230,39 @@ function quimimpex_process_products_checkin_form(){
 		'comment_meta'			=> array( 'qm_products' => $_POST['qm_products'] ),
 	);
 	$comment = wp_insert_comment( $commentdata );
+
+	$to 		= t_em( 'commercial_contact_email' );
+	$subject	= __( 'Product Request', 'quimimpex' );
+	$message	= '<h5>'. __( 'Product List:', 'quimimpex' ) .'</h5>';
+
+	// Send email for import products
+	if ( ! empty( $import_products ) ) :
+		$message 	.= '<ul>';
+		foreach ( $import_products as $product ) :
+			$message .= '<li><a href="'. get_permalink( $product ) .'" target="_blanck">'. get_post_field( 'post_title', $product ) .'</a></li>';
+		endforeach;
+		$message 	.= '</ul>';
+		$headers[]	= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
+		$headers[]	= 'Cc: '. $author_email;
+		$import_mail = wp_mail( $to, $subject, $message, $headers );
+		echo '<pre>'. print_r( $import_mail, true ) .'</pre>';
+	endif;
+
+	// Send email for export products
+	if ( ! empty( $export_products ) ) :
+		$message 	.= '<ul>';
+		foreach ( $export_products as $product ) :
+			$company_id 	= ( get_post_meta( $product->ID, 'qm_product_company' ) ) ? get_post_meta( $product->ID, 'qm_product_company', true ) : null;
+			$company_email	= ( $company_id ) ? get_post_meta( $company_id, 'qm_company_request_email', true ) : null;
+			$headers[]		= ( $company_email ) ? 'Cc: '. $company_email : null;
+			$message .= '<li><a href="'. get_permalink( $product ) .'" target="_blanck">'. get_post_field( 'post_title', $product ) .'</a></li>';
+		endforeach;
+		$message 	.= '</ul>';
+		$headers[]	= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
+		$headers[]	= 'Cc: '. $author_email;
+		$export_mail = wp_mail( $to, $subject, $message, $headers );
+		echo '<pre>'. print_r( $export_mail, true ) .'</pre>';
+	endif;
 
 	$query = array(
 		'do_action'	=> 'success',

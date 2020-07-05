@@ -30,12 +30,12 @@ function quimimpex_company_data_fields(){
 		),
 		'company_email'	=> array(
 			'label'		=> __( 'Company Email', 'quimimpex' ),
-			'meta'		=> 'qm_company_email',
+			'meta'		=> 'qm_company_main_email',
 			'type'		=> 'email',
 		),
 		'request_email'	=> array(
 			'label'		=> __( 'Email to send requests and services', 'quimimpex' ),
-			'meta'		=> 'qm_company_request',
+			'meta'		=> 'qm_company_request_email',
 			'type'		=> 'email',
 		),
 	);

@@ -312,7 +312,8 @@ function quimimpex_ajax_modal(){
 	$request_email	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_request_email', true ) )
 						? '<span class="py-1 d-block"><i class="icomoon-mail mr-3 text-primary"></i> <a href="mailto:'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'</a></span>'
 						: null;
-	$checkin 		= '<a href="#" class="btn btn-light rounded-circle mr-3 qm-checkin-product" data-product-id="'. $post_id .'" aria-label="'. __( 'Checkin', 'quimimpex' ) .'"><i class="icomoon-shopping-cart text-muted h6 mb-0"></i></a>';
+	$checked		= ( $_SESSION['qm_checkin_products'] && in_array( $post_id, $_SESSION['qm_checkin_products'] ) ) ? 'qm-product-checked' : null;
+	$checkin 		= '<a href="#" class="btn btn-light rounded-circle mr-3 qm-checkin-product '. $checked .'" data-product-id="'. $post_id .'" aria-label="'. __( 'Checkin', 'quimimpex' ) .'"><i class="icomoon-shopping-cart text-muted h6 mb-0"></i></a>';
 	$data_sheet		= ( get_post_meta( $post_id, 'qm_data_sheet_url' ) )
 						? '<a href="'. get_post_meta( $post_id, 'qm_data_sheet_url', true ) .'" class="btn btn-light rounded-circle mr-3" aria-label="'. __( 'Data sheet', 'quimimpex' ) .'" download><i class="icomoon-text-document text-muted h6 mb-0"></i></a>'
 						: null;
