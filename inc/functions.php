@@ -339,4 +339,22 @@ function quimimpex_custom_mime_types( $mime_types ){
 	return $mime_types;
 }
 add_filter( 'upload_mimes', 'quimimpex_custom_mime_types' );
+
+/**
+ * Get all subscribers email
+ * @return array
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_get_subscribers_email(){
+	$args = [
+		'role'	=> 'subscriber',
+	];
+	$subscribers = get_users( $args );
+	$emails = [];
+	foreach ( $subscribers as $subscriber ) :
+		array_push( $emails, $subscriber->user_email );
+	endforeach;
+	return $emails;
+}
 ?>
