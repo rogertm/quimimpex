@@ -296,7 +296,6 @@ function quimimpex_do_cancel_subscription(){
 		'unsubscribed'	=> 'success',
 	);
 	wp_safe_redirect( add_query_arg( $args, get_permalink( t_em( 'page_cancel_subscription' ) ) ) );
-	// wp_safe_redirect( get_permalink( t_em( 'page_cancel_subscription' ) ) );
 	exit;
 }
 add_action( 'template_redirect', 'quimimpex_do_cancel_subscription' );

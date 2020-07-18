@@ -47,7 +47,7 @@ add_action( 't_em_action_top_menu_before', 'quimimpex_top_bar', 0 );
  */
 function quimimpex_cart_counter(){
 	if ( t_em( 'page_checkin' ) ) :
-		$counter 	= ( $_SESSION['qm_checkin_products'] ) ? $_SESSION['qm_checkin_products'] : array();
+		$counter 	= ( isset( $_SESSION['qm_checkin_products'] ) ) ? $_SESSION['qm_checkin_products'] : array();
 		$style 		= ( count( $counter ) > 0 ) ? 'primary' : 'qm-blue-light';
 ?>
 	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 pr-3">
