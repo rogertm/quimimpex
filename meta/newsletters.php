@@ -88,17 +88,6 @@ function quimimpex_save_newsletter_meta( $post_id ){
 			delete_post_meta( $post_id, $value['meta'] );
 		endif;
 	endforeach;
-
-	if ( get_post_meta( $post_id, 'qm_newsletter_id' ) ) :
-		$attachment_id = get_post_meta( $post_id, 'qm_newsletter_id', true );
-		$to 			= quimimpex_get_subscribers_email();
-		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
-		$message		= '';
-		$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
-		$headers[]		= 'Content-type: text/html';
-		$attachments	= get_attached_file( $attachment_id );
-		wp_mail( $to, $subject, $message, $headers, $attachments );
-	endif;
 }
 add_action( 'save_post', 'quimimpex_save_newsletter_meta' );
 ?>
