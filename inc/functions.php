@@ -364,9 +364,9 @@ function quimimpex_get_subscribers_email(){
  * @since Quimimpex 1.0
  */
 function quimimpex_send_newsletter( $new_status, $old_status, $post ){
-	if ( $new_status == 'publish'
-		&& $old_status != 'publish'
-		&& $post->post_type == 'qm-newsletter'
+	if ( $new_status === 'publish'
+		&& $old_status !== 'publish'
+		&& $post->post_type === 'qm-newsletter'
 		&& get_post_meta( $post->ID, 'qm_newsletter_id' ) ) :
 			$attachment_id = get_post_meta( $post->ID, 'qm_newsletter_id', true );
 			$to 			= quimimpex_get_subscribers_email();
