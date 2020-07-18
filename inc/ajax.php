@@ -60,7 +60,8 @@ Thank you.
 
 		$content 	= str_replace( '###SITENAME###', $sitename, $content );
 		$content 	= str_replace( '###SITEURL###', home_url(), $content );
-		wp_mail( $email, sprintf( __( '[%s] Newsletter Subscription' ), $sitename ), $content );
+		$headers[]	= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
+		wp_mail( $email, sprintf( __( '[%s] Newsletter Subscription' ), $sitename ), $content, $headers );
 
 	endif;
 

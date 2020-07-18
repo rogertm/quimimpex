@@ -244,8 +244,8 @@ function quimimpex_process_products_checkin_form(){
 		$message 	.= '</ul>';
 		$headers[]	= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
 		$headers[]	= 'Cc: '. $author_email;
+		$headers[]	= 'Content-type: text/html';
 		$import_mail = wp_mail( $to, $subject, $message, $headers );
-		echo '<pre>'. print_r( $import_mail, true ) .'</pre>';
 	endif;
 
 	// Send email for export products
@@ -260,8 +260,8 @@ function quimimpex_process_products_checkin_form(){
 		$message 	.= '</ul>';
 		$headers[]	= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
 		$headers[]	= 'Cc: '. $author_email;
+		$headers[]	= 'Content-type: text/html';
 		$export_mail = wp_mail( $to, $subject, $message, $headers );
-		echo '<pre>'. print_r( $export_mail, true ) .'</pre>';
 	endif;
 
 	$query = array(
@@ -294,8 +294,8 @@ function quimimpex_do_cancel_subscription(){
 	$args = array(
 		'unsubscribed'	=> 'success',
 	);
-	wp_safe_redirect( add_query_arg( $args, get_permalink( t_em( 'page_cancel_subscription' ) ) ) );
-	// wp_safe_redirect( get_permalink( t_em( 'page_cancel_subscription' ) ) );
+	// wp_safe_redirect( add_query_arg( $args, get_permalink( t_em( 'page_cancel_subscription' ) ) ) );
+	wp_safe_redirect( get_permalink( t_em( 'page_cancel_subscription' ) ) );
 	exit;
 }
 add_action( 'template_redirect', 'quimimpex_do_cancel_subscription' );
