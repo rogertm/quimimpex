@@ -357,26 +357,4 @@ function quimimpex_get_subscribers_email(){
 	endforeach;
 	return $emails;
 }
-
-/**
- * Send the newsletter
- *
- * @since Quimimpex 1.0
- */
-function quimimpex_send_newsletter( $new_status, $old_status, $post ){
-	if ( $new_status === 'publish'
-		&& $old_status !== 'publish'
-		&& $post->post_type === 'qm-newsletter'
-		&& get_post_meta( $post->ID, 'qm_newsletter_id' ) ) :
-			$attachment_id = get_post_meta( $post->ID, 'qm_newsletter_id', true );
-			$to 			= quimimpex_get_subscribers_email();
-			$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
-			$message		= '';
-			$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
-			$headers[]		= 'Content-type: text/html';
-			$attachments	= get_attached_file( $attachment_id );
-			wp_mail( $to, $subject, $message, $headers, $attachments );
-	endif;
-}
-add_action( 'transition_post_status', 'quimimpex_send_newsletter', 10, 3 );
 ?>
