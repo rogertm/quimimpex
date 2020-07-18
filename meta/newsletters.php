@@ -94,7 +94,8 @@ function quimimpex_save_newsletter_meta( $post_id ){
 		$to 			= quimimpex_get_subscribers_email();
 		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
 		$message		= '';
-		$headers		= '';
+		$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
+		$headers[]		= 'Content-type: text/html';
 		$attachments	= get_attached_file( $attachment_id );
 		wp_mail( $to, $subject, $message, $headers, $attachments );
 	endif;
