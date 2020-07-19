@@ -400,8 +400,7 @@ function quimimpex_send_newsletter( $new_status, $old_status, $post ){
 		$to 			= quimimpex_get_subscribers_email();
 		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
 		$message		= __( 'You receive this message be cause you are subscribed to our newsletter', 'quimimpex' );
-		$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
-		$headers[]		= 'Content-type: text/html';
+		$headers[]		= 'From: Quimimpex <no-replay@quimimpex.cu>';
 		$attachments	= [ get_attached_file( $attachment_id ) ];
 		wp_mail( $to, $subject, $message, $headers, $attachments );
 
