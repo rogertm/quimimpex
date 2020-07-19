@@ -357,4 +357,60 @@ function quimimpex_get_subscribers_email(){
 	endforeach;
 	return $emails;
 }
+
+/**
+ * Register custom status for newsletters
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_newsletter_status(){
+	$unsent = [
+		'label'						=> __( 'Unsent', 'quimimpex' ),
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Unsent <span class="count">(%s)</span>', 'Unsent <span class="count">(%s)</span>', 'quimimpex' ),
+	];
+	register_post_status( 'unsent', $unsent );
+
+	$sent = [
+		'label'						=> __( 'Sent', 'quimimpex' ),
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Sent <span class="count">(%s)</span>', 'Sent <span class="count">(%s)</span>', 'quimimpex' ),
+	];
+	register_post_status( 'sent', $sent );
+}
+add_action( 'init', 'quimimpex_newsletter_status' );
+
+/**
+ * Send the newsletter
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_send_newsletter( $new_status, $old_status, $post ){
+	if ( $new_status === 'unsent'
+		&& $old_status !== 'unsent'
+		&& $post->post_type === 'qm-newsletter' ) :
+
+		$attachment_id 	= get_post_meta( $post->ID, 'qm_newsletter_id', true );
+		$to 			= quimimpex_get_subscribers_email();
+		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
+		$message		= '';
+		$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
+		$headers[]		= 'Content-type: text/html';
+		$attachments	= get_attached_file( $attachment_id );
+		wp_mail( $to, $subject, $message, $headers, $attachments );
+
+		$post_data = [
+			'ID'			=> $post->ID,
+			'post_status'	=> 'sent',
+		];
+		wp_update_post( $post_data );
+	endif;
+}
+add_action( 'transition_post_status', 'quimimpex_send_newsletter', 10, 3 );
 ?>
