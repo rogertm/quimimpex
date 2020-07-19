@@ -399,12 +399,12 @@ function quimimpex_send_newsletter( $new_status, $old_status, $post ){
 		$attachment_id 	= get_post_meta( $post->ID, 'qm_newsletter_id', true );
 		$to 			= quimimpex_get_subscribers_email();
 		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
-		$message		= '';
+		$message		= __( 'Test Message', 'quimimpex' );
 		$headers[]		= __( 'From: Quimimpex <no-replay@quimimpex.cu>' );
-		$headers[]		= 'MIME-Version: 1.0' . "\r\n";
+		/*$headers[]		= 'MIME-Version: 1.0' . "\r\n";
 		$headers[]		= 'Content-type: text/html';
-		$attachments	= [ get_attached_file( $attachment_id ) ];
-		wp_mail( $to, $subject, $message, $headers, $attachments );
+		$attachments	= [ get_attached_file( $attachment_id ) ];*/
+		wp_mail( $to, $subject, $message, $headers, /*$attachments*/ );
 
 		$post_data = [
 			'ID'			=> $post->ID,
