@@ -401,12 +401,17 @@ function quimimpex_send_newsletter( $new_status, $old_status, $post ){
 		$subject		= __( 'Quimimpex Newsletter', 'quimimpex' );
 		$message		= __( 'You receive this message be cause you are subscribed to our newsletter', 'quimimpex' );
 		$headers[]		= 'From: Quimimpex <no-replay@quimimpex.cu>';
-		$attachments	= [ get_attached_file( $attachment_id ) ];
-		wp_mail( $to, $subject, $message, $headers, $attachments );
+		$attachment		= get_attached_file( $attachment_id );
+		if ( ! $attachment ) :
+			$status = 'unsent';
+		else :
+			$status = 'sent';
+			wp_mail( $to, $subject, $message, $headers, $attachment );
+		endif;
 
 		$post_data = [
 			'ID'			=> $post->ID,
-			'post_status'	=> 'sent',
+			'post_status'	=> $status,
 		];
 		wp_update_post( $post_data );
 	endif;
