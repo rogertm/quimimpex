@@ -88,10 +88,10 @@ function t_em_slider_bootstrap_carousel( $args ){
 						<?php t_em_featured_post_thumbnail( 1200, t_em( 'slider_height' ), false, 'd-block w-100', $post->ID ); ?>
 						<div id="<?php echo $post->post_name ?>-<?php echo $post->ID; ?>" class="carousel-caption">
 							<div class="<?php echo t_em_grid( 8 ) ?> <?php echo t_em_grid( 2, '', true ) ?>">
-								<h3 class="item-title text-uppercase">
+								<h3 class="item-title text-uppercase h2">
 									<a href="<?php echo get_post_meta( $post->ID, 'quimimpex_banner_link', true ); ?>"><?php echo get_the_title(); ?></a>
 								</h3>
-								<p class="item-summary d-none d-md-block"><?php t_em_get_post_excerpt(); ?></p>
+								<p class="item-summary d-none d-lg-block"><?php t_em_get_post_excerpt(); ?></p>
 							</div>
 						</div>
 					</div><!-- .item -->

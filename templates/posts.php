@@ -21,8 +21,8 @@ function quimimpex_front_about_us(){
 ?>
 	<section id="about-us" class="my-9 about-us">
 		<div class="row">
-			<div class="<?php echo t_em_grid( 7 ) ?>">
-				<?php t_em_featured_post_thumbnail( 1200, 600, true, 'about-us-image col-10', t_em( 'page_about_us' ) ) ?>
+			<div class="<?php echo t_em_grid( 7 ) ?> position-relative">
+				<?php t_em_featured_post_thumbnail( 1200, 600, true, 'about-us-image '. t_em_grid( 10 ), t_em( 'page_about_us' ) ) ?>
 				<div class="about-us-title position-absolute">
 					<a href="<?php echo get_permalink( t_em( 'page_about_us' ) ) ?>">
 						<p class="text-white h1 p-6 hvr-grow"><?php echo get_the_title( t_em( 'page_about_us' ) ) ?></p>

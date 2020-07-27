@@ -48,17 +48,52 @@ body{
 #top-menu{
 	@extend .fixed-top;
 	@extend .shadow-sm;
+	@extend .p-0;
+	@include media-breakpoint-down(md){
+		box-shadow: unset !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		margin-top: -.5rem;
+	}
+	#quimimpex-social-network-menu{
+		[class^="icomoon-"]{
+			@extend .hvr-grow;
+		}
+	}
 	> .navbar{
 		@extend .bg-white;
 		@extend .pb-0;
 		@extend .pt-1;
 		@extend .position-relative;
+		@include media-breakpoint-down(md){
+			background-color: transparent !important;
+			padding: 0 !important;
+		}
 		&-collapse{
 			@include media-breakpoint-down(md){
 				margin-right: 1rem;
 				position: absolute;
 				top: 65px;
 				right: 0;
+			}
+		}
+		.navbar-toggler{
+			@extend .bg-light;
+			@extend .border-0;
+			&-icon{
+				filter: grayscale(100%) brightness(100%) contrast(0%);
+			}
+		}
+		.brand-wrapper{
+			@include media-breakpoint-down(md){
+				width: 100% !important;
+				padding: 0 1rem !important;
+			}
+		}
+		#site-top-menu{
+			@include media-breakpoint-down(md){
+				width: 200px !important;
+				margin: 1rem !important;
 			}
 		}
 		#menu-top-menu{
@@ -68,6 +103,10 @@ body{
 				width: 200px;
 				background-color: #f8f9fa;
 				border-radius: 3px;
+				.menu-item{
+					padding: 0 !important;
+					margin: 0 .5rem !important;
+				}
 			}
 			.nav-item{
 				@extend .mr-2;
@@ -125,8 +164,8 @@ body{
 						margin-left: -10px;
 					}
 					.menu-item{
-						@extend .py-2;
-						@extend .mx-2;
+						@extend .py-0;
+						@extend .mx-0;
 						@extend .border-0;
 						&:before{
 							@extend .border-0;
@@ -152,7 +191,7 @@ body{
 		}
 	}
 	.active{
-		a{
+		> a{
 			@extend .text-primary;
 		}
 	}
@@ -176,7 +215,8 @@ body{
 	}
 	.navbar-brand{
 		.custom-logo{
-			height: 45px;
+			height: 50px;
+			width: 200px;
 		}
 		#site-title{
 			@extend .d-none;
@@ -218,8 +258,25 @@ body{
 }
 
 //
+// Forms
+//
+#searchform{
+	&-sm{
+		@extend .my-2;
+		.form-control{
+			max-width: 150px !important;
+		}
+	}
+}
+
+//
 // Slider
 //
+#slider-carousel{
+	@include media-breakpoint-down(md){
+		margin-top: 5rem !important;
+	}
+}
 .carousel{
 	&-control{
 		&-prev,
@@ -252,14 +309,38 @@ body{
 // Front Page
 //
 .about-us{
+	@include media-breakpoint-down(md){
+		margin-top: 5rem !important;
+		img{
+			padding: 0 !important;
+		}
+	}
 	&-title{
 		margin-top: -200px;
 		margin-left: 200px;
+		@include media-breakpoint-down(md){
+			margin: 0 !important;
+			bottom: -10px;
+			left: 15px;
+			right: 15px;
+		}
 		p{
 			background-color: rgba($primary, 0.8);
+			@include media-breakpoint-down(md){
+				padding: 1rem !important;
+				display: block;
+			}
 		}
 		.hvr-outline-in::before{
 			border: rgba($primary, 0.8) solid 3px !important;
+		}
+	}
+	&-text{
+		@include media-breakpoint-down(md){
+			margin-top: 3rem !important;
+			margin-bottom: 3rem !important;
+			padding-left: 1rem !important;
+			padding-right: 1rem !important;
 		}
 	}
 }
@@ -539,6 +620,44 @@ body{
 	#colophon{
 		@extend .border-bottom;
 		@extend .border-white;
+		.widget{
+			&-title{
+				@extend .h5;
+				@extend .font-weight-bold;
+			}
+		}
+		@include media-breakpoint-down(md){
+			.widget-area{
+				> div{
+					padding: 0 !important;
+					&:not(:last-child){
+						border-bottom: solid 1px $white;
+					}
+					aside{
+						padding: 1rem;
+						margin-bottom: 1rem !important;
+					}
+				}
+				text-align: center !important;
+				.widget{
+					// border-bottom: solid 1px $white;
+				}
+			}
+		}
+	}
+	#copyright{
+		a img{
+			width: 90px;
+			height: 20px;
+		}
+	}
+}
+#t-em-social-network-menu{
+	.list-inline{
+		@extend .mb-0;
+	}
+	.social-icon{
+		@extend .mx-2;
 	}
 }
 

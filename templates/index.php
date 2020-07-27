@@ -17,4 +17,5 @@ require( get_stylesheet_directory() . '/templates/navigation.php' );
 require( get_stylesheet_directory() . '/templates/header.php' );
 require( get_stylesheet_directory() . '/templates/posts.php' );
 require( get_stylesheet_directory() . '/templates/general.php' );
+require( get_stylesheet_directory() . '/templates/footer.php' );
 ?>

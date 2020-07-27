@@ -303,7 +303,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 
 		$output  = '<section id="qm-'. $line .'-line" class="mt-6">';
 		$output .=	'<h3 class="h1 mb-5 text-center">'. $taxonomy->labels->singular_name .'</h3>';
-		$output .=	'<div class="row row-cols-3">';
+		$output .=	'<div class="row">';
 		foreach ( $lines as $product_line ) :
 			$products_args = array(
 				'post_type'			=> 'qm-'. $line .'-product',
@@ -318,7 +318,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			);
 			$products = get_posts( $products_args );
 
-			$output .= '<div id="line-'. $product_line->term_id .'" class="col mb-4 mt-8">';
+			$output .= '<div id="line-'. $product_line->term_id .'" class="'. t_em_grid( 4 ) .' mb-4 mt-8">';
 			$output .= 		'<div class="card">';
 			$output .= 			'<div class="bg-white rounded-circle mx-auto d-flex align-items-center justify-content-center cicle-one">';
 			$output .=				'<i class="'. get_term_meta( $product_line->term_id, 'qm_taxonomy_icon', true ) .' rounded-circle display-2 bg-white border d-flex align-items-center justify-content-center cicle-two text-primary"></i>';
@@ -331,7 +331,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=			'<ul class="list-group list-group-flush border-bottom">';
 								foreach( $products as $product ) :
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
-			$output .=					'<a href="'. get_post_meta( $product->ID, 'qm_product_external_url', true ) .'" target="_blank">'. $product->post_title .'</a>';
+			$output .=					'<a href="'. get_permalink( $product->ID ) .'">'. $product->post_title .'</a>';
 			$output .=					'<div class="d-flex justify-content-center">';
 			$output .=						'<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
 			$output .=						quimimpex_checkin_btn( $product->ID );

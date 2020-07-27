@@ -61,12 +61,12 @@ class Quimimpex_Newsletter_Subscribers extends WP_Widget{
 					<label for="qm_subscriber_email" class="sr-only"><?php _e( 'Email address', 'quimimpex' ); ?></label>
 					<input id="qm_subscriber_email" class="form-control w-100" type="email" name="qm_subscriber_email" placeholder="<?php _e( 'Subscribe', 'quimimpex' ) ?>" required>
 				</div>
-				<div class="form-group mt-4 <?php echo t_em_grid( 4 ) ?>">
+				<div class="form-group mt-sm-4 <?php echo t_em_grid( '4', 'sm' ) ?>">
 					<button id="qm-newsletter-subscribe" class="btn btn-primary btn-block" type="button">
 						<?php _e( 'Subscribe', 'quimimpex' ); ?>
 					</button>
 				</div>
-				<div class="form-group mt-4 <?php echo t_em_grid( 8 ) ?>">
+				<div class="form-group mt-sm-4 <?php echo t_em_grid( '8', 'sm' ) ?>">
 					<button id="qm-newsletter-cancel" class="btn btn-outline-primary btn-block" type="button">
 						<?php _e( 'Cancel subscription', 'quimimpex' ); ?>
 					</button>
@@ -158,9 +158,9 @@ class Quimimpex_Contact_Info extends WP_Widget{
 
 		if ( t_em('company_address') ) : ?>
 		<div id="qm-address" class="mb-4">
-			<div class="media">
+			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
 				<span class="mr-3"><i class="icomoon-location-pin"></i></span>
-				<div class="media-body">
+				<div class="mb-0">
 					<?php echo t_em( 'company_address' ) ?>
 				</div>
 			</div>
@@ -169,9 +169,9 @@ class Quimimpex_Contact_Info extends WP_Widget{
 
 		<div id="qm-phone" class="mb-4">
 <?php	if ( t_em('principal_contact_phone') ) : ?>
-			<div class="media">
+			<div class="d-flex justify-content-lg-start d-flex justify-content-center">
 				<span class="mr-3"><i class="icomoon-phone"></i></span>
-				<div class="media-body">
+				<div class="mb-0">
 					<a href="tel:<?php echo t_em( 'principal_contact_phone' ) ?>"><?php echo t_em( 'principal_contact_phone' ) ?></a>
 				</div>
 			</div>
@@ -180,9 +180,9 @@ class Quimimpex_Contact_Info extends WP_Widget{
 
 		if ( t_em('commercial_contact_phone') ) :
 ?>
-			<div class="media">
+			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
 				<span class="mr-3"><i class="icomoon-phone"></i></span>
-				<div class="media-body">
+				<div class="mb-0">
 					<a href="tel:<?php echo t_em( 'commercial_contact_phone' ) ?>"><?php echo t_em( 'commercial_contact_phone' ) ?></a>
 				</div>
 			</div>
@@ -192,9 +192,9 @@ class Quimimpex_Contact_Info extends WP_Widget{
 		<div id="qm-email" class="mb-4">
 
 <?php	if ( t_em('principal_contact_email') ) : ?>
-			<div class="media">
+			<div class="d-flex justify-content-lg-start d-flex justify-content-center">
 				<span class="mr-3"><i class="icomoon-mail"></i></span>
-				<div class="media-body">
+				<div class="mb-0">
 					<a href="mailto:<?php echo t_em( 'principal_contact_email' ) ?>"><?php echo t_em( 'principal_contact_email' ) ?></a>
 				</div>
 			</div>
@@ -203,9 +203,9 @@ class Quimimpex_Contact_Info extends WP_Widget{
 
 		if ( t_em('commercial_contact_email') ) :
 ?>
-			<div class="media">
+			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
 				<span class="mr-3"><i class="icomoon-mail"></i></span>
-				<div class="media-body">
+				<div class="mb-0">
 					<a href="mailto:<?php echo t_em( 'commercial_contact_email' ) ?>"><?php echo t_em( 'commercial_contact_email' ) ?></a>
 				</div>
 			</div>
