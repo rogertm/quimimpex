@@ -11,6 +11,34 @@
  */
 
 /**
+ * Export Products content fields
+ * @return array 	Array of fields
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_export_product_content_fields(){
+	$fields = array(
+		'description'	=> array(
+			'label'		=> __( 'Description', 'quimimpex' ),
+			'meta'		=> 'qm_product_description',
+		),
+		'chemical_formula'	=> array(
+			'label'		=> __( 'Chemical Formula', 'quimimpex' ),
+			'meta'		=> 'qm_product_chemical_formula',
+		),
+		'use'			=> array(
+			'label'		=> __( 'Use', 'quimimpex' ),
+			'meta'		=> 'qm_product_use',
+		),
+		'expiration'	=> array(
+			'label'		=> __( 'Expiration', 'quimimpex' ),
+			'meta'		=> 'qm_product_expiration',
+		),
+	);
+	return apply_filters( 'quimimpex_export_product_content_fields', $fields );
+}
+
+/**
  * Export Products fields
  * @return array 	Array of fields
  *
@@ -105,6 +133,24 @@ function quimimpex_export_products_query_fields( $custom_fields = array() ){
 add_filter( 'quimimpex_export_product_data_fields', 'quimimpex_export_products_query_fields' );
 
 /**
+ * Export Product content callback
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_export_product_content_callback( $post ){
+	wp_nonce_field( 'qm_export_attr', 'qm_export_field' );
+	$fields = quimimpex_export_product_content_fields();
+
+	foreach ( $fields as $key => $value ) :
+		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
+?>
+	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
+	<textarea id="<?php echo $value['meta'] ?>" name="<?php echo $value['meta'] ?>" cols="100" rows="5"><?php echo $meta_value ?></textarea>
+<?php
+	endforeach;
+}
+
+/**
  * Export Product data callback
  *
  * @since Quimimpex 1.0
@@ -147,6 +193,15 @@ function quimimpex_save_export_product_meta( $post_id ){
 		return;
 
 	// Save the data
+	$fields = quimimpex_export_product_content_fields();
+	foreach ( $fields as $key => $value ) :
+		if ( isset( $_POST[$value['meta']] ) && $_POST[$value['meta']] ) :
+			update_post_meta( $post_id, $value['meta'], $_POST[$value['meta']] );
+		else :
+			delete_post_meta( $post_id, $value['meta'] );
+		endif;
+	endforeach;
+
 	$fields = quimimpex_export_product_data_fields();
 	foreach ( $fields as $key => $value ) :
 		if ( isset( $_POST[$value['meta']] ) && $_POST[$value['meta']] ) :

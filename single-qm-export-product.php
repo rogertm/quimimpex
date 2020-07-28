@@ -67,9 +67,20 @@ $data_sheet		= ( get_post_meta( $post->ID, 'qm_data_sheet_url' ) )
 						<h4 class="mb-0"><?php the_title(); ?></h4>
 						<div><?php echo $checkin; echo $data_sheet; ?></div>
 					</div>
-					<h6 class="font-weight-bold"><?php _e( 'Product Description', 'quimimpex' ) ?></h6>
-					<?php the_content(); ?>
-					<h6 class="font-weight-bold border-bottom pb-2"><?php _e( 'Contact Information', 'quimimpex' ) ?></h6>
+<?php
+	$content = quimimpex_export_product_content_fields();
+	foreach ( $content as $key => $value ) :
+		if ( get_post_meta( $post->ID, $value['meta'] ) ) :
+?>
+					<div class="mb-3">
+						<h6 class="font-weight-bold"><?php echo $value['label'] ?></h6>
+						<?php echo t_em_wrap_paragraph( get_post_meta( $post->ID, $value['meta'], true ) ) ?>
+					</div>
+<?php
+		endif;
+	endforeach;
+?>
+					<h6 class="font-weight-bold border-bottom pb-2 mt-5 text-primary"><?php _e( 'Contact Information', 'quimimpex' ) ?></h6>
 					<div class="row">
 						<div class="contact-phone <?php echo t_em_grid( 6 ) ?>">
 							<?php echo $land_phone; echo $mobil_phone ?>

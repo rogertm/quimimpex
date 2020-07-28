@@ -17,10 +17,12 @@
  */
 function quimimpex_meta_boxes(){
 	// Export Products
+	add_meta_box( 'quimimpex-export-product-content', __( 'Product Content', 'quimimpex' ), 'quimimpex_export_product_content_callback', 'qm-export-product', 'advanced', 'high' );
 	add_meta_box( 'quimimpex-export-product-data', __( 'Product Data', 'quimimpex' ), 'quimimpex_export_product_data_callback', 'qm-export-product', 'advanced', 'high' );
 	add_meta_box( 'quimimpex-upload-data', __( 'Data Sheet', 'quimimpex' ), 'quimimpex_export_data_sheet_callback', 'qm-export-product', 'advanced', 'high' );
 
 	// Import Products
+	add_meta_box( 'quimimpex-import-product-content', __( 'Product Content', 'quimimpex' ), 'quimimpex_import_product_content_callback', 'qm-import-product', 'advanced', 'high' );
 	add_meta_box( 'quimimpex-import-product-data', __( 'Product Data', 'quimimpex' ), 'quimimpex_import_product_data_callback', 'qm-import-product', 'advanced', 'high' );
 	add_meta_box( 'quimimpex-upload-data', __( 'Data Sheet', 'quimimpex' ), 'quimimpex_import_data_sheet_callback', 'qm-import-product', 'advanced', 'high' );
 
