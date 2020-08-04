@@ -417,4 +417,16 @@ function quimimpex_send_newsletter( $new_status, $old_status, $post ){
 	endif;
 }
 add_action( 'transition_post_status', 'quimimpex_send_newsletter', 10, 3 );
+
+/**
+ * Set default image
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_default_image(){
+	global $post;
+	if ( get_post_type( $post->id ) == 'qm-export-product' || get_post_type( $post->ID ) == 'qm-import-product' )
+		return get_stylesheet_directory_uri() .'/assets/images/product-default.jpg';
+}
+add_filter( 't_em_filter_default_post_thumbnail', 'quimimpex_default_image' );
 ?>
