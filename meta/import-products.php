@@ -81,13 +81,27 @@ function quimimpex_import_product_data_fields(){
 function quimimpex_import_product_content_callback( $post ){
 	wp_nonce_field( 'qm_import_attr', 'qm_import_field' );
 	$fields = quimimpex_import_product_content_fields();
+	$settings = array(
+		'media_buttons'	=> false,
+		'textarea_rows'	=> 7,
+		'teeny'			=> true,
+		'tinymce'		=> array(
+			'resize'				=> true,
+			'wordpress_adv_hidden'	=> false,
+			'add_unload_trigger'	=> false,
+			'statusbar'				=> false,
+			'wp_autoresize_on'		=> true,
+			'toolbar1'				=> 'bold,italic,underline,|,superscript,subscript,|,alignleft,aligncenter,alignright,|,link,unlink,|,undo,redo',
+		),
+		'quicktags'		=> false,
+	);
 
 	foreach ( $fields as $key => $value ) :
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
 	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
-	<textarea id="<?php echo $value['meta'] ?>" name="<?php echo $value['meta'] ?>" cols="100" rows="5"><?php echo $meta_value ?></textarea>
 <?php
+		wp_editor( $meta_value, $value['meta'], $settings );
 	endforeach;
 }
 
