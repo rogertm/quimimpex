@@ -25,7 +25,7 @@ function quimimpex_shortcode_documents(){
 	);
 	$documents = get_posts( $args );
 
-	$docs = '<ul class="list-group list-group-flush">';
+	$docs = '<ul class="list-group list-group-flush mb-5">';
 	foreach( $documents as $document ) :
 		$doc_url = get_post_meta( $document->ID, 'qm_document_url', true );
 		$docs .= '<li class="list-group-item" id="document-'. $document->ID .'">';
@@ -97,7 +97,7 @@ function quimimpex_shortcode_contact_form(){
 		$alert  = null;
 	endif;
 
-	$form  = '<form id="qm-contact-form" class="mb-4" method="post">';
+	$form  = '<form id="qm-contact-form" class="mb-5" method="post">';
 	$form .= 	$alert;
 	$form .= 	wp_nonce_field( 'qm_contact_form_attr', 'qm_contact_form_field' );
 
@@ -196,7 +196,7 @@ function quimimpex_shortcode_checkin(){
 		foreach ( $products as $product ) :
 			$service_page = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? t_em( 'page_export_lines' ) : t_em( 'page_import_lines' );
 			$taxonomy = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
-			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0">';
+			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0">';
 			$output .=	 	$product->post_title;
 			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
 			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
@@ -242,12 +242,12 @@ function quimimpex_shortcode_executives(){
 
 	$executives = get_posts( $args );
 	if ( $executives ) :
-		$output = '<section id="qm-executives">';
-		$output .=	'<h3 class="h1">'. __( 'Executives', 'quimimpex' ) .'</h3>';
+		$output = '<section id="qm-executives" class="mt-6 mb-8">';
+		$output .=	'<h3 class="h1 mb-5">'. __( 'Executives', 'quimimpex' ) .'</h3>';
 		$output .=	'<div class="row row-cols-3">';
 		foreach ( $executives as $executive ) :
 			$output .= '<div class="col mb-4">';
-			$output .= 		'<div class="card h-100 text-center">';
+			$output .= 		'<div class="card h-100 text-center border-0 shadow-sm">';
 			$output .=			'<img src="'. t_em_image_resize( 600, 600, get_post_meta( $executive->ID, '_thumbnail_id', true ) ) .'" class="card-img-top">';
 			$output .=			'<div class="card-body">';
 			$output .=				'<h5 class="card-title">'. $executive->post_title .'</h5>';
@@ -301,7 +301,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 	if ( $lines ) :
 		$taxonomy = get_taxonomy( 'qm-'. $line .'-line' );
 
-		$output  = '<section id="qm-'. $line .'-line" class="mt-6">';
+		$output  = '<section id="qm-'. $line .'-line" class="qm-products mt-6">';
 		$output .=	'<h3 class="h1 mb-5 text-center">'. $taxonomy->labels->singular_name .'</h3>';
 		$output .=	'<div class="row">';
 		foreach ( $lines as $product_line ) :
@@ -328,7 +328,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=				'<p class="card-text text-center">'. $product_line->description .'</p>';
 			$output .=			'</div>';
 			$output .=			'<h5 class="mt-5 p-3 bg-light">'. __( 'List of products', 'quimimpex' ) .'</h5>';
-			$output .=			'<ul class="list-group list-group-flush border-bottom">';
+			$output .=			'<ul class="list-group list-group-flush">';
 								foreach( $products as $product ) :
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
 			$output .=					'<a href="'. get_permalink( $product->ID ) .'">'. $product->post_title .'</a>';

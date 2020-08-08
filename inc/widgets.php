@@ -51,6 +51,7 @@ class Quimimpex_Newsletter_Subscribers extends WP_Widget{
 		echo $before_widget;
 		if ( $title ) echo $before_title . $title . $after_title;
 		?>
+		<h5 class="font-weight-bold mb-2 h6"><?php _e( 'Quimimpex Newsletter', 'quimimpex' ) ?></h5>
 		<form class="form-inline" method="post">
 			<?php if ( $description ) : ?>
 				<p><?php echo $description; ?></p>

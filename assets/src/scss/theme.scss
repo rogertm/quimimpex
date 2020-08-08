@@ -168,6 +168,7 @@ body{
 						@extend .py-0;
 						@extend .mx-0;
 						@extend .border-0;
+						@extend .w-100;
 						&:before{
 							@extend .border-0;
 							height: 0;
@@ -300,7 +301,7 @@ body{
 		a{
 			@extend .text-white;
 			&:hover{
-				@extend .text-primary;
+				color: $qm-red !important;
 			}
 		}
 	}
@@ -429,7 +430,7 @@ body{
 body{
 	&:not(.home){
 		#main{
-			@extend .mt-8;
+			margin-top: 8.5rem !important;
 		}
 	}
 	&.page{
@@ -469,10 +470,23 @@ body{
 		}
 	}
 }
-#content{
+.single,
+.page{
 	article{
 		@extend .mt-0;
 		@extend .mb-0;
+	}
+}
+#content{
+	article{
+		.entry{
+			&-meta{
+				[class^="icomoon-"], [class*=" icomoon-"]{
+					@extend .text-primary;
+					@extend .pr-2;
+				}
+			}
+		}
 		&.qm{
 			&-export-product,
 			&-import-product{
@@ -561,7 +575,7 @@ body{
 	&-page{
 		&-archive{
 			article.post{
-				@extend .mb-4;
+				@extend .mt-5;
 				header{
 					.entry-title{
 						@extend .h4;
@@ -588,6 +602,15 @@ body{
 			}
 		}
 	}
+	&-products{
+		a{
+			&:hover{
+				i{
+					@extend .text-primary;
+				}
+			}
+		}
+	}
 }
 
 //
@@ -604,7 +627,7 @@ body{
 		@extend .text-white;
 		a{
 			&:hover{
-				@extend .text-primary;
+				color: $qm-red !important;
 			}
 		}
 	}
@@ -621,10 +644,12 @@ body{
 	#colophon{
 		@extend .border-bottom;
 		@extend .border-white;
+		@extend .pb-0;
 		.widget{
 			&-title{
 				@extend .h5;
 				@extend .font-weight-bold;
+				@extend .mb-4;
 			}
 		}
 		@include media-breakpoint-down(md){

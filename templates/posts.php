@@ -141,16 +141,16 @@ function quimimpex_front_posts_section(){
 	$featured_posts = get_posts( $args );
 	if ( $featured_posts ) :
 ?>
-	<section id="latest-news" class="py-5">
+	<section id="latest-news" class="py-5 mt-5">
 		<h3 class="h1 text-center mb-4"><?php _e( 'Latest news', 'quimimpex' ) ?></h3>
 		<div class="row">
 			<div class="card-deck <?php echo t_em_grid( 10 ) ?> mx-auto">
 <?php foreach ( $featured_posts as $featured ) : ?>
-				<div class="card text-center">
+				<div class="card text-center border-0 shadow-sm">
 					<?php t_em_featured_post_thumbnail( 600, 700, true, 'card-img-top', $featured->ID ) ?>
 					<div class="card-body">
-						<h5 class="card-title"><?php echo $featured->post_title ?></h5>
-						<time class="d-block"><i class="qmicon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
+						<h5 class="card-title mt-2"><?php echo $featured->post_title ?></h5>
+						<time class="d-block small mb-2"><i class="qmicon-calendar mx-1 text-primary"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
 						<?php t_em_get_post_excerpt( $featured->ID ) ?>
 						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block stretched-link"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
 						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="qmicon-link"></i></span>
@@ -227,7 +227,6 @@ function quimimpex_modal(){
 								<div class="modal-thumbnail"></div>
 							</div>
 							<div class="<?php echo t_em_grid( 7 ) ?> py-1">
-								<h6 class="font-weight-bold modal-title-description"></h6>
 								<div class="modal-post-content mb-3"></div>
 								<h6 class="font-weight-bold modal-title-contact border-bottom pb-2"></h6>
 								<div class="modal-post-contact row">

@@ -30,15 +30,17 @@ get_header(); ?>
 			<?php do_action( 't_em_action_content_before' ); ?>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-
+<?php
+$grid = ( is_page( [t_em( 'page_docs' ), t_em( 'page_checkin' ), t_em( 'page_contact' )] ) ) ? t_em_grid( 8 ) .' mx-auto' : null;
+?>
 		<?php do_action( 't_em_action_post_before' ); ?>
 
-		<article id="post-<?php the_ID(); ?>" <?php post_class( ( is_page( [t_em( 'page_docs' ), t_em( 'page_checkin' ), t_em( 'page_contact' )] ) ) ? t_em_grid( 8 ) .' mx-auto' : null ); ?>>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<?php do_action( 't_em_action_post_inside_before' ); ?>
 
 			<?php do_action( 't_em_action_post_content_before' ); ?>
 
-			<div class="entry-content">
+			<div class="entry-content <?php echo $grid ?>">
 				<?php the_content(); ?>
 			</div><!-- .entry-content -->
 

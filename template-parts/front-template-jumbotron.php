@@ -11,7 +11,7 @@ foreach ( t_em_front_page_widgets_options() as $widget ) :
 		'<div class="jumbo-widget-thumbnail"><img src="'. t_em( 'thumbnail_src_'.$widget['name'] ) .'" alt="'. sanitize_text_field( t_em( 'headline_'.$widget['name'] ) ).'" /></div>' : null;
 
 	$widget_headline	= ( t_em( 'headline_'.$widget['name'] ) ) ?
-		'<h2 class="jumbo-widget-heading">'. $widget_icon_class . t_em( 'headline_'.$widget['name'] ) .'</h2>' : '';
+		'<h2 class="jumbo-widget-heading h1">'. $widget_icon_class . t_em( 'headline_'.$widget['name'] ) .'</h2>' : '';
 
 	$widget_content		= ( t_em( 'content_'.$widget['name'] ) ) ?
 		'<div class="jumbo-widget-body">'. t_em_wrap_paragraph( do_shortcode( t_em( 'content_'.$widget['name'] ) ) ) .'</div>' : '';

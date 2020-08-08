@@ -342,7 +342,6 @@ jQuery(document).ready(function($) {
 						$('.modal-actions').append(response.checkin);
 						$('.modal-actions').append(response.data_sheet);
 						$('.modal-thumbnail').append(response.thumbnail);
-						$('.modal-title-description').append(response.title_description);
 						$('.modal-title-contact').append(response.title_contact);
 						$('.modal-post-content').append(response.content);
 						$('.contact-phone').append(response.land_phone);

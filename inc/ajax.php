@@ -318,14 +318,23 @@ function quimimpex_ajax_modal(){
 	$data_sheet		= ( get_post_meta( $post_id, 'qm_data_sheet_url' ) )
 						? '<a href="'. get_post_meta( $post_id, 'qm_data_sheet_url', true ) .'" class="btn btn-light rounded-circle mr-3" aria-label="'. __( 'Data sheet', 'quimimpex' ) .'" download><i class="icomoon-text-document text-muted h6 mb-0"></i></a>'
 						: null;
+	$content 		= '';
+	$meta 			= quimimpex_export_product_content_fields();
+	foreach ( $meta as $key => $value ) :
+		if ( get_post_meta( $post_id, $value['meta'] ) ) :
+			$content .= '<div class="mb-3">';
+			$content .= 	'<h6 class="font-weight-bold">'. $value['label'] .'</h6>';
+			$content .= 	t_em_wrap_paragraph( get_post_meta( $post_id, $value['meta'], true ) );
+			$content .= '</div>';
+		endif;
+	endforeach;
 
 	$response = array(
 		'status'		=> 'success',
 		'title'			=> $title,
 		'thumbnail'		=> $thumbnail,
-		'title_description' => __( 'Product Description', 'quimimpex' ),
 		'title_contact' => __( 'Contact information', 'quimimpex' ),
-		'content'		=> t_em_wrap_paragraph( get_post_field( 'post_content', $post_id ) ),
+		'content'		=> $content,
 		'checkin'		=> $checkin,
 		'data_sheet'	=> $data_sheet,
 		'land_phone' 	=> $land_phone,
