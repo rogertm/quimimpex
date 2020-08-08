@@ -80,15 +80,15 @@ function quimimpex_top_bar(){
 		<div class="<?php t_em_container(); ?> navbar navbar-dark navbar-expand py-0">
 			<ul class="navbar-nav mr-auto small">
 				<li class="nav-item mr-3">
-					<a href="<?php echo t_em('web_chat_url') ?>" class="nav-link hvr-grow"><i class="icomoon-chat mr-2"></i><?php _e( 'Chat', 'quimimpex' ) ?></a>
+					<a href="<?php echo t_em('web_chat_url') ?>" class="nav-link hvr-grow"><i class="qmicon-chat mr-2"></i><?php _e( 'Chat', 'quimimpex' ) ?></a>
 				</li>
 				<li class="nav-item mr-3">
-					<a href="<?php echo t_em('web_email_url') ?>" class="nav-link hvr-grow"><i class="icomoon-mail mr-2"></i><?php _e( 'Web Mail', 'quimimpex' ) ?></a>
+					<a href="<?php echo t_em('web_email_url') ?>" class="nav-link hvr-grow"><i class="qmicon-envelope mr-2"></i><?php _e( 'Web Mail', 'quimimpex' ) ?></a>
 				</li>
 			</ul>
 			<form id="searchform" class="form-inline my-2 my-lg-0 d-none d-lg-inline" action="<?php echo home_url( '/' ); ?>" method="get">
 				<input class="form-control form-control-sm bg-transparent border-qm-blue-light mr-sm-1" type="search" value="<?php the_search_query(); ?>" placeholder="Buscar" aria-label="Buscar" name="s">
-				<button class="btn btn-qm-blue-light btn-sm" type="submit"><i class="icomoon-search hvr-grow"></i></button>
+				<button class="btn btn-qm-blue-light btn-sm" type="submit"><i class="qmicon-search hvr-grow"></i></button>
 			</form>
 			<div class="offset-1 d-none d-lg-inline"><?php t_em_user_social_network( 'quimimpex', '', 'navbar-nav navbar-dark', 'nav-item', 'nav-link mr-2' ) ?></div>
 			<?php echo quimimpex_cart_counter() ?>
@@ -112,7 +112,7 @@ function quimimpex_cart_counter(){
 	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 pr-3">
 		<a href="<?php echo get_permalink( t_em( 'page_checkin' ) ) ?>" class="btn btn-<?php echo $style ?> btn-sm">
 			<span class="text-white counter"><?php echo count( $counter ) ?></span>
-			<i class="icomoon-shopping-cart text-white hvr-grow ml-2"></i>
+			<i class="qmicon-car-add text-white hvr-grow ml-2"></i>
 		</a>
 	</div>
 <?php
@@ -134,7 +134,7 @@ function quimimpex_custom_menu_items( $items, $args ){
 		$items .= '<li class="menu-item nav-item mr-2 ml-2 ml-lg-4 py-2 py-lg-4 d-none d-sm-inline-flex d-lg-none d-lx-none d-flex justify-content-between">';
 		$items .=	'<form id="searchform-sm" class="form-inline d-flex justify-content-between" action="'. home_url( '/' ) .'" method="get">';
 		$items .=		'<input class="form-control form-control-sm bg-transparent border-qm-blue-light" type="search" value="'. the_search_query() .'" placeholder="Buscar" aria-label="Buscar" name="s">';
-		$items .=		'<button class="btn btn-qm-blue-light btn-sm" type="submit"><i class="icomoon-search hvr-grow"></i></button>';
+		$items .=		'<button class="btn btn-qm-blue-light btn-sm" type="submit"><i class="qmicon-search hvr-grow"></i></button>';
 		$items .=	'</form>';
 		$items .= '</li>';
 		$items .= '<li class="menu-item nav-item mr-2 ml-2 ml-lg-4 py-2 py-lg-4 d-none d-sm-inline-flex d-lg-none d-lx-none d-flex justify-content-between">';

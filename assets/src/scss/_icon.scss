@@ -1,0 +1,153 @@
+@import "icon_variables";
+
+@font-face {
+  font-family: '#{$qmicon-font-family}';
+  src:
+    url('#{$qmicon-font-path}/#{$qmicon-font-family}.ttf?b9iqzl') format('truetype'),
+    url('#{$qmicon-font-path}/#{$qmicon-font-family}.woff?b9iqzl') format('woff'),
+    url('#{$qmicon-font-path}/#{$qmicon-font-family}.svg?b9iqzl##{$qmicon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="qmicon-"], [class*=" qmicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$qmicon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.qmicon-envelope {
+  &:before {
+    content: $qmicon-envelope;
+  }
+}
+.qmicon-navegation {
+  &:before {
+    content: $qmicon-navegation;
+  }
+}
+.qmicon-car {
+  &:before {
+    content: $qmicon-car;
+  }
+}
+.qmicon-atom {
+  &:before {
+    content: $qmicon-atom;
+  }
+}
+.qmicon-calendar {
+  &:before {
+    content: $qmicon-calendar;
+  }
+}
+.qmicon-car-add {
+  &:before {
+    content: $qmicon-car-add;
+  }
+}
+.qmicon-chat {
+  &:before {
+    content: $qmicon-chat;
+  }
+}
+.qmicon-close {
+  &:before {
+    content: $qmicon-close;
+  }
+}
+.qmicon-delete {
+  &:before {
+    content: $qmicon-delete;
+  }
+}
+.qmicon-download {
+  &:before {
+    content: $qmicon-download;
+  }
+}
+.qmicon-download-file {
+  &:before {
+    content: $qmicon-download-file;
+  }
+}
+.qmicon-eye {
+  &:before {
+    content: $qmicon-eye;
+  }
+}
+.qmicon-facebook {
+  &:before {
+    content: $qmicon-facebook;
+  }
+}
+.qmicon-fire {
+  &:before {
+    content: $qmicon-fire;
+  }
+}
+.qmicon-instagram {
+  &:before {
+    content: $qmicon-instagram;
+  }
+}
+.qmicon-link {
+  &:before {
+    content: $qmicon-link;
+  }
+}
+.qmicon-location {
+  &:before {
+    content: $qmicon-location;
+  }
+}
+.qmicon-neumatic {
+  &:before {
+    content: $qmicon-neumatic;
+  }
+}
+.qmicon-paper {
+  &:before {
+    content: $qmicon-paper;
+  }
+}
+.qmicon-phone {
+  &:before {
+    content: $qmicon-phone;
+  }
+}
+.qmicon-search {
+  &:before {
+    content: $qmicon-search;
+  }
+}
+.qmicon-test-bulb {
+  &:before {
+    content: $qmicon-test-bulb;
+  }
+}
+.qmicon-test-tube {
+  &:before {
+    content: $qmicon-test-tube;
+  }
+}
+.qmicon-twitter {
+  &:before {
+    content: $qmicon-twitter;
+  }
+}
+.qmicon-youtube {
+  &:before {
+    content: $qmicon-youtube;
+  }
+}

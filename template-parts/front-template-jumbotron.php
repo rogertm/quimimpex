@@ -59,7 +59,7 @@ foreach ( t_em_front_page_widgets_options() as $widget ) :
 					</div>
 					<div class="info">
 						<div class="info-back">
-							<span class="h2 mt-5 mb-4 d-block"><i class="icomoon-search"></i></span>
+							<span class="h2 mt-5 mb-4 d-block"><i class="qmicon-search"></i></span>
 							<span class="text-white"><?php echo $widget_content; ?></span>
 						</div>
 					</div>

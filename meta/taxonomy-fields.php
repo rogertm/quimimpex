@@ -103,12 +103,12 @@ function quimimpex_taxonomy_form_fields( $term ){
  */
 function quimimpex_taxonomy_icons(){
 	$icons = array(
-		'icomoon-lab-flask'			=> __( 'Nitrogenous', 'quimimpex' ),
-		'icomoon-lab-flask'			=> __( 'Chemicals', 'quimimpex' ),
-		'icomoon-hour-glass'		=> __( 'Glasses', 'quimimpex' ),
-		'icomoon-cake'				=> __( 'Industrial Gases', 'quimimpex' ),
-		'icomoon-circular-graph'	=> __( 'Tire', 'quimimpex' ),
-		'icomoon-paper-plane'		=> __( 'Paper', 'quimimpex' ),
+		'qmicon-atom'		=> __( 'Nitrogenous', 'quimimpex' ),
+		'qmicon-test-tube'	=> __( 'Chemicals', 'quimimpex' ),
+		'qmicon-test-bulb'	=> __( 'Glasses', 'quimimpex' ),
+		'qmicon-fire'		=> __( 'Industrial Gases', 'quimimpex' ),
+		'qmicon-neumatic'	=> __( 'Tire', 'quimimpex' ),
+		'qmicon-paper'		=> __( 'Paper', 'quimimpex' ),
 	);
 
 	/**

@@ -31,7 +31,7 @@ function quimimpex_shortcode_documents(){
 		$docs .= '<li class="list-group-item" id="document-'. $document->ID .'">';
 		$docs .= 	$document->post_title;
 		$docs .= 		'<a href="'. $doc_url .'" class="float-right ml-3" download><i class="icomoon-cloud-download"></i></a>';
-		$docs .= 		'<a href="'. $doc_url .'" class="float-right" target="_blanck"><i class="icomoon-eye"></i></a>';
+		$docs .= 		'<a href="'. $doc_url .'" class="float-right" target="_blanck"><i class="qmicon-eye"></i></a>';
 		$docs .= '</li>';
 	endforeach;
 	$docs .= '</ul>';
@@ -199,7 +199,7 @@ function quimimpex_shortcode_checkin(){
 			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0">';
 			$output .=	 	$product->post_title;
 			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
-			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="icomoon-trash"></i></a>';
+			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
 			$output .=	'</li>';
 			$output .= 	'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
 		endforeach;
@@ -254,11 +254,11 @@ function quimimpex_shortcode_executives(){
 			$output .=				'<h6 class="card-subtitle mb-2 text-muted">'. get_post_meta( $executive->ID, 'qm_executive_position', true ) .'</h6>';
 			$output .=				'<hr>';
 			$output .=				'<a href="tel:'. get_post_meta( $executive->ID, 'qm_executive_phone', true ) .'" class="d-block">';
-			$output .=					'<i class="icomoon-phone mr-1"></i>';
+			$output .=					'<i class="qmicon-phone mr-1"></i>';
 			$output .=					get_post_meta( $executive->ID, 'qm_executive_phone', true );
 			$output .=				'</a>';
 			$output .=				'<a href="tel:'. get_post_meta( $executive->ID, 'qm_executive_email', true ) .'" class="d-block">';
-			$output .=					'<i class="icomoon-mail mr-1"></i>';
+			$output .=					'<i class="qmicon-envelope mr-1"></i>';
 			$output .=					get_post_meta( $executive->ID, 'qm_executive_email', true );
 			$output .=				'</a>';
 			$output .=			'</div>';
@@ -333,9 +333,9 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
 			$output .=					'<a href="'. get_permalink( $product->ID ) .'">'. $product->post_title .'</a>';
 			$output .=					'<div class="d-flex justify-content-center">';
-			$output .=						( $line == 'export' ) ? '<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>' : null;
+			$output .=						( $line == 'export' ) ? '<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="qmicon-eye"></i></a>' : null;
 			$output .=						quimimpex_checkin_btn( $product->ID );
-			$output .=						( $line == 'export' ) ? '<a href="'. get_permalink( $product->ID ) .'" class="text-muted ml-3"><i class="icomoon-link"></i></a>' : null;
+			$output .=						( $line == 'export' ) ? '<a href="'. get_permalink( $product->ID ) .'" class="text-muted ml-3"><i class="qmicon-link"></i></a>' : null;
 			$output .=					'</div>';
 			$output .=				'</li>';
 								endforeach;

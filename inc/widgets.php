@@ -159,7 +159,7 @@ class Quimimpex_Contact_Info extends WP_Widget{
 		if ( t_em('company_address') ) : ?>
 		<div id="qm-address" class="mb-4">
 			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
-				<span class="mr-3"><i class="icomoon-location-pin"></i></span>
+				<span class="mr-3"><i class="qmicon-location"></i></span>
 				<div class="mb-0">
 					<?php echo t_em( 'company_address' ) ?>
 				</div>
@@ -170,7 +170,7 @@ class Quimimpex_Contact_Info extends WP_Widget{
 		<div id="qm-phone" class="mb-4">
 <?php	if ( t_em('principal_contact_phone') ) : ?>
 			<div class="d-flex justify-content-lg-start d-flex justify-content-center">
-				<span class="mr-3"><i class="icomoon-phone"></i></span>
+				<span class="mr-3"><i class="qmicon-phone"></i></span>
 				<div class="mb-0">
 					<a href="tel:<?php echo t_em( 'principal_contact_phone' ) ?>"><?php echo t_em( 'principal_contact_phone' ) ?></a>
 				</div>
@@ -181,7 +181,7 @@ class Quimimpex_Contact_Info extends WP_Widget{
 		if ( t_em('commercial_contact_phone') ) :
 ?>
 			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
-				<span class="mr-3"><i class="icomoon-phone"></i></span>
+				<span class="mr-3"><i class="qmicon-phone"></i></span>
 				<div class="mb-0">
 					<a href="tel:<?php echo t_em( 'commercial_contact_phone' ) ?>"><?php echo t_em( 'commercial_contact_phone' ) ?></a>
 				</div>
@@ -193,7 +193,7 @@ class Quimimpex_Contact_Info extends WP_Widget{
 
 <?php	if ( t_em('principal_contact_email') ) : ?>
 			<div class="d-flex justify-content-lg-start d-flex justify-content-center">
-				<span class="mr-3"><i class="icomoon-mail"></i></span>
+				<span class="mr-3"><i class="qmicon-envelope"></i></span>
 				<div class="mb-0">
 					<a href="mailto:<?php echo t_em( 'principal_contact_email' ) ?>"><?php echo t_em( 'principal_contact_email' ) ?></a>
 				</div>
@@ -204,7 +204,7 @@ class Quimimpex_Contact_Info extends WP_Widget{
 		if ( t_em('commercial_contact_email') ) :
 ?>
 			<div class="d-flex justify-content-lg-start d-flex justify-content-center mb-3">
-				<span class="mr-3"><i class="icomoon-mail"></i></span>
+				<span class="mr-3"><i class="qmicon-envelope"></i></span>
 				<div class="mb-0">
 					<a href="mailto:<?php echo t_em( 'commercial_contact_email' ) ?>"><?php echo t_em( 'commercial_contact_email' ) ?></a>
 				</div>

@@ -32,8 +32,8 @@ function quimimpex_front_about_us(){
 			<div class="<?php echo t_em_grid( 5 ) ?> px-5 py-0 about-us-text">
 				<?php echo t_em_wrap_paragraph( get_post_field( 'post_excerpt', t_em( 'page_about_us' ) ) ) ?>
 		        <div class="mt-5">
-		      		<button type="button" class="btn btn-outline-primary mr-3"><i class="icomoon-phone pr-2"></i><?php echo t_em( 'principal_contact_phone' ) ?></button>
-		      		<button type="button" class="btn btn-outline-primary"><i class="icomoon-mail pr-2"></i><?php echo t_em( 'principal_contact_email' ) ?></button>
+		      		<button type="button" class="btn btn-outline-primary mr-3"><i class="qmicon-phone pr-2"></i><?php echo t_em( 'principal_contact_phone' ) ?></button>
+		      		<button type="button" class="btn btn-outline-primary"><i class="qmicon-envelope pr-2"></i><?php echo t_em( 'principal_contact_email' ) ?></button>
 		        </div>
 			</div>
 		</div>
@@ -150,10 +150,10 @@ function quimimpex_front_posts_section(){
 					<?php t_em_featured_post_thumbnail( 600, 700, true, 'card-img-top', $featured->ID ) ?>
 					<div class="card-body">
 						<h5 class="card-title"><?php echo $featured->post_title ?></h5>
-						<time class="d-block"><i class="icomoon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
+						<time class="d-block"><i class="qmicon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
 						<?php t_em_get_post_excerpt( $featured->ID ) ?>
 						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block stretched-link"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
-						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="icomoon-link"></i></span>
+						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="qmicon-link"></i></span>
 					</div>
 				</div>
 <?php endforeach; ?>
@@ -318,9 +318,9 @@ function quimimpex_products_related_posts(){
 							<a href="<?php echo get_permalink() ?>"><?php echo get_the_title() ?></a>
 						</h5>
 						<div class="d-flex justify-content-center">
-							<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="<?php echo $post->ID ?>"><i class="icomoon-eye"></i></a>
+							<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="<?php echo $post->ID ?>"><i class="qmicon-eye"></i></a>
 							<?php echo quimimpex_checkin_btn( $post->ID ); ?>
-							<a href="<?php echo get_permalink() ?>" class="text-muted ml-3"><i class="icomoon-link"></i></a>
+							<a href="<?php echo get_permalink() ?>" class="text-muted ml-3"><i class="qmicon-link"></i></a>
 						</div>
 					</div>
 				</div>
@@ -412,10 +412,10 @@ function t_em_single_related_posts(){
 					<?php t_em_featured_post_thumbnail( 600, 700, true, 'card-img-top', $featured->ID ) ?>
 					<div class="card-body">
 						<h5 class="card-title"><?php echo $featured->post_title ?></h5>
-						<time class="d-block"><i class="icomoon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
+						<time class="d-block"><i class="qmicon-calendar mx-1"></i><?php echo get_the_date( get_option( 'date_format' ), $featured->ID ) ?></time>
 						<?php t_em_get_post_excerpt( $featured->ID ) ?>
 						<a href="<?php echo get_permalink( $featured->ID ) ?>" class="btn btn-link btn-block stretched-link"><?php _e( 'Read more...', 'quimimpex' ) ?></a>
-						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="icomoon-link"></i></span>
+						<span class="card-link h2 p-3 d-inline-block text-center position-absolute rounded-circle text-white bg-primary"><i class="qmicon-link"></i></span>
 					</div>
 				</div>
 <?php endforeach; ?>
@@ -438,7 +438,7 @@ function t_em_single_related_posts(){
 function quimimpex_checkin_btn( $product_id ){
 	$products = ( isset( $_SESSION['qm_checkin_products'] ) ) ? $_SESSION['qm_checkin_products'] : array();
 	$checked = ( in_array( $product_id, $products ) ) ? 'qm-product-checked' : 'qm-product-unchecked';
-	return '<a href="#" class="qm-checkin-product ml-3 '. $checked .'" data-product-id="'. $product_id .'"><i class="icomoon-shopping-cart"></i></a>';
+	return '<a href="#" class="qm-checkin-product ml-3 '. $checked .'" data-product-id="'. $product_id .'"><i class="qmicon-car-add"></i></a>';
 }
 
 /**

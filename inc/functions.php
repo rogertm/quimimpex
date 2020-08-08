@@ -324,7 +324,7 @@ function quimimpex_checkin_product(){
 	global $post;
 	if ( get_post_type( $post->ID ) == 'qm-import-product'
 		|| get_post_type( $post->ID ) == 'qm-export-product' ) :
-		echo '<div class="small d-inline mr-3"><span class="icomoon-shopping-cart text-muted"></span> <a href="#" class="qm-checkin-product" data-product-id="'. $post->ID .'">'. __( 'Check in', 'quimimpex' ) .'</a></div>';
+		echo '<div class="small d-inline mr-3"><span class="qmicon-car-add text-muted"></span> <a href="#" class="qm-checkin-product" data-product-id="'. $post->ID .'">'. __( 'Check in', 'quimimpex' ) .'</a></div>';
 	endif;
 }
 add_action( 't_em_action_entry_meta_footer', 'quimimpex_checkin_product', 15 );
@@ -429,4 +429,45 @@ function quimimpex_default_image(){
 		return get_stylesheet_directory_uri() .'/assets/images/product-default.jpg';
 }
 add_filter( 't_em_filter_default_post_thumbnail', 'quimimpex_default_image' );
+
+/**
+ * Custom social network options
+ * @return array
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_social_network_options(){
+	$options = [
+		'facebook_set' => array(
+			'name' => 'facebook_set',
+			'label' => __( 'Facebook URL', 't_em' ),
+			'item' => __( 'Facebook', 't_em' ),
+			'class' => 'qmicon-facebook',
+			'order' => '0',
+		),
+		'twitter_set' => array(
+			'name' => 'twitter_set',
+			'label' => __( 'Twitter URL', 't_em' ),
+			'item' => __( 'Twitter', 't_em' ),
+			'class' => 'qmicon-twitter',
+			'order' => '10',
+		),
+		'youtube_set' => array(
+			'name' => 'youtube_set',
+			'label' => __( 'Youtube URL', 't_em' ),
+			'item' => __( 'Youtube', 't_em' ),
+			'class' => 'qmicon-youtube',
+			'order' => '20',
+		),
+		'instagram_set' => array(
+			'name' => 'instagram_set',
+			'label' => __( 'Instagram URL', 't_em' ),
+			'item' => __( 'Instagram', 't_em' ),
+			'class' => 'qmicon-instagram',
+			'order' => '30',
+		),
+	];
+	return apply_filters( 'quimimpex_social_network_options', $options );
+}
+add_filter( 't_em_admin_filter_social_network_options', 'quimimpex_social_network_options' );
 ?>
