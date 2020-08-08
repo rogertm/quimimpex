@@ -333,9 +333,9 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
 			$output .=					'<a href="'. get_permalink( $product->ID ) .'">'. $product->post_title .'</a>';
 			$output .=					'<div class="d-flex justify-content-center">';
-			$output .=						'<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>';
+			$output .=						( $line == 'export' ) ? '<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="'. $product->ID .'"><i class="icomoon-eye"></i></a>' : null;
 			$output .=						quimimpex_checkin_btn( $product->ID );
-			$output .=						'<a href="'. get_permalink( $product->ID ) .'" class="text-muted ml-3"><i class="icomoon-link"></i></a>';
+			$output .=						( $line == 'export' ) ? '<a href="'. get_permalink( $product->ID ) .'" class="text-muted ml-3"><i class="icomoon-link"></i></a>' : null;
 			$output .=					'</div>';
 			$output .=				'</li>';
 								endforeach;
