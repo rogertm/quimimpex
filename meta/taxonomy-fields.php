@@ -56,6 +56,7 @@ add_action( 'admin_init', 'quimimpex_taxonomies_init_hooks' );
  * @since Quimimpex 1.0
  */
 function quimimpex_taxonomy_form_fields( $term ){
+	wp_nonce_field( 'qm_taxonomy_attr', 'qm_taxonomy_field' );
 	$filters = quimimpex_get_taxonomies();
 	$custom_taxonomies = array( 'qm-export-line', 'qm-import-line' );
 
@@ -63,7 +64,7 @@ function quimimpex_taxonomy_form_fields( $term ){
 		if ( in_array( $filter, $custom_taxonomies ) ) :
 			if ( current_filter() == $filter .'_add_form_fields' ) :
 ?>
-		<div class="form-field term-taxonomy-image">
+		<div class="form-field term-taxonomy-icon">
 			<label for="qm_taxonomy_icon"><?php printf( __( '%s Icon', 'quimimpex' ), $value->labels->singular_name ); ?></label>
 			<select id="qm_taxonomy_icon" name="qm_taxonomy_icon">
 				<option value=""><?php _e( '&mdash; Select an Icon &mdash;', 'quimimpex' ) ?></option>
@@ -72,9 +73,20 @@ function quimimpex_taxonomy_form_fields( $term ){
 				<?php endforeach; ?>
 			</select>
 		</div>
+
+		<div class="form-field term-taxonomy-image">
+			<label for="qm_taxonomy_image"><?php printf( __( '%s default Image', 'quimimpex' ), $value->labels->singular_name ); ?></label>
+			<select id="qm_taxonomy_image" name="qm_taxonomy_image">
+				<option value=""><?php _e( '&mdash; Select an Image &mdash;', 'quimimpex' ) ?></option>
+				<?php foreach ( quimimpex_taxonomy_images() as $image => $label ) : ?>
+				<option value="<?php echo $image ?>"><?php echo $label ?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
 <?php
 			elseif ( current_filter() == $filter .'_edit_form_fields' ) :
-				$data = get_term_meta( $term->term_id, 'qm_taxonomy_icon', true );
+				$icon_data 	= get_term_meta( $term->term_id, 'qm_taxonomy_icon', true );
+				$image_data = get_term_meta( $term->term_id, 'qm_taxonomy_image', true );
 ?>
 		<tr class="form-field">
 			<th scope="row">
@@ -84,7 +96,21 @@ function quimimpex_taxonomy_form_fields( $term ){
 				<select id="qm_taxonomy_icon" name="qm_taxonomy_icon">
 					<option value=""><?php _e( '&mdash; Select an Icon &mdash;', 'quimimpex' ) ?></option>
 					<?php foreach ( quimimpex_taxonomy_icons() as $icon => $label ) : ?>
-					<option value="<?php echo $icon ?>" <?php selected( $icon, $data ) ?>><?php echo $label ?></option>
+					<option value="<?php echo $icon ?>" <?php selected( $icon, $icon_data ) ?>><?php echo $label ?></option>
+					<?php endforeach; ?>
+				</select>
+			</td>
+		</tr>
+
+		<tr class="form-field">
+			<th scope="row">
+				<label for="qm_taxonomy_icon"><?php printf( __( '%s default Image', 'taxonomy_image' ), $value->labels->singular_name ); ?></label>
+			</th>
+			<td>
+				<select id="qm_taxonomy_image" name="qm_taxonomy_image">
+					<option value=""><?php _e( '&mdash; Select an Image &mdash;', 'quimimpex' ) ?></option>
+					<?php foreach ( quimimpex_taxonomy_images() as $image => $label ) : ?>
+					<option value="<?php echo $image ?>" <?php selected( $image, $image_data ) ?>><?php echo $label ?></option>
 					<?php endforeach; ?>
 				</select>
 			</td>
@@ -121,18 +147,52 @@ function quimimpex_taxonomy_icons(){
 }
 
 /**
+ * Set of default taxonomies images
+ * @return array 	Pair 'image.jpg' => 'Image Label'...
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_taxonomy_images(){
+	$images = array(
+		'default-nitrogenous.jpg'		=> __( 'Nitrogenous', 'quimimpex' ),
+		'default-chemicals.jpg'			=> __( 'Chemicals', 'quimimpex' ),
+		'default-glasses.jpg'			=> __( 'Glasses', 'quimimpex' ),
+		'default-industrial-gases.jpg'	=> __( 'Industrial Gases', 'quimimpex' ),
+		'default-tire.jpg'				=> __( 'Tire', 'quimimpex' ),
+		'default-paper.jpg'				=> __( 'Paper', 'quimimpex' ),
+	);
+
+	/**
+	 * Filter the images array
+	 * @param array $images 		Array of 'image.jpg' => 'Image Label' pairs
+	 *
+	 * @since Quimimpex 1.0
+	 */
+	return apply_filters( 'quimimpex_taxonomy_images', $images );
+}
+
+/**
  * Save the data
  *
  * @since Quimimpex 1.0
  */
 function quimimpex_taxonomy_save_form_fields( $term_id ){
-	if ( ! isset( $_POST['qm_taxonomy_icon'] ) )
+	// Check if the user intended to change this value.
+	if ( ! isset( $_POST['qm_taxonomy_field'] ) || ! wp_verify_nonce( $_POST['qm_taxonomy_field'], 'qm_taxonomy_attr' ) )
 		return;
+/*	if ( ! isset( $_POST['qm_taxonomy_icon'] ) )
+		return;*/
 
 	if ( ! empty( $_POST['qm_taxonomy_icon'] ) ) :
 		update_term_meta( $term_id, 'qm_taxonomy_icon', sanitize_text_field( $_POST['qm_taxonomy_icon'] ) );
 	else :
 		delete_term_meta( $term_id, 'qm_taxonomy_icon' );
+	endif;
+
+	if ( ! empty( $_POST['qm_taxonomy_image'] ) ) :
+		update_term_meta( $term_id, 'qm_taxonomy_image', sanitize_text_field( $_POST['qm_taxonomy_image'] ) );
+	else :
+		delete_term_meta( $term_id, 'qm_taxonomy_image' );
 	endif;
 }
 ?>
