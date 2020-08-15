@@ -56,6 +56,20 @@ function quimimpex_hide_admin_bar(){
 add_action( 'init', 'quimimpex_hide_admin_bar' );
 
 /**
+ * Exclude some post types from search results
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_search_filter( $query ){
+	if( ! is_admin() && $query->is_main_query() ) :
+		if( $query->is_search ) :
+			$query->set( 'post_type', ['qm-export-product', 'qm-import-product'] );
+		endif;
+	endif;
+}
+add_action( 'pre_get_posts', 'quimimpex_search_filter' );
+
+/**
  * Add custom body classes
  *
  * @since Quimimpex 1.0
@@ -314,20 +328,6 @@ function quimimpex_comment_types( $comment_types ){
 	return $comments;
 }
 add_action( 'admin_comment_types_dropdown', 'quimimpex_comment_types' );
-
-/**
- * Check in products
- *
- * @since Quimimpex 1.0
- **/
-function quimimpex_checkin_product(){
-	global $post;
-	if ( get_post_type( $post->ID ) == 'qm-import-product'
-		|| get_post_type( $post->ID ) == 'qm-export-product' ) :
-		echo '<div class="small d-inline mr-3"><span class="qmicon-car-add text-muted"></span> <a href="#" class="qm-checkin-product" data-product-id="'. $post->ID .'">'. __( 'Check in', 'quimimpex' ) .'</a></div>';
-	endif;
-}
-add_action( 't_em_action_entry_meta_footer', 'quimimpex_checkin_product', 15 );
 
 /**
  * Add custom mime types to upload

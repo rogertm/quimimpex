@@ -22,6 +22,19 @@ body{
 			top: 30px !important;
 		}
 	}
+	&.search{
+		#content{
+			@extend .mt-5;
+			article{
+				&.qm-import-product,
+				&.qm-export-product{
+					header{
+						@extend .bg-transparent;
+					}
+				}
+			}
+		}
+	}
 }
 
 .full-width {

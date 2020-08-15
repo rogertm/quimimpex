@@ -317,9 +317,13 @@ function quimimpex_products_related_posts(){
 							<a href="<?php echo get_permalink() ?>"><?php echo get_the_title() ?></a>
 						</h5>
 						<div class="d-flex justify-content-center">
+							<?php if ( get_post_type( $post->ID ) == 'qm-export-product' ) : ?>
 							<a href="#" class="text-muted ml-3" data-toggle="modal" data-target="#qm-modal" data-id="<?php echo $post->ID ?>"><i class="qmicon-eye"></i></a>
+							<?php endif; ?>
 							<?php echo quimimpex_checkin_btn( $post->ID ); ?>
+							<?php if ( get_post_type( $post->ID ) == 'qm-export-product' ) : ?>
 							<a href="<?php echo get_permalink() ?>" class="text-muted ml-3"><i class="qmicon-link"></i></a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
