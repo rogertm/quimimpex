@@ -580,6 +580,28 @@ body{
 		}
 	}
 }
+#you-are-here{
+	@extend .full-width;
+	@extend .border-bottom;
+	@extend .mb-4;
+	.breadcrumb{
+		@extend .container;
+		@extend .bg-transparent;
+		@extend .mb-0;
+		@extend .small;
+	}
+}
+.page,
+.single{
+	&.page-has-thumbnail{
+		#you-are-here{
+			margin-top: -5.5rem;
+		}
+	}
+	#you-are-here{
+		margin-top: -3rem;
+	}
+}
 
 //
 // QM

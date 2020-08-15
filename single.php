@@ -36,6 +36,7 @@ get_header(); ?>
 					<h1 class="entry-title h2 text-white mx-auto <?php echo t_em_grid( 8 ) ?>"><?php the_title(); ?></h1>
 				</header>
 			</div>
+			<?php do_action( 't_em_action_post_content_before' ); ?>
 			<figure class="mb-4">
 			<?php if ( has_post_thumbnail() ) the_post_thumbnail(); ?>
 			</figure>
@@ -43,7 +44,6 @@ get_header(); ?>
 				<?php do_action( 't_em_action_entry_meta_header' ) ?>
 			</div>
 
-			<?php do_action( 't_em_action_post_content_before' ); ?>
 			<?php if ( ! empty( get_post_field( 'post_excerpt' ) ) ) : ?>
 			<div class="entry-excerpt"><?php echo t_em_wrap_paragraph( $post->post_excerpt ) ?></div>
 			<?php endif; ?>

@@ -122,6 +122,7 @@ function t_em_custom_template_content(){
 			<h1 class="entry-title text-white"><?php echo apply_filters( 'the_title', $template_data->post_title ); ?></h1>
 		</header>
 	</div><!-- .featured-header -->
+	<?php do_action( 't_em_action_post_content_before' ) ?>
 <?php
 	endif;
 }

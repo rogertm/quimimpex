@@ -19,15 +19,19 @@ function quimimpex_setup(){
 	// Make Quimimpex available for translation.
 	load_child_theme_textdomain( 'quimimpex', get_stylesheet_directory() . '/languages' );
 
-	// Hooks
+	// Remove Hooks
 	// remove_action( 't_em_action_entry_meta_footer', 't_em_edit_post_link' );
 	remove_action( 't_em_action_entry_meta_header', 't_em_post_author' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_posted_in' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_post_shortlink' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_comments_link' );
 	remove_action( 't_em_action_post_after', 't_em_single_navigation', 5 );
+	remove_action( 't_em_action_content_before', 't_em_breadcrumb', 5 );
 
 	remove_filter( 'get_the_excerpt', 't_em_custom_excerpt_more' );
+
+	// Add Hooks
+	add_action( 't_em_action_post_content_before', 't_em_breadcrumb' );
 }
 add_action( 'after_setup_theme', 'quimimpex_setup' );
 
