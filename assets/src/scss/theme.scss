@@ -22,9 +22,14 @@ body{
 			top: 30px !important;
 		}
 	}
-	&.search{
+	&.search,
+	&.archive{
 		#content{
 			@extend .mt-5;
+		}
+	}
+	&.search{
+		#content{
 			article{
 				&.qm-import-product,
 				&.qm-export-product{
@@ -593,6 +598,11 @@ body{
 }
 .page,
 .single{
+	&-qm-export-product{
+		#you-are-here{
+			margin-top: 0 !important;
+		}
+	}
 	&.page-has-thumbnail{
 		#you-are-here{
 			margin-top: -5.5rem;
