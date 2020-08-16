@@ -85,7 +85,7 @@ function t_em_slider_bootstrap_carousel( $args ){
 				<?php foreach ( $slider_posts as $post ) : setup_postdata( $post );
 					$thumbnail = t_em_image_resize( 1200, t_em( 'slider_height' ), $post->ID ); ?>
 					<div class="carousel-item">
-						<?php t_em_featured_post_thumbnail( 1200, t_em( 'slider_height' ), false, 'd-block w-100', $post->ID ); ?>
+						<?php t_em_featured_post_thumbnail( 1900, 600, false, 'd-block w-auto', $post->ID ); ?>
 						<div id="<?php echo $post->post_name ?>-<?php echo $post->ID; ?>" class="carousel-caption">
 							<div class="<?php echo t_em_grid( 8 ) ?> <?php echo t_em_grid( 2, '', true ) ?>">
 								<h3 class="item-title text-uppercase h2">

@@ -31,9 +31,9 @@ function quimimpex_front_about_us(){
 			</div>
 			<div class="<?php echo t_em_grid( 5 ) ?> px-5 py-0 about-us-text">
 				<?php echo t_em_wrap_paragraph( get_post_field( 'post_excerpt', t_em( 'page_about_us' ) ) ) ?>
-		        <div class="mt-5">
-		      		<button type="button" class="btn btn-outline-primary mr-3"><i class="qmicon-phone pr-2"></i><?php echo t_em( 'principal_contact_phone' ) ?></button>
-		      		<button type="button" class="btn btn-outline-primary"><i class="qmicon-envelope pr-2"></i><?php echo t_em( 'principal_contact_email' ) ?></button>
+		        <div class="about-us-action mt-5">
+		      		<button type="button" class="btn btn-outline-primary mr-3 mb-3"><i class="qmicon-phone pr-2"></i><?php echo t_em( 'principal_contact_phone' ) ?></button>
+		      		<button type="button" class="btn btn-outline-primary mb-3"><i class="qmicon-envelope pr-2"></i><?php echo t_em( 'principal_contact_email' ) ?></button>
 		        </div>
 			</div>
 		</div>
@@ -181,12 +181,12 @@ function quimimpex_companies_section(){
 	$companies = get_posts( $args );
 	if ( $companies ) :
 		$attr = array(
-			'class'	=> 'card-img-top py-5',
+			'class'	=> 'card-img-top pt-3 pb-1 py-sm-5',
 		);
 ?>
 	<section id="featured-companies">
-		<div class="<?php echo t_em_container() ?>">
-			<div class="card-group">
+		<div class="<?php echo t_em_container() ?> container">
+			<div class="card-group d-flex justify-content-center">
 <?php foreach ( $companies as $company ) : ?>
 				<div class="card border-0">
 					<div class="card-wrapper">
@@ -212,9 +212,11 @@ function quimimpex_modal(){
 	<div id="qm-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qm-modal-label" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h3 id="qm-modal-label" class="modal-title"></h3>
-					<div class="ml-auto">
+				<div class="modal-header row no-gutters">
+					<div class="col-lg-8">
+						<h3 id="qm-modal-label" class="modal-title text-center text-lg-left"></h3>
+					</div>
+					<div class="col-lg-4 text-center text-lg-right">
 						<div class="modal-actions d-inline"></div>
 						<a href="#" class="btn btn-light rounded-circle" data-dismiss="modal" aria-label="<?php _e( 'Close', 'quimimpex' ) ?>">
 							<i class="icomoon-cross text-muted h6 mb-0"></i>
@@ -225,9 +227,9 @@ function quimimpex_modal(){
 					<div class="container-fluid">
 						<div class="row">
 							<div class="<?php echo t_em_grid( 5 ) ?> p-0">
-								<div class="modal-thumbnail"></div>
+								<div class="modal-thumbnail mb-3"></div>
 							</div>
-							<div class="<?php echo t_em_grid( 7 ) ?> py-1">
+							<div class="<?php echo t_em_grid( 7 ) ?> py-1 px-lg-3 p-0">
 								<div class="modal-post-content mb-3"></div>
 								<h6 class="font-weight-bold modal-title-contact border-bottom pb-2"></h6>
 								<div class="modal-post-contact row">

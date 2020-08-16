@@ -183,7 +183,6 @@ function quimimpex_data_sheet_data_fields(){
 			'upload'	=> true,
 			'attr'		=> array(
 								'class' 	=> 'media-url',
-								'required'	=> 'required',
 							),
 		),
 		'data_sheet_id'	=> array(
@@ -193,7 +192,6 @@ function quimimpex_data_sheet_data_fields(){
 			'upload'	=> null,
 			'attr'		=> array(
 								'class' => 'media-id',
-								'required'	=> null,
 							),
 		),
 	);
@@ -213,7 +211,7 @@ function quimimpex_import_data_sheet_callback( $post ){
 		$meta_value = get_post_meta( $post->ID, $value['meta'], true );
 ?>
 	<h4><label for="<?php echo $value['meta'] ?>"><?php echo $value['label'] ?></label></h4>
-	<input id="<?php echo $value['meta'] ?>" class="<?php echo $value['attr']['class'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>" required="<?php echo $value['attr']['required'] ?>">
+	<input id="<?php echo $value['meta'] ?>" class="<?php echo $value['attr']['class'] ?>" type="<?php echo $value['type'] ?>" name="<?php echo $value['meta'] ?>" value="<?php echo $meta_value ?>">
 	<?php if ( $value['upload'] ) : ?>
 		<a href="#" class="button media-selector"><?php _e( 'Upload Data Sheet', 'quimimpex' ) ?></a>
 	<?php endif; ?>

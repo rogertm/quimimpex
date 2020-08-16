@@ -133,6 +133,9 @@ body{
 				@extend .py-4;
 				@extend .hvr-underline-from-center;
 				overflow: inherit !important;
+				@include media-breakpoint-down(md){
+					border-bottom: solid 1px $gray-300;
+				}
 				&:before{
 					height: 3px;
 				}
@@ -175,12 +178,18 @@ body{
 						border-bottom-color: rgba(0,0,0,.15);
 						border-width: 11px;
 						margin-left: -11px;
+						@include media-breakpoint-down(md){
+							top: 18%;
+						}
 					}
 					&:after{
 						border-color: rgba(255, 255, 255, 0);
 						border-bottom-color: #ffffff;
 						border-width: 10px;
 						margin-left: -10px;
+						@include media-breakpoint-down(md){
+							top: 20%;
+						}
 					}
 					.menu-item{
 						@extend .py-0;
@@ -293,8 +302,14 @@ body{
 // Slider
 //
 #slider-carousel{
+	img{
+		max-width: unset !important;
+	}
 	@include media-breakpoint-down(md){
 		margin-top: 5rem !important;
+		.item-title{
+			font-size: 1.5rem !important;
+		}
 	}
 }
 .carousel{
@@ -330,7 +345,8 @@ body{
 //
 .about-us{
 	@include media-breakpoint-down(md){
-		margin-top: 5rem !important;
+		margin-top: 6rem !important;
+		margin-bottom: 6rem !important;
 		img{
 			padding: 0 !important;
 		}
@@ -343,12 +359,16 @@ body{
 			bottom: -10px;
 			left: 15px;
 			right: 15px;
+			text-align: center;
 		}
 		p{
 			background-color: rgba($primary, 0.8);
 			@include media-breakpoint-down(md){
 				padding: 1rem !important;
 				display: block;
+			}
+			@include media-breakpoint-down(sm){
+				font-size: 1.5rem;
 			}
 		}
 		.hvr-outline-in::before{
@@ -361,6 +381,14 @@ body{
 			margin-bottom: 3rem !important;
 			padding-left: 1rem !important;
 			padding-right: 1rem !important;
+			text-align: center;
+		}
+	}
+	&-action{
+		@include media-breakpoint-down(sm){
+			.btn{
+				width: 100%;
+			}
 		}
 	}
 }
@@ -376,10 +404,28 @@ body{
 		@extend .text-center;
 		@extend .w-75;
 		@extend .mx-auto;
+		@include media-breakpoint-down(md){
+			width: 100% !important;
+		}
 	}
 	a:hover{
 		.jumbo-widget-heading{
 			@extend .text-secondary;
+		}
+	}
+	.jumbo-widget{
+		&.ih-item{
+			@include media-breakpoint-down(md){
+				.info{
+					background: rgba(41, 36, 100, 0.7);
+					opacity: 1;
+					&-back *{
+						transform: unset !important;
+						visibility: visible !important;
+						display: block !important;
+					}
+				}
+			}
 		}
 	}
 }
@@ -562,6 +608,13 @@ body{
 			@extend .text-primary;
 		}
 	}
+	@include media-breakpoint-down(md){
+		&-title{
+			font-size: 1.5rem;
+			line-height: 1.2;
+			margin-bottom: 1.5rem;
+		}
+	}
 }
 
 #featured-companies{
@@ -668,11 +721,24 @@ body{
 	background-position: center top;
 	background-attachment: fixed;
 	@extend .position-relative;
-	*:not(input){
+	*{
 		@extend .text-white;
 		a{
 			&:hover{
 				color: $qm-red !important;
+			}
+		}
+	}
+	input{
+		background-color: rgba(255,255,255,.2);
+	}
+	.btn{
+		&-outline{
+			&-primary{
+				@extend .text-primary;
+				&:hover{
+					@extend .text-white;
+				}
 			}
 		}
 	}

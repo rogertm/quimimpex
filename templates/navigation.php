@@ -36,11 +36,11 @@ function t_em_top_menu(){
 					$brand = ( has_custom_logo() ) ? get_custom_logo() : '<'. $heading_tag .' id="site-title"><a href="'. home_url( '/' ) .'" class="navbar-brand" rel="home">'. get_bloginfo( 'name' ) .'</a></'. $heading_tag .'>';
 					echo apply_filters( 't_em_filter_top_menu_brand', $brand );
 					?>
-					<?php if ( has_nav_menu( 'top-menu' ) ) : ?>
 					<button type="button" class="navbar-toggler h-75 my-auto" data-toggle="collapse" data-target="#site-top-menu">
-						<span class="navbar-toggler-icon"></span>
+						<span class="navbar-icon qmicon-navegation text-qm-blue-light"></span>
 					</button>
 				</div>
+				<?php if ( has_nav_menu( 'top-menu' ) ) : ?>
 				<div id="site-top-menu" class="collapse navbar-collapse">
 				<?php
 				do_action( 't_em_action_top_menu_navbar_before' );
@@ -109,7 +109,7 @@ function quimimpex_cart_counter(){
 		$counter 	= ( isset( $_SESSION['qm_checkin_products'] ) ) ? $_SESSION['qm_checkin_products'] : array();
 		$style 		= ( count( $counter ) > 0 ) ? 'primary' : 'qm-blue-light';
 ?>
-	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 pr-3">
+	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 mr-0 mr-lg-3 pr-0">
 		<a href="<?php echo get_permalink( t_em( 'page_checkin' ) ) ?>" class="btn btn-<?php echo $style ?> btn-sm">
 			<span class="text-white counter"><?php echo count( $counter ) ?></span>
 			<i class="qmicon-car-add text-white hvr-grow ml-2"></i>
