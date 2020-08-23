@@ -314,7 +314,7 @@ function quimimpex_products_related_posts(){
 			<div class="row">
 		<?php foreach( $all_posts as $post ) : setup_postdata( $post ); ?>
 				<div class="card text-center shadow-sm border-0 <?php echo t_em_grid( 4 ) ?>">
-					<?php t_em_featured_post_thumbnail( 700, 460, true, 'featured-post-thumbnail card-img-top', $post->ID ) ?>
+					<?php t_em_featured_post_thumbnail( 700, 460, true, 'card-img-top border p-1', $post->ID ) ?>
 					<div class="card-body">
 						<h5 class="card-title font-weight-superbold mt-2 mb-3">
 							<a href="<?php echo get_permalink() ?>"><?php echo get_the_title() ?></a>

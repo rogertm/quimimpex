@@ -424,14 +424,18 @@ add_action( 'transition_post_status', 'quimimpex_send_newsletter', 10, 3 );
 
 /**
  * Set default image
+ * @param int $post_id Optional. Post ID. Default is ID of the global $post.
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_default_image(){
-	global $post;
-	if ( get_post_type( $post->id ) == 'qm-export-product' || get_post_type( $post->ID ) == 'qm-import-product' ) :
-		$taxonomy = ( get_post_type( $post->ID ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
-		$term = wp_get_post_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+function quimimpex_default_image( $post_id = 0 ){
+	$post_id = absint( $post_id );
+	if ( ! $post_id )
+		$post_id = get_the_ID();
+
+	if ( get_post_type( $post_id ) == 'qm-export-product' || get_post_type( $post_id ) == 'qm-import-product' ) :
+		$taxonomy = ( get_post_type( $post_id ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
+		$term = wp_get_post_terms( $post_id, $taxonomy, array( 'fields' => 'ids' ) );
 		$image = get_term_meta( $term[0], 'qm_taxonomy_image', true );
 		return get_stylesheet_directory_uri() .'/assets/images/'. $image;
 	endif;

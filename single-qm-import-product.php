@@ -46,7 +46,7 @@ $data_sheet		= ( get_post_meta( $post->ID, 'qm_data_sheet_url' ) )
 			<?php do_action( 't_em_action_post_content_before' ); ?>
 			<div class="entry-content row mt-5">
 				<div class="<?php echo t_em_grid( 5 ) ?>">
-					<?php t_em_featured_post_thumbnail( 700, 460, false, 'w-100 mb-4' ) ?>
+					<?php t_em_featured_post_thumbnail( 700, 460, false, 'w-100 mb-4 border p-1' ) ?>
 				</div>
 				<div class="<?php echo t_em_grid( 7 ) ?>">
 					<div class="d-flex justify-content-between align-items-center mb-4">

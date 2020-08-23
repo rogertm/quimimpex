@@ -299,7 +299,8 @@ function quimimpex_ajax_modal(){
 	$post_id		= $_POST['post_id'];
 	$title 			= get_the_title( $post_id );
 	$attachment_id 	= get_post_thumbnail_id( $post_id );
-	$thumbnail		= '<img src="'. t_em_image_resize( 700, 460, $attachment_id ) .'" class="m-0">';
+	$img 			= ( $attachment_id ) ? t_em_image_resize( 700, 460, $attachment_id ) : quimimpex_default_image( $post_id );
+	$thumbnail		= '<img src="'. $img .'" class="m-0 border p-1">';
 	$contact_id		= get_post_meta( $post_id, 'qm_product_contact', true );
 	$land_phone		= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_land_phones', true ) )
 						? '<span class="py-1 d-block"><i class="qmicon-phone mr-3 text-primary"></i> <a href="tel:'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'</a></span>'

@@ -180,22 +180,48 @@ function quimimpex_shortcode_checkin(){
 		$alert  = null;
 	endif;
 
-	$args = array(
-		'post_type'			=> array( 'qm-export-product', 'qm-import-product' ),
+	$export_args = array(
+		'post_type'			=> 'qm-export-product',
 		'posts_per_page'	=> -1,
 		'post__in'			=> $checked_products,
 	);
-	$products = ( $checked_products ) ? get_posts( $args ) : null;
+	$export_products = ( isset( $checked_products ) ) ? get_posts( $export_args ) : null;
+
+	$import_args = array(
+		'post_type'			=> 'qm-import-product',
+		'posts_per_page'	=> -1,
+		'post__in'			=> $checked_products,
+	);
+	$import_products = ( isset( $checked_products ) ) ? get_posts( $import_args ) : null;
 
 	$output  = '<form id="qm-checkin-form" method="post" class="mb-5">';
 	$output  	.= $alert;
 	$output  	.= wp_nonce_field( 'qm_checkin_form_attr', 'qm_checkin_form_field' );
-	if ( $products ) :
+	if ( $export_products || $import_products ) :
 		$output  	.= '<h3 class="h2 mb-4">'. __( 'List of products', 'quimimpex' ) .'</h3>';
+	endif;
+	if ( $export_products ) :
+		$output  	.= '<h5 class="mb-2 mt-5">'. __( 'Export products', 'quimimpex' ) .'</h5>';
 		$output 	.= '<ul class="list-group list-group-flush">';
-		foreach ( $products as $product ) :
-			$service_page = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? t_em( 'page_export_lines' ) : t_em( 'page_import_lines' );
-			$taxonomy = ( get_post_type( $product->ID ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
+		foreach ( $export_products as $product ) :
+			$service_page = t_em( 'page_export_lines' );
+			$taxonomy = 'qm-export-line';
+			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0">';
+			$output .=	 	$product->post_title;
+			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
+			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
+			$output .=	'</li>';
+			$output .= 	'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
+		endforeach;
+		$output 	.= '</ul>';
+	endif;
+
+	if ( $import_products ) :
+		$output  	.= '<h5 class="mb-2 mt-5">'. __( 'Export products', 'quimimpex' ) .'</h5>';
+		$output 	.= '<ul class="list-group list-group-flush">';
+		foreach ( $import_products as $product ) :
+			$service_page = t_em( 'page_import_lines' );
+			$taxonomy = 'qm-import-line';
 			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0">';
 			$output .=	 	$product->post_title;
 			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
@@ -257,7 +283,7 @@ function quimimpex_shortcode_executives(){
 			$output .=					'<i class="qmicon-phone mr-1"></i>';
 			$output .=					get_post_meta( $executive->ID, 'qm_executive_phone', true );
 			$output .=				'</a>';
-			$output .=				'<a href="tel:'. get_post_meta( $executive->ID, 'qm_executive_email', true ) .'" class="d-block">';
+			$output .=				'<a href="mailto:'. get_post_meta( $executive->ID, 'qm_executive_email', true ) .'" class="d-block">';
 			$output .=					'<i class="qmicon-envelope mr-1"></i>';
 			$output .=					get_post_meta( $executive->ID, 'qm_executive_email', true );
 			$output .=				'</a>';
