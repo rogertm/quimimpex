@@ -217,7 +217,7 @@ function quimimpex_shortcode_checkin(){
 	endif;
 
 	if ( $import_products ) :
-		$output  	.= '<h5 class="mb-2 mt-5">'. __( 'Export products', 'quimimpex' ) .'</h5>';
+		$output  	.= '<h5 class="mb-2 mt-5">'. __( 'Import products', 'quimimpex' ) .'</h5>';
 		$output 	.= '<ul class="list-group list-group-flush">';
 		foreach ( $import_products as $product ) :
 			$service_page = t_em( 'page_import_lines' );

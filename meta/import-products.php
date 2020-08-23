@@ -74,6 +74,43 @@ function quimimpex_import_product_data_fields(){
 }
 
 /**
+ * Merge the companies settings into Import Products Fields
+ * @return array 	Array of fields
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_import_products_query_fields( $custom_fields = array() ){
+	$fields = array(
+		'contacts'		=> array(
+			'label'		=> __( 'Contacts', 'quimimpex' ),
+			'meta'		=> 'qm_product_contact',
+			'type'		=> 'select',
+			'options'	=> array(),
+			'order'		=> '05',
+		),
+	);
+
+	// Contacts
+	$contact_args = array(
+		'post_type'			=> 'qm-contact',
+		'posts_per_page'	=> -1,
+		'post_status'		=> 'publish',
+	);
+	$contacts = get_posts( $contact_args );
+
+	$contacts_options = array( '0' => __( '&mdash; Select Contact &mdash;', 'quimimpex' ) );
+	foreach ( $contacts as $contact ) :
+		$key = array( '\''. $contact->ID .'\'' => $contact->post_title );
+		$contacts_options = array_merge( $contacts_options, $key );
+	endforeach;
+
+	$fields['contacts']['options'] = array_merge( $fields['contacts']['options'], $contacts_options );
+	uasort( $fields, 't_em_sort_by_order' );
+	return array_merge( $custom_fields, $fields );
+}
+add_filter( 'quimimpex_import_product_data_fields', 'quimimpex_import_products_query_fields' );
+
+/**
  * Import Product content callback
  *
  * @since Quimimpex 1.0
