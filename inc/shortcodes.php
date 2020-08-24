@@ -40,6 +40,64 @@ function quimimpex_shortcode_documents(){
 add_shortcode( 'qm_documents', 'quimimpex_shortcode_documents' );
 
 /**
+ * Shortcode [qm_contact_info]
+ * Behavior: [qm_contact_info]
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_shortcode_contact_info(){
+	$args = array(
+		'post_type'			=> 'qm-contact',
+		'posts_per_page'	=> -1,
+		'meta_key'			=> 'qm_contact_is_public',
+	);
+
+	$contacts = get_posts( $args );
+
+	if ( $contacts ) :
+		$output = '<div class="d-block">';
+		$output .= '<div class="row row-cols-1 row-cols-lg-3 mt-4 mb-3">';
+		foreach ( $contacts as $contact ) :
+			$land_phone 	= ( get_post_meta( $contact->ID, 'qm_contact_land_phones' ) )
+								? get_post_meta( $contact->ID, 'qm_contact_land_phones', true )
+								: null;
+			$mobil_phone 	= ( get_post_meta( $contact->ID, 'qm_contact_mobil_phones' ) )
+								? get_post_meta( $contact->ID, 'qm_contact_mobil_phones', true )
+								: null;
+			$phone 			= $land_phone ?? $mobil_phone;
+
+			$contact_email	= ( get_post_meta( $contact->ID, 'qm_contact_email' ) )
+								? get_post_meta( $contact->ID, 'qm_contact_email', true )
+								: null;
+			$request_email 	= ( get_post_meta( $contact->ID, 'qm_contact_request_email' ) )
+								? get_post_meta( $contact->ID, 'qm_contact_request_email', true )
+								: null;
+			$email 			= $contact_email ?? $request_email;
+
+			$output .= '<div class="col mb-3">';
+			$output .=		'<div class="card">';
+			$output .=			'<div class="card-body">';
+			$output .=				'<h6 class="card-title">'. $contact->post_title .'</h6>';
+			$output .=				'<div class="card-textd-flex justify-content-lg-start d-flex justify-content-center">';
+			$output .= 					'<span class="mr-3 text-primary"><i class="qmicon-phone"></i></span>';
+			$output .= 					'<a href="tel:'. $phone .'">'. $phone .'</a>';
+			$output .= 				'</div>';
+			$output .=				'<div class="card-textd-flex justify-content-lg-start d-flex justify-content-center">';
+			$output .= 					'<span class="mr-3 text-primary"><i class="qmicon-envelope"></i></span>';
+			$output .= 					'<a href="mailto:'. $email .'">'. $email .'</a>';
+			$output .= 				'</div>';
+			$output .=			'</div>';
+			$output .=		'</div>';
+			$output .= '</div>';
+		endforeach;
+		$output .= '</div>';
+		$output .= '</div>';
+		return $output;
+	endif;
+}
+add_shortcode( 'qm_contact_info', 'quimimpex_shortcode_contact_info' );
+
+/**
  * Shortcode [qm_contact_form]
  * Behavior: [qm_contact_form line=""]
  * 0. line: 	Required. Default value: "empty". Options: "export", "import"

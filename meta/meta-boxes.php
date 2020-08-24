@@ -31,6 +31,7 @@ function quimimpex_meta_boxes(){
 
 	// Contact
 	add_meta_box( 'quimimpex-contact-data', __( 'Contact Data', 'quimimpex' ), 'quimimpex_contact_data_callback', 'qm-contact', 'advanced', 'high' );
+	add_meta_box( 'quimimpex-contact-public', __( 'Public', 'quimimpex' ), 'quimimpex_contact_public_callback', 'qm-contact', 'side', 'high' );
 
 	// Documents
 	add_meta_box( 'quimimpex-upload-data', __( 'Document Data', 'quimimpex' ), 'quimimpex_document_data_callback', 'qm-document', 'advanced', 'high' );

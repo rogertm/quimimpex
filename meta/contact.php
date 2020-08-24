@@ -61,6 +61,23 @@ function quimimpex_contact_data_callback( $post ){
 }
 
 /**
+ * Make the current contact information public
+ * Will be shown in [qm_contact_info] shortcode
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_contact_public_callback( $post ){
+	wp_nonce_field( 'qm_contact_attr', 'qm_contact_field' );
+?>
+	<p><?php _e( 'Active this checkbox to show this information in <code>[qm_contact_info]</code> shortcode', 'quimimpex' ); ?></p>
+	<label>
+		<input type="checkbox" name="qm_contact_is_public" value="1" <?php checked( true, get_post_meta( $post->ID, 'qm_contact_is_public', true ) ) ?>>
+		<?php _e( 'Public Information', 'quimimpex' ) ?>
+	</label>
+<?php
+}
+
+/**
  * Save the data
  *
  * @since Quimimpex 1.0
@@ -85,6 +102,12 @@ function quimimpex_save_contact_meta( $post_id ){
 			delete_post_meta( $post_id, $value['meta'] );
 		endif;
 	endforeach;
+
+	if ( isset( $_POST['qm_contact_is_public'] ) && $_POST['qm_contact_is_public'] ) :
+		update_post_meta( $post_id, 'qm_contact_is_public', $_POST['qm_contact_is_public'] );
+	else :
+		delete_post_meta( $post_id, 'qm_contact_is_public' );
+	endif;
 }
 add_action( 'save_post', 'quimimpex_save_contact_meta' );
 ?>
