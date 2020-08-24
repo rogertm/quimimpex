@@ -323,7 +323,7 @@ jQuery(document).ready(function($) {
 	$('#qm-modal').on('shown.bs.modal', function(e){
 		var obj 	= $(e.relatedTarget);
 		var post_id	= obj.data('id');
-		var loading	= '<div class="modal-loading text-center py-6 text-muted"><i class="icomoon-cycle h1"></i></div>';
+		var loading	= '<div class="modal-loading text-center py-6 text-muted"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>';
 		$('.modal-body').append(loading);
 
 		$.ajax({
@@ -342,12 +342,7 @@ jQuery(document).ready(function($) {
 						$('.modal-actions').append(response.checkin);
 						$('.modal-actions').append(response.data_sheet);
 						$('.modal-thumbnail').append(response.thumbnail);
-						$('.modal-title-contact').append(response.title_contact);
 						$('.modal-post-content').append(response.content);
-						$('.contact-phone').append(response.land_phone);
-						$('.contact-phone').append(response.mobil_phone);
-						$('.contact-email').append(response.email);
-						$('.contact-email').append(response.request_email);
 						break;
 					case 'error':
 						console.log(response.msg);
@@ -363,9 +358,6 @@ jQuery(document).ready(function($) {
 		$('.modal-loading').empty();
 		$('.modal-thumbnail').empty();
 		$('.modal-title-description').empty();
-		$('.modal-title-contact').empty();
 		$('.modal-post-content').empty();
-		$('.contact-phone').empty();
-		$('.contact-email').empty();
 	})
 });

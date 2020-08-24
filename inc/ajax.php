@@ -330,18 +330,29 @@ function quimimpex_ajax_modal(){
 		endif;
 	endforeach;
 
+	if ( $land_phone || $mobil_phone || $email || $request_email ) :
+		$content .= '<div class="mb-3">';
+		$content .= 	'<h6 class="font-weight-bold border-bottom pb-2">'. __( 'Contact information', 'quimimpex' ) .'</h6>';
+		$content .= 	'<div class="row">';
+		$content .= 		'<div class="contact-phone '. t_em_grid( 6 ) .'">';
+		$content .= 			$land_phone;
+		$content .= 			$mobil_phone;
+		$content .= 		'</div>';
+		$content .= 		'<div class="contact-phone '. t_em_grid( 6 ) .'">';
+		$content .= 			$email;
+		$content .= 			$request_email;
+		$content .= 		'</div>';
+		$content .= 	'</div>';
+		$content .= '</div>';
+	endif;
+
 	$response = array(
 		'status'		=> 'success',
 		'title'			=> $title,
 		'thumbnail'		=> $thumbnail,
-		'title_contact' => __( 'Contact information', 'quimimpex' ),
 		'content'		=> $content,
 		'checkin'		=> $checkin,
 		'data_sheet'	=> $data_sheet,
-		'land_phone' 	=> $land_phone,
-		'mobil_phone' 	=> $mobil_phone,
-		'email' 		=> $email,
-		'request_email' => $request_email,
 	);
 	return wp_send_json( $response );
 }

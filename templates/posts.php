@@ -231,11 +231,11 @@ function quimimpex_modal(){
 							</div>
 							<div class="<?php echo t_em_grid( 7 ) ?> py-1 px-lg-3 p-0">
 								<div class="modal-post-content mb-3"></div>
-								<h6 class="font-weight-bold modal-title-contact border-bottom pb-2"></h6>
+								<!-- <h6 class="font-weight-bold modal-title-contact pb-2"></h6>
 								<div class="modal-post-contact row">
 									<div class="contact-phone <?php echo t_em_grid( 6 ) ?>"></div>
 									<div class="contact-email <?php echo t_em_grid( 6 ) ?>"></div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
