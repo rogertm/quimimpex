@@ -280,6 +280,7 @@ function quimimpex_products_related_posts(){
 			'posts_per_page'	=> $limit,
 			'post__not_in'		=> array( $post_id ),
 			'post_status'		=> 'publish',
+			'orderby'			=> 'rand',
 			'tax_query'			=> array(
 				'relation'		=> 'OR',
 			),

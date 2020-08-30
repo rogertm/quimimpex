@@ -172,6 +172,28 @@ function quimimpex_cpt(){
 			'query_var'				=> true,
 			'rewrite'				=> array( 'slug' => 'import-line' ),
 		),
+		'qm-export-tag'	=> array(
+			'post_type'				=> array( 'qm-export-product' ),
+			'singular'				=> _x( 'Tag', 'taxonomy singular name', 'quimimpex' ),
+			'plural'				=> _x( 'Tags', 'taxonomy general name', 'quimimpex' ),
+			'hierarchical'			=> true,
+			'show_ui'				=> true,
+			'show_admin_column'		=> true,
+			'update_count_callback'	=> '_update_post_term_count',
+			'query_var'				=> true,
+			'rewrite'				=> array( 'slug' => 'export-tag' ),
+		),
+		'qm-import-tag'	=> array(
+			'post_type'				=> array( 'qm-import-product' ),
+			'singular'				=> _x( 'Tag', 'taxonomy singular name', 'quimimpex' ),
+			'plural'				=> _x( 'Tags', 'taxonomy general name', 'quimimpex' ),
+			'hierarchical'			=> true,
+			'show_ui'				=> true,
+			'show_admin_column'		=> true,
+			'update_count_callback'	=> '_update_post_term_count',
+			'query_var'				=> true,
+			'rewrite'				=> array( 'slug' => 'import-tag' ),
+		),
 	);
 
 	foreach ( $taxonomies as $taxonomy => $tax ) :
