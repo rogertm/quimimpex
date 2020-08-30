@@ -493,4 +493,18 @@ function quimimpex_social_network_options(){
 	return apply_filters( 'quimimpex_social_network_options', $options );
 }
 add_filter( 't_em_admin_filter_social_network_options', 'quimimpex_social_network_options' );
+
+/**
+ * Highlight search results
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_highlight_search_results( $excerpt ){
+	if ( ! is_search() )
+		return $excerpt;
+	$keys = explode( ' ', get_search_query() );
+	$excerpt = preg_replace( '/('.implode('|', $keys) .')/iu', '<strong class="search-highlight">\0</strong>', $excerpt );
+	return $excerpt;
+}
+add_filter( 'get_the_excerpt', 'quimimpex_highlight_search_results' );
 ?>
