@@ -109,7 +109,7 @@ function quimimpex_cart_counter(){
 		$counter 	= ( isset( $_SESSION['qm_checkin_products'] ) ) ? $_SESSION['qm_checkin_products'] : array();
 		$style 		= ( count( $counter ) > 0 ) ? 'primary' : 'qm-blue-light';
 ?>
-	<div id="checkin-counter" class="my-2 ml-5 pl-5 my-lg-0 mr-0 mr-lg-3 pr-0">
+	<div id="checkin-counter" class="my-2 ml-5 pl-lg-5 my-lg-0 mr-0 mr-lg-3 pr-0">
 		<a href="<?php echo get_permalink( t_em( 'page_checkin' ) ) ?>" class="btn btn-<?php echo $style ?> btn-sm">
 			<span class="text-white counter"><?php echo count( $counter ) ?></span>
 			<i class="qmicon-car-add text-white hvr-grow ml-2"></i>

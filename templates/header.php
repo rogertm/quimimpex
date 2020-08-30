@@ -87,7 +87,7 @@ function t_em_slider_bootstrap_carousel( $args ){
 					<div class="carousel-item">
 						<?php t_em_featured_post_thumbnail( 1900, 600, false, 'd-block w-auto', $post->ID ); ?>
 						<div id="<?php echo $post->post_name ?>-<?php echo $post->ID; ?>" class="carousel-caption">
-							<div class="<?php echo t_em_grid( 8 ) ?> <?php echo t_em_grid( 2, '', true ) ?>">
+							<div class="<?php echo t_em_grid( 8 ) ?> <?php echo t_em_grid( 2, '', true ) ?> px-5">
 								<h3 class="item-title text-uppercase h2">
 									<a href="<?php echo get_post_meta( $post->ID, 'quimimpex_banner_link', true ); ?>"><?php echo get_the_title(); ?></a>
 								</h3>

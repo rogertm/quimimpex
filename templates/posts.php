@@ -53,7 +53,7 @@ add_action( 't_em_action_custom_front_page_before', 'quimimpex_front_about_us' )
 function t_em_front_page_widgets(){
 	if ( 'widgets-front-page' == t_em( 'front_page_set' ) ) :
 ?>
-		<section id="services" class="<?php echo t_em( 'text_widget_template' ) ?> full-width services py-5 img-bg">
+		<section id="services" class="<?php echo t_em( 'text_widget_template' ) ?> full-width services py-lg-5 img-bg">
 			<div class="container">
 				<div class="row">
 					<?php do_action( 't_em_action_custom_front_page_inside_before' ); ?>
