@@ -264,10 +264,12 @@ function quimimpex_shortcode_checkin(){
 		foreach ( $export_products as $product ) :
 			$service_page = t_em( 'page_export_lines' );
 			$taxonomy = 'qm-export-line';
-			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0">';
-			$output .=	 	$product->post_title;
-			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
-			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
+			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0 d-flex justify-content-between align-items-center">';
+			$output .=	 	'<span>';
+			$output .=	 		$product->post_title;
+			$output .=			'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
+			$output .=	 	'</span>';
+			$output .=	 	'<a href="#" class="delete-checkin-product text-danger ml-3" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
 			$output .=	'</li>';
 			$output .= 	'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
 		endforeach;
@@ -280,10 +282,12 @@ function quimimpex_shortcode_checkin(){
 		foreach ( $import_products as $product ) :
 			$service_page = t_em( 'page_import_lines' );
 			$taxonomy = 'qm-import-line';
-			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0">';
-			$output .=	 	$product->post_title;
-			$output .=		'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
-			$output .=	 	'<a href="#" class="delete-checkin-product float-right ml-3 text-danger" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
+			$output .=	'<li id="checkin-product-'. $product->ID .'" class="list-group-item px-0 border-bottom-0 d-flex justify-content-between align-items-center">';
+			$output .=	 	'<span>';
+			$output .=	 		$product->post_title;
+			$output .=			'<small class="ml-3"><a href="'. get_permalink( $service_page ) .'">'. get_the_terms( $product->ID, $taxonomy )[0]->name .'</a></small>';
+			$output .=	 	'</span>';
+			$output .=	 	'<a href="#" class="delete-checkin-product text-danger ml-3" data-target="#checkin-product-'. $product->ID .'" data-product-id="'. $product->ID .'"><i class="qmicon-delete"></i></a>';
 			$output .=	'</li>';
 			$output .= 	'<input type="hidden" name="qm_checkin_product[]" value="'. $product->ID .'">';
 		endforeach;
