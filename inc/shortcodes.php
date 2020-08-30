@@ -328,7 +328,7 @@ function quimimpex_shortcode_executives(){
 	if ( $executives ) :
 		$output = '<section id="qm-executives" class="mt-6 mb-8">';
 		$output .=	'<h3 class="h1 mb-5">'. __( 'Executives', 'quimimpex' ) .'</h3>';
-		$output .=	'<div class="row row-cols-3">';
+		$output .=	'<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">';
 		foreach ( $executives as $executive ) :
 			$output .= '<div class="col mb-4">';
 			$output .= 		'<div class="card h-100 text-center border-0 shadow-sm">';
