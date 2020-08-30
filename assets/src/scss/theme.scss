@@ -513,11 +513,16 @@ body{
 			.featured-post-thumbnail{
 				&.wp-post-image{
 					@extend .w-100;
+					@include media-breakpoint-down(lg){
+						width: 200% !important;
+						max-width: 200% !important;
+					}
 				}
 				&-wrapper{
 					@extend .full-width;
 					@extend .position-relative;
 					@extend .d-block;
+					@extend .overflow-hidden;
 					&:after{
 						@extend .position-absolute;
 						content: "";
@@ -536,8 +541,15 @@ body{
 					min-height: 6rem;
 					margin-bottom: 5rem;
 					@extend .position-relative;
+					@include media-breakpoint-down(md){
+						margin-top: -6rem;
+						min-height: 5.5rem;
+					}
 					.entry-title{
 						@extend .text-white;
+						@include media-breakpoint-down(md){
+							font-size: 1.5rem;
+						}
 					}
 				}
 			}
