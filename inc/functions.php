@@ -433,7 +433,7 @@ function quimimpex_default_image( $post_id = 0 ){
 	if ( get_post_type( $post_id ) == 'qm-export-product' || get_post_type( $post_id ) == 'qm-import-product' ) :
 		$taxonomy = ( get_post_type( $post_id ) == 'qm-export-product' ) ? 'qm-export-line' : 'qm-import-line';
 		$term = wp_get_post_terms( $post_id, $taxonomy, array( 'fields' => 'ids' ) );
-		$image = get_term_meta( $term[0], 'qm_taxonomy_image', true );
+		$image = ( $term ) ? get_term_meta( $term[0], 'qm_taxonomy_image', true ) : null;
 		return get_stylesheet_directory_uri() .'/assets/images/'. $image;
 	endif;
 }

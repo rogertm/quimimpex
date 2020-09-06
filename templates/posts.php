@@ -256,49 +256,94 @@ function quimimpex_products_related_posts(){
 	if ( is_singular( array( 'qm-export-product', 'qm-import-product' ) ) && t_em( 'single_related_posts' ) ) :
 		global $post;
 		$post_id = $post->ID;
-		$taxonomies = get_taxonomies( array( 'public' => true ), 'object' );
 		$post_type = get_post_type( $post_id );
 		$labels = get_post_type_object( $post_type );
-		$taxonomy = array();
-
-		foreach ( $taxonomies as $key => $value ) :
-			if ( in_array( $post_type, $value->object_type ) ) :
-				array_push( $taxonomy, $key );
-			endif;
-		endforeach;
 
 		/**
-		 * Filter the amount of related post to display
+		 * Filters the amount of related post to display
 		 *
 		 * @param int Number of posts to display
 		 * @since Twenty'em 1.0
 		 */
 		$limit = apply_filters( 't_em_filter_single_limit_related_posts', 3 );
 
-		$query_args = array(
+		$products_id = array();
+
+		// Get product tags
+		$tag  		= ( 'qm-export-product' == $post_type ) ? 'qm-export-tag' : 'qm-import-tag';
+		$tag_terms 	= get_the_terms( $post_id, $tag );
+		$terms_id 	= array();
+		if ( $tag_terms ) :
+			foreach ( $tag_terms as $term ) :
+				array_push( $terms_id, $term->term_id );
+			endforeach;
+		endif;
+
+		$tag_args = array(
 			'post_type'			=> $post_type,
-			'posts_per_page'	=> $limit,
+			'posts_per_page'	=> -1,
 			'post__not_in'		=> array( $post_id ),
 			'post_status'		=> 'publish',
 			'orderby'			=> 'rand',
 			'tax_query'			=> array(
 				'relation'		=> 'OR',
+				array(
+					'taxonomy'	=> $tag,
+					'fields'	=> 'id',
+					'terms'		=> $terms_id,
+				),
 			),
 		);
-		foreach ( $taxonomy as $tax ) :
-			$terms = get_the_terms( $post_id, $tax );
-			if ( ! $terms ) continue;
-			$terms_ids = array();
-			foreach ( $terms as $term ) :
-				array_push( $terms_ids, $term->term_id );
-			endforeach;
-			$key = array(
-				'taxonomy'	=> $tax,
-				'field'		=> 'id',
-				'terms'		=> $terms_ids,
-			);
-			array_push( $query_args['tax_query'], $key );
+
+		$tag_products = get_posts( $tag_args );
+		foreach ( $tag_products as $product ) :
+			array_push( $products_id, $product->ID );
 		endforeach;
+
+		// Get Product line just if tags are less than $limit
+		if ( count( $tag_products ) < $limit ) :
+			$line 		= ( 'qm-export-product' == $post_type ) ? 'qm-export-line' : 'qm-import-line';
+			$tag_lines 	= get_the_terms( $post_id, $line );
+			$lines_id 	= array();
+			if ( $tag_lines ) :
+				foreach( $tag_lines as $term ) :
+					array_push( $lines_id, $term->term_id );
+				endforeach;
+			endif;
+
+			$line_args = array(
+				'post_type'			=> $post_type,
+				'posts_per_page'	=> -1,
+				'post__not_in'		=> array( $post_id ),
+				'post_status'		=> 'publish',
+				'orderby'			=> 'rand',
+				'tax_query'			=> array(
+					'relation'		=> 'OR',
+					array(
+						'taxonomy'	=> $line,
+						'fields'	=> 'id',
+						'terms'		=> $lines_id,
+					),
+				),
+			);
+			$line_products = get_posts( $line_args );
+			foreach ( $line_products as $product ) :
+				array_push( $products_id, $product->ID );
+			endforeach;
+		endif;
+
+		/**
+		 * Final Query
+		 * Get the related product prioritizing the tag's ones
+		 */
+		$post__in = array_slice( $products_id, 0, $limit );
+		$product_args = array(
+			'post_type'		=> $post_type,
+			'post_per_page'	=> $limit,
+			'post__not_in'	=> array( $post_id ),
+			'post__in'		=> $post__in,
+			'orderby'		=> 'rand',
+		);
 
 		/**
 		 * Filter the related post query arguments
@@ -306,7 +351,7 @@ function quimimpex_products_related_posts(){
 		 *
 		 * @since Twenty'em 1.2
 		 */
-		$all_posts = apply_filters( 't_em_filter_single_related_post_query', get_posts( $query_args ) );
+		$all_posts = apply_filters( 't_em_filter_single_related_post_query', get_posts( $product_args ) );
 ?>
 		<section id="related-products">
 			<div class="my-5 border-top">
