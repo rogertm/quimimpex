@@ -36,7 +36,7 @@ function quimimpex_cpt(){
 			'hierarchical'	=> false,
 			'supports'		=> array( 'title', 'thumbnail' ),
 			'rewrite'		=> _x( 'import-product', 'post type slug', 'quimimpex' ),
-			'public'		=> false,
+			'public'		=> true,
 		),
 		'qm-company'	=> array(
 			'post-type'		=> 'qm-company',

@@ -675,7 +675,8 @@ body{
 }
 .page,
 .single{
-	&-qm-export-product{
+	&-qm-export-product,
+	&-qm-import-product{
 		#you-are-here{
 			margin-top: 0 !important;
 		}
