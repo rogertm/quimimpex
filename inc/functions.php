@@ -60,20 +60,6 @@ function quimimpex_hide_admin_bar(){
 add_action( 'init', 'quimimpex_hide_admin_bar' );
 
 /**
- * Exclude some post types from search results
- *
- * @since Quimimpex 1.0
- */
-function quimimpex_search_filter( $query ){
-	if( ! is_admin() && $query->is_main_query() ) :
-		if( $query->is_search ) :
-			$query->set( 'post_type', ['qm-export-product', 'qm-import-product'] );
-		endif;
-	endif;
-}
-add_action( 'pre_get_posts', 'quimimpex_search_filter' );
-
-/**
  * Add custom body classes
  *
  * @since Quimimpex 1.0
@@ -499,12 +485,45 @@ add_filter( 't_em_admin_filter_social_network_options', 'quimimpex_social_networ
  *
  * @since Quimimpex 1.0
  */
-function quimimpex_highlight_search_results( $excerpt ){
+function quimimpex_highlight_search_results( $excerpt, $post ){
 	if ( ! is_search() )
 		return $excerpt;
 	$keys = explode( ' ', get_search_query() );
-	$excerpt = preg_replace( '/('.implode('|', $keys) .')/iu', '<strong class="search-highlight">\0</strong>', $excerpt );
+
+	$description = ( get_post_meta( $post->ID, 'qm_product_description' ) )
+					? get_post_meta( $post->ID, 'qm_product_description', true )
+					: null;
+
+	$use 		 = ( get_post_meta( $post->ID, 'qm_product_use' ) )
+					? get_post_meta( $post->ID, 'qm_product_use', true )
+					: null;
+
+	$content = sprintf( __( '<strong>Description:</strong> %s | <strong>Use:</strong> %s' ), $description, $use );
+	$content = str_replace( ["\r", "\n", "\t"], ' ', $content );
+
+	$excerpt = preg_replace( '/('.implode('|', $keys) .')/iu', '<strong class="search-highlight">\0</strong>', $content );
 	return $excerpt;
 }
-add_filter( 'get_the_excerpt', 'quimimpex_highlight_search_results' );
+add_filter( 'get_the_excerpt', 'quimimpex_highlight_search_results', 10, 2 );
+
+/**
+ * The foo() function
+ * THIS IS A VERY DANGEROUS FUNCTION
+ */
+function foo(){
+	$args = array(
+		'post_type'			=> array( 'qm-export-product', 'qm-import-product' ),
+		'posts_per_page'	=> -1,
+		'post_status'		=> 'any',
+	);
+	$posts = get_posts( $args );
+	foreach ( $posts as $p ) :
+		$data = array(
+			'ID'			=> $p->ID,
+			'post_content'	=> null,
+		);
+		wp_update_post( $data );
+	endforeach;
+}
+// add_action( 'init', 'foo' );
 ?>
