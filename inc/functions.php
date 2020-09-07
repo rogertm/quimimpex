@@ -519,33 +519,4 @@ function quimimpex_highlight_search_results( $excerpt, $post ){
 	return $excerpt;
 }
 add_filter( 'get_the_excerpt', 'quimimpex_highlight_search_results', 10, 2 );
-
-/**
- * The foo() function
- * THIS IS A VERY DANGEROUS FUNCTION
- */
-function foo(){
-	$args = array(
-		'post_type'			=> array( 'qm-export-product', 'qm-import-product' ),
-		'posts_per_page'	=> -1,
-		'post_status'		=> 'any',
-	);
-	$posts = get_posts( $args );
-	foreach ( $posts as $p ) :
-		$description	= get_post_meta( $p->ID, 'qm_product_description', true );
-		$formula		= get_post_meta( $p->ID, 'qm_product_chemical_formula', true );
-		$use			= get_post_meta( $p->ID, 'qm_product_use', true );
-		$expiration		= get_post_meta( $p->ID, 'qm_product_expiration', true );
-		$content 		= '<p>'. $description .'</p>'
-						. '<p>'. $formula .'</p>'
-						. '<p>'. $use .'</p>'
-						. '<p>'. $expiration .'</p>';
-		$data = array(
-			'ID'			=> $p->ID,
-			'post_content'	=> $content,
-		);
-		wp_update_post( $data );
-	endforeach;
-}
-// add_action( 'init', 'foo' );
 ?>
