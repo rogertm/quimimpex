@@ -186,13 +186,24 @@ function quimimpex_save_import_product_meta( $post_id ){
 
 	// Save the data
 	$fields = quimimpex_import_product_content_fields();
+	$content = '';
 	foreach ( $fields as $key => $value ) :
 		if ( isset( $_POST[$value['meta']] ) && $_POST[$value['meta']] ) :
 			update_post_meta( $post_id, $value['meta'], $_POST[$value['meta']] );
 		else :
 			delete_post_meta( $post_id, $value['meta'] );
 		endif;
+		$content .= '<p>'. get_post_meta( $post_id, $value['meta'], true ) .'</p>';
 	endforeach;
+
+	// Trick: Insert all data as post_content field
+	remove_action( 'save_post', 'quimimpex_save_import_product_meta' );
+		$data = array(
+			'ID'			=> $post_id,
+			'post_content'	=> $content,
+		);
+		wp_update_post( $data );
+	add_action( 'save_post', 'quimimpex_save_import_product_meta' );
 
 	$fields = quimimpex_import_product_data_fields();
 	foreach ( $fields as $key => $value ) :

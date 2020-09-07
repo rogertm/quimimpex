@@ -481,6 +481,20 @@ function quimimpex_social_network_options(){
 add_filter( 't_em_admin_filter_social_network_options', 'quimimpex_social_network_options' );
 
 /**
+ * Exclude some post types from search results
+ *
+ * @since Quimimpex 1.0
+ */
+function quimimpex_search_filter( $query ){
+	if( ! is_admin() && $query->is_main_query() ) :
+		if( $query->is_search ) :
+			$query->set( 'post_type', ['qm-export-product', 'qm-import-product'] );
+		endif;
+	endif;
+}
+add_action( 'pre_get_posts', 'quimimpex_search_filter' );
+
+/**
  * Highlight search results
  *
  * @since Quimimpex 1.0
@@ -491,11 +505,11 @@ function quimimpex_highlight_search_results( $excerpt, $post ){
 	$keys = explode( ' ', get_search_query() );
 
 	$description = ( get_post_meta( $post->ID, 'qm_product_description' ) )
-					? get_post_meta( $post->ID, 'qm_product_description', true )
+					? wp_trim_words( get_post_meta( $post->ID, 'qm_product_description', true ), 35, '...' )
 					: null;
 
 	$use 		 = ( get_post_meta( $post->ID, 'qm_product_use' ) )
-					? get_post_meta( $post->ID, 'qm_product_use', true )
+					? wp_trim_words( get_post_meta( $post->ID, 'qm_product_use', true ), 35, '...' )
 					: null;
 
 	$content = sprintf( __( '<strong>Description:</strong> %s | <strong>Use:</strong> %s' ), $description, $use );
@@ -518,9 +532,17 @@ function foo(){
 	);
 	$posts = get_posts( $args );
 	foreach ( $posts as $p ) :
+		$description	= get_post_meta( $p->ID, 'qm_product_description', true );
+		$formula		= get_post_meta( $p->ID, 'qm_product_chemical_formula', true );
+		$use			= get_post_meta( $p->ID, 'qm_product_use', true );
+		$expiration		= get_post_meta( $p->ID, 'qm_product_expiration', true );
+		$content 		= '<p>'. $description .'</p>'
+						. '<p>'. $formula .'</p>'
+						. '<p>'. $use .'</p>'
+						. '<p>'. $expiration .'</p>';
 		$data = array(
 			'ID'			=> $p->ID,
-			'post_content'	=> null,
+			'post_content'	=> $content,
 		);
 		wp_update_post( $data );
 	endforeach;
