@@ -20,20 +20,66 @@ function quimimpex_setup(){
 	load_child_theme_textdomain( 'quimimpex', get_stylesheet_directory() . '/languages' );
 
 	// Remove Hooks
-	// remove_action( 't_em_action_entry_meta_footer', 't_em_edit_post_link' );
 	remove_action( 't_em_action_entry_meta_header', 't_em_post_author' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_posted_in' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_post_shortlink' );
 	remove_action( 't_em_action_entry_meta_footer', 't_em_comments_link' );
 	remove_action( 't_em_action_post_after', 't_em_single_navigation', 5 );
 	remove_action( 't_em_action_content_before', 't_em_breadcrumb', 5 );
-
 	remove_filter( 'get_the_excerpt', 't_em_custom_excerpt_more' );
 
 	// Add Hooks
 	add_action( 't_em_action_post_content_before', 't_em_breadcrumb' );
+
+	// Remove Admin Hooks
+	add_filter( 't_em_admin_filter_header_options_no_header_image', '__return_false' );
+	add_filter( 't_em_admin_filter_header_options_header_image', '__return_false' );
+	add_filter( 't_em_admin_filter_header_options_static_header', '__return_false' );
+	add_filter( 't_em_admin_filter_front_page_options_wp_front_page', '__return_false' );
+	add_filter( 't_em_admin_filter_archive_options_the_content', '__return_false' );
+	remove_action( 't_em_admin_action_layout_options_after', 't_em_layout_width' );
 }
 add_action( 'after_setup_theme', 'quimimpex_setup' );
+
+/**
+ * Layout Options
+ *
+ * @since Qiomimpex 1.0
+ */
+function quimimpex_layout_options( $layout_options = '' ){
+	unset( $layout_options['two-columns-content-left'] );
+	unset( $layout_options['two-columns-content-right'] );
+	unset( $layout_options['three-columns-content-left'] );
+	unset( $layout_options['three-columns-content-right'] );
+	unset( $layout_options['three-columns-content-middle'] );
+	return $layout_options;
+}
+add_filter( 't_em_admin_filter_layout_options', 'quimimpex_layout_options' );
+
+/**
+ * Footer Options
+ *
+ * @since Qiomimpex 1.0
+ */
+function quimimpex_footer_options( $footer_options = '' ){
+	unset( $footer_options['four-footer-widget'] );
+	unset( $footer_options['two-footer-widget'] );
+	unset( $footer_options['one-footer-widget'] );
+	unset( $footer_options['no-footer-widget'] );
+	return $footer_options;
+}
+add_filter( 't_em_admin_filter_footer_options', 'quimimpex_footer_options' );
+
+/**
+ * Pagination Options
+ *
+ * @since quimimpex 1.0
+ */
+function quimimpex_pagination_options( $archive_pagination = '' ){
+	unset( $archive_pagination['prev-next'] );
+	return $archive_pagination;
+}
+add_filter( 't_em_admin_filter_archive_pagination_options', 'quimimpex_pagination_options' );
 
 /**
  * Avoid access to admin panel
