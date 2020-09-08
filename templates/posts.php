@@ -184,7 +184,7 @@ function quimimpex_companies_section(){
 			'class'	=> 'card-img-top pt-3 pb-1 py-sm-5',
 		);
 ?>
-	<section id="featured-companies">
+	<section id="featured-companies" class="w-100 d-block">
 		<div class="<?php echo t_em_container() ?> container">
 			<div class="card-group d-flex justify-content-center">
 <?php foreach ( $companies as $company ) : ?>
