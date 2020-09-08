@@ -1,0 +1,907 @@
+# Copyright (C) 2020 RogerTM
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Quimimpex 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/quimimpex\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-09-08T17:38:44-04:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: quimimpex\n"
+
+#. Theme Name of the theme
+msgid "Quimimpex"
+msgstr ""
+
+#. Theme URI of the theme
+msgid "https://github.com/rogertm/twenty-em-child"
+msgstr ""
+
+#. Description of the theme
+msgid "Quimimpex Theme"
+msgstr ""
+
+#. Author of the theme
+msgid "RogerTM"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://themingisprose.com"
+msgstr ""
+
+#: admin/custom-content-options.php:41
+msgid "Page Blog"
+msgstr ""
+
+#: admin/custom-content-options.php:42
+msgid "Blog"
+msgstr ""
+
+#: admin/custom-content-options.php:47
+msgid "Page About Us"
+msgstr ""
+
+#: admin/custom-content-options.php:48
+msgid "About Us"
+msgstr ""
+
+#: admin/custom-content-options.php:53
+msgid "Page Import Lines"
+msgstr ""
+
+#: admin/custom-content-options.php:54
+msgid "Import Lines"
+msgstr ""
+
+#: admin/custom-content-options.php:59
+msgid "Page Export Lines"
+msgstr ""
+
+#: admin/custom-content-options.php:60
+msgid "Export Lines"
+msgstr ""
+
+#: admin/custom-content-options.php:65
+msgid "Page Documents"
+msgstr ""
+
+#: admin/custom-content-options.php:66
+msgid "Documents"
+msgstr ""
+
+#: admin/custom-content-options.php:71
+msgid "Page Check In"
+msgstr ""
+
+#: admin/custom-content-options.php:72
+msgid "Check In"
+msgstr ""
+
+#: admin/custom-content-options.php:77
+msgid "Page Contact"
+msgstr ""
+
+#: admin/custom-content-options.php:78
+#: inc/widgets.php:152
+msgid "Contact"
+msgstr ""
+
+#: admin/custom-content-options.php:83
+msgid "Page Cancel Subscription"
+msgstr ""
+
+#: admin/custom-content-options.php:84
+msgid "Cancel Subscription"
+msgstr ""
+
+#: admin/custom-content-options.php:98
+msgid "Custom Pages"
+msgstr ""
+
+#: admin/custom-content-options.php:106
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+#: admin/custom-content-options.php:116
+msgid "Edit"
+msgstr ""
+
+#: admin/custom-content-options.php:117
+msgid "View"
+msgstr ""
+
+#: admin/functions.php:21
+msgid "Custom Content"
+msgstr ""
+
+#: admin/general-options.php:22
+msgid "Company address"
+msgstr ""
+
+#: admin/general-options.php:28
+msgid "Principal Contact Email"
+msgstr ""
+
+#: admin/general-options.php:34
+msgid "Commercial Contact Email"
+msgstr ""
+
+#: admin/general-options.php:40
+msgid "Principal Phone Number"
+msgstr ""
+
+#: admin/general-options.php:46
+msgid "Commercial Phone Number"
+msgstr ""
+
+#: admin/general-options.php:52
+msgid "Web Chat URL"
+msgstr ""
+
+#: admin/general-options.php:58
+msgid "Webmail URL"
+msgstr ""
+
+#: admin/queue.php:23
+msgid "Select Document"
+msgstr ""
+
+#: admin/queue.php:24
+msgid "Use selected document"
+msgstr ""
+
+#: inc/ajax.php:22
+#: inc/ajax.php:86
+#: inc/ajax.php:214
+msgid "Unknown error. Please try again"
+msgstr ""
+
+#: inc/ajax.php:35
+#: inc/ajax.php:99
+msgid "The email is required"
+msgstr ""
+
+#: inc/ajax.php:38
+#: inc/ajax.php:102
+msgid "You should enter a valid email address"
+msgstr ""
+
+#: inc/ajax.php:41
+msgid "That email address already exists in our system"
+msgstr ""
+
+#: inc/ajax.php:44
+msgid "Your email has been registered successfully"
+msgstr ""
+
+#: inc/ajax.php:105
+msgid "That email address do not exists in our system"
+msgstr ""
+
+#: inc/ajax.php:108
+msgid "We send you an email with some instruction to finish cancellation"
+msgstr ""
+
+#: inc/ajax.php:161
+#: inc/ajax.php:231
+#: inc/ajax.php:290
+msgid "Unknown error. Refresh your page and try again"
+msgstr ""
+
+#: inc/ajax.php:201
+#: inc/shortcodes.php:119
+#: inc/shortcodes.php:199
+msgid "Success"
+msgstr ""
+
+#: inc/ajax.php:318
+#: single-qm-export-product.php:45
+#: single-qm-import-product.php:45
+msgid "Checkin"
+msgstr ""
+
+#: inc/ajax.php:320
+#: single-qm-export-product.php:47
+#: single-qm-import-product.php:47
+msgid "Data sheet"
+msgstr ""
+
+#: inc/ajax.php:335
+msgid "Contact information"
+msgstr ""
+
+#: inc/functions.php:258
+#: inc/functions.php:285
+msgid "Product Request"
+msgstr ""
+
+#: inc/functions.php:259
+msgid "Product List:"
+msgstr ""
+
+#: inc/functions.php:270
+msgid "Comment:"
+msgstr ""
+
+#: inc/functions.php:271
+msgid "No comment"
+msgstr ""
+
+#: inc/functions.php:290
+msgid "Import Product:"
+msgstr ""
+
+#: inc/functions.php:310
+msgid "Export Product:"
+msgstr ""
+
+#: inc/functions.php:372
+msgid "Product Requests"
+msgstr ""
+
+#: inc/functions.php:415
+msgid "Unsent"
+msgstr ""
+
+#: inc/functions.php:420
+msgid "Unsent <span class=\"count\">(%s)</span>"
+msgid_plural "Unsent <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/functions.php:425
+msgid "Sent"
+msgstr ""
+
+#: inc/functions.php:430
+msgid "Sent <span class=\"count\">(%s)</span>"
+msgid_plural "Sent <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/functions.php:448
+#: inc/widgets.php:54
+msgid "Quimimpex Newsletter"
+msgstr ""
+
+#: inc/functions.php:449
+msgid "You receive this message be cause you are subscribed to our newsletter"
+msgstr ""
+
+#: inc/post-types.php:23
+msgctxt "post type singular name"
+msgid "Export Product"
+msgstr ""
+
+#: inc/post-types.php:24
+msgctxt "post type general name"
+msgid "Export Products"
+msgstr ""
+
+#: inc/post-types.php:25
+msgctxt "post type general name"
+msgid "Export Line"
+msgstr ""
+
+#: inc/post-types.php:28
+msgctxt "post type slug"
+msgid "export-product"
+msgstr ""
+
+#: inc/post-types.php:33
+msgctxt "post type singular name"
+msgid "Import Product"
+msgstr ""
+
+#: inc/post-types.php:34
+msgctxt "post type general name"
+msgid "Import Products"
+msgstr ""
+
+#: inc/post-types.php:35
+msgctxt "post type general name"
+msgid "Import Line"
+msgstr ""
+
+#: inc/post-types.php:38
+msgctxt "post type slug"
+msgid "import-product"
+msgstr ""
+
+#: inc/post-types.php:43
+msgctxt "post type singular name"
+msgid "Company"
+msgstr ""
+
+#: inc/post-types.php:44
+#: inc/post-types.php:45
+msgctxt "post type general name"
+msgid "Companies"
+msgstr ""
+
+#: inc/post-types.php:48
+msgctxt "post type slug"
+msgid "company"
+msgstr ""
+
+#: inc/post-types.php:53
+msgctxt "post type singular name"
+msgid "Customer"
+msgstr ""
+
+#: inc/post-types.php:54
+#: inc/post-types.php:55
+msgctxt "post type general name"
+msgid "Customers"
+msgstr ""
+
+#: inc/post-types.php:58
+msgctxt "post type slug"
+msgid "customer"
+msgstr ""
+
+#: inc/post-types.php:63
+msgctxt "post type singular name"
+msgid "Document"
+msgstr ""
+
+#: inc/post-types.php:64
+#: inc/post-types.php:65
+msgctxt "post type general name"
+msgid "Documents"
+msgstr ""
+
+#: inc/post-types.php:68
+msgctxt "post type slug"
+msgid "document"
+msgstr ""
+
+#: inc/post-types.php:73
+msgctxt "post type singular name"
+msgid "Newsletter"
+msgstr ""
+
+#: inc/post-types.php:74
+#: inc/post-types.php:75
+msgctxt "post type general name"
+msgid "Newsletters"
+msgstr ""
+
+#: inc/post-types.php:78
+msgctxt "post type slug"
+msgid "newsletter"
+msgstr ""
+
+#: inc/post-types.php:83
+msgctxt "post type singular name"
+msgid "Contact"
+msgstr ""
+
+#: inc/post-types.php:84
+#: inc/post-types.php:85
+msgctxt "post type general name"
+msgid "Contacts"
+msgstr ""
+
+#: inc/post-types.php:88
+msgctxt "post type slug"
+msgid "contact"
+msgstr ""
+
+#: inc/post-types.php:93
+msgctxt "post type singular name"
+msgid "Executive"
+msgstr ""
+
+#: inc/post-types.php:94
+#: inc/post-types.php:95
+msgctxt "post type general name"
+msgid "Executives"
+msgstr ""
+
+#: inc/post-types.php:98
+msgctxt "post type slug"
+msgid "executive"
+msgstr ""
+
+#: inc/post-types.php:103
+msgctxt "post type singular name"
+msgid "Banner"
+msgstr ""
+
+#: inc/post-types.php:104
+#: inc/post-types.php:105
+msgctxt "post type general name"
+msgid "Banners"
+msgstr ""
+
+#: inc/post-types.php:108
+msgctxt "post type slug"
+msgid "banner"
+msgstr ""
+
+#: inc/post-types.php:118
+#: inc/post-types.php:205
+msgid "All %s"
+msgstr ""
+
+#: inc/post-types.php:119
+msgid "Add new"
+msgstr ""
+
+#: inc/post-types.php:120
+msgid "Add new %s"
+msgstr ""
+
+#: inc/post-types.php:121
+#: inc/post-types.php:208
+msgid "Edit %s"
+msgstr ""
+
+#: inc/post-types.php:122
+msgid "New %s"
+msgstr ""
+
+#: inc/post-types.php:123
+#: inc/post-types.php:210
+msgid "View %s"
+msgstr ""
+
+#: inc/post-types.php:124
+#: inc/post-types.php:203
+msgid "Search %s"
+msgstr ""
+
+#: inc/post-types.php:125
+#: inc/post-types.php:213
+msgid "No %s found"
+msgstr ""
+
+#: inc/post-types.php:126
+msgid "No %s found in trash"
+msgstr ""
+
+#: inc/post-types.php:127
+#: inc/post-types.php:206
+#: inc/post-types.php:207
+msgid "Parent %s"
+msgstr ""
+
+#: inc/post-types.php:155
+msgctxt "taxonomy singular name"
+msgid "Export Line"
+msgstr ""
+
+#: inc/post-types.php:156
+msgctxt "taxonomy general name"
+msgid "Export Lines"
+msgstr ""
+
+#: inc/post-types.php:166
+msgctxt "taxonomy singular name"
+msgid "Import Line"
+msgstr ""
+
+#: inc/post-types.php:167
+msgctxt "taxonomy general name"
+msgid "Import Lines"
+msgstr ""
+
+#: inc/post-types.php:177
+#: inc/post-types.php:188
+msgctxt "taxonomy singular name"
+msgid "Tag"
+msgstr ""
+
+#: inc/post-types.php:178
+#: inc/post-types.php:189
+msgctxt "taxonomy general name"
+msgid "Tags"
+msgstr ""
+
+#: inc/post-types.php:204
+msgid "Popular %s"
+msgstr ""
+
+#: inc/post-types.php:209
+msgid "Update %s"
+msgstr ""
+
+#: inc/post-types.php:211
+msgid "Add New %s"
+msgstr ""
+
+#: inc/post-types.php:212
+msgid "New %s name"
+msgstr ""
+
+#: inc/shortcodes.php:115
+#: inc/shortcodes.php:195
+msgid "Error"
+msgstr ""
+
+#: inc/shortcodes.php:129
+msgid "An error has occurred. Refresh your page and try again"
+msgstr ""
+
+#: inc/shortcodes.php:132
+#: inc/shortcodes.php:212
+msgid "You should specify your name"
+msgstr ""
+
+#: inc/shortcodes.php:135
+#: inc/shortcodes.php:215
+msgid "You should specify your email"
+msgstr ""
+
+#: inc/shortcodes.php:138
+msgid "You should send a comment"
+msgstr ""
+
+#: inc/shortcodes.php:141
+#: inc/shortcodes.php:218
+msgid "Your massage has been send successfully"
+msgstr ""
+
+#: inc/shortcodes.php:163
+#: inc/shortcodes.php:298
+msgid "Your Name"
+msgstr ""
+
+#: inc/shortcodes.php:167
+#: inc/shortcodes.php:302
+#: meta/executives.php:32
+msgid "Email"
+msgstr ""
+
+#: inc/shortcodes.php:171
+#: inc/shortcodes.php:306
+msgid "Leave a comment"
+msgstr ""
+
+#: inc/shortcodes.php:174
+msgid "Send Request"
+msgstr ""
+
+#: inc/shortcodes.php:209
+msgid "You should select at least one product"
+msgstr ""
+
+#: inc/shortcodes.php:233
+msgid "Warning"
+msgstr ""
+
+#: inc/shortcodes.php:234
+msgid "You have not selected any product yet"
+msgstr ""
+
+#: inc/shortcodes.php:259
+msgid "List of products"
+msgstr ""
+
+#: inc/shortcodes.php:262
+msgid "Export products"
+msgstr ""
+
+#: inc/shortcodes.php:280
+msgid "Import products"
+msgstr ""
+
+#: inc/shortcodes.php:296
+msgid "Send request"
+msgstr ""
+
+#: inc/shortcodes.php:309
+msgid "Send"
+msgstr ""
+
+#: inc/shortcodes.php:334
+msgid "Executives"
+msgstr ""
+
+#: inc/shortcodes.php:379
+msgid "An error has occurred with the <code>qm_contact_form</code> shortcode. Please review the <code>line</code> parameter"
+msgstr ""
+
+#: inc/shortcodes.php:418
+msgid "Products and Services"
+msgstr ""
+
+#: inc/widgets.php:22
+msgid "Newsletter Subscriber"
+msgstr ""
+
+#: inc/widgets.php:24
+msgid "%1$s Newsletter Subscribers"
+msgstr ""
+
+#: inc/widgets.php:46
+msgid "Subscribe to our Newsletter"
+msgstr ""
+
+#: inc/widgets.php:62
+msgid "Email address"
+msgstr ""
+
+#: inc/widgets.php:63
+#: inc/widgets.php:67
+msgid "Subscribe"
+msgstr ""
+
+#: inc/widgets.php:72
+msgid "Cancel subscription"
+msgstr ""
+
+#: inc/widgets.php:112
+#: inc/widgets.php:248
+msgid "Title:"
+msgstr ""
+
+#: inc/widgets.php:115
+msgid "Description:"
+msgstr ""
+
+#: inc/widgets.php:130
+msgid "Display Contact Information"
+msgstr ""
+
+#: inc/widgets.php:132
+msgid "%1$s Display Contact Information"
+msgstr ""
+
+#: inc/widgets.php:250
+msgid "The data of this widget is generated from the information provided in the configuration of General Options of %s"
+msgstr ""
+
+#: meta/banners.php:22
+msgid "Link"
+msgstr ""
+
+#: meta/company.php:22
+#: meta/contact.php:22
+msgid "Land Phones"
+msgstr ""
+
+#: meta/company.php:27
+#: meta/contact.php:27
+msgid "Mobil Phones"
+msgstr ""
+
+#: meta/company.php:32
+msgid "Company Email"
+msgstr ""
+
+#: meta/company.php:37
+#: meta/contact.php:37
+msgid "Email to send requests and services"
+msgstr ""
+
+#: meta/contact.php:32
+msgid "Contact Email"
+msgstr ""
+
+#: meta/contact.php:72
+msgid "Active this checkbox to show this information in <code>[qm_contact_info]</code> shortcode"
+msgstr ""
+
+#: meta/contact.php:75
+msgid "Public Information"
+msgstr ""
+
+#: meta/documents.php:22
+msgid "Document URL"
+msgstr ""
+
+#: meta/documents.php:60
+msgid "Upload Document"
+msgstr ""
+
+#: meta/executives.php:22
+msgid "Position"
+msgstr ""
+
+#: meta/executives.php:27
+msgid "Phone Number"
+msgstr ""
+
+#: meta/export-products.php:22
+#: meta/import-products.php:22
+msgid "Description"
+msgstr ""
+
+#: meta/export-products.php:26
+#: meta/import-products.php:26
+msgid "Chemical Formula"
+msgstr ""
+
+#: meta/export-products.php:30
+#: meta/import-products.php:30
+msgid "Use"
+msgstr ""
+
+#: meta/export-products.php:34
+#: meta/import-products.php:34
+msgid "Expiration"
+msgstr ""
+
+#: meta/export-products.php:50
+#: meta/import-products.php:50
+msgid "Code"
+msgstr ""
+
+#: meta/export-products.php:56
+#: meta/import-products.php:56
+msgid "External URL"
+msgstr ""
+
+#: meta/export-products.php:62
+#: meta/import-products.php:62
+msgid "Is Product"
+msgstr ""
+
+#: meta/export-products.php:66
+#: meta/import-products.php:66
+msgid "Yes"
+msgstr ""
+
+#: meta/export-products.php:67
+#: meta/import-products.php:67
+msgid "No"
+msgstr ""
+
+#: meta/export-products.php:85
+msgid "Companies"
+msgstr ""
+
+#: meta/export-products.php:92
+#: meta/import-products.php:85
+msgid "Contacts"
+msgstr ""
+
+#: meta/export-products.php:108
+msgid "&mdash; Select Company &mdash;"
+msgstr ""
+
+#: meta/export-products.php:122
+#: meta/import-products.php:101
+msgid "&mdash; Select Contact &mdash;"
+msgstr ""
+
+#: meta/export-products.php:256
+#: meta/import-products.php:264
+msgid "Upload Data Sheet"
+msgstr ""
+
+#: meta/import-products.php:228
+msgid "Data Sheet URL"
+msgstr ""
+
+#: meta/meta-boxes.php:20
+#: meta/meta-boxes.php:25
+msgid "Product Content"
+msgstr ""
+
+#: meta/meta-boxes.php:21
+#: meta/meta-boxes.php:26
+msgid "Product Data"
+msgstr ""
+
+#: meta/meta-boxes.php:22
+#: meta/meta-boxes.php:27
+msgid "Data Sheet"
+msgstr ""
+
+#: meta/meta-boxes.php:30
+msgid "Company Data"
+msgstr ""
+
+#: meta/meta-boxes.php:33
+msgid "Contact Data"
+msgstr ""
+
+#: meta/meta-boxes.php:34
+msgid "Public"
+msgstr ""
+
+#: meta/meta-boxes.php:37
+msgid "Document Data"
+msgstr ""
+
+#: meta/meta-boxes.php:40
+msgid "Newsletter Data"
+msgstr ""
+
+#: meta/meta-boxes.php:43
+msgid "Executive Data"
+msgstr ""
+
+#: meta/meta-boxes.php:46
+msgid "Banner Data"
+msgstr ""
+
+#: meta/newsletters.php:22
+msgid "Newsletter URL"
+msgstr ""
+
+#: meta/newsletters.php:60
+msgid "Upload Newsletter"
+msgstr ""
+
+#: meta/taxonomy-fields.php:68
+msgid "%s Icon"
+msgstr ""
+
+#: meta/taxonomy-fields.php:70
+#: meta/taxonomy-fields.php:97
+msgid "&mdash; Select an Icon &mdash;"
+msgstr ""
+
+#: meta/taxonomy-fields.php:78
+msgid "%s default Image"
+msgstr ""
+
+#: meta/taxonomy-fields.php:80
+#: meta/taxonomy-fields.php:111
+msgid "&mdash; Select an Image &mdash;"
+msgstr ""
+
+#: meta/taxonomy-fields.php:132
+#: meta/taxonomy-fields.php:157
+msgid "Nitrogenous"
+msgstr ""
+
+#: meta/taxonomy-fields.php:133
+#: meta/taxonomy-fields.php:158
+msgid "Chemicals"
+msgstr ""
+
+#: meta/taxonomy-fields.php:134
+#: meta/taxonomy-fields.php:159
+msgid "Glasses"
+msgstr ""
+
+#: meta/taxonomy-fields.php:135
+#: meta/taxonomy-fields.php:160
+msgid "Industrial Gases"
+msgstr ""
+
+#: meta/taxonomy-fields.php:136
+#: meta/taxonomy-fields.php:161
+msgid "Tire"
+msgstr ""
+
+#: meta/taxonomy-fields.php:137
+#: meta/taxonomy-fields.php:162
+msgid "Paper"
+msgstr ""
+
+#: single-qm-export-product.php:83
+#: single-qm-import-product.php:83
+msgid "Contact Information"
+msgstr ""
+
+#: templates/navigation.php:83
+msgid "Chat"
+msgstr ""
+
+#: templates/navigation.php:86
+msgid "Web Mail"
+msgstr ""
+
+#: templates/posts.php:146
+msgid "Latest news"
+msgstr ""
+
+#: templates/posts.php:156
+#: templates/posts.php:469
+msgid "Read more..."
+msgstr ""
+
+#: templates/posts.php:221
+msgid "Close"
+msgstr ""
