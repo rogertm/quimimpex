@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2020-09-08T17:38:44-04:00\n"
-"PO-Revision-Date: 2020-09-08 18:47-0400\n"
+"PO-Revision-Date: 2020-09-08 18:49-0400\n"
 "X-Generator: Poedit 2.0.6\n"
 "X-Domain: quimimpex\n"
 "Last-Translator: \n"
@@ -549,7 +549,7 @@ msgstr "Usted no ha seleccionado ningún producto aún"
 
 #: inc/shortcodes.php:259
 msgid "List of products"
-msgstr ""
+msgstr "Lista de productos"
 
 #: inc/shortcodes.php:262
 msgid "Export products"
