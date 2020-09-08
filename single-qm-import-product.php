@@ -27,6 +27,20 @@ get_header(); ?>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 <?php
+$contact_id	= get_post_meta( $post->ID, 'qm_product_contact', true );
+$land_phone		= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_land_phones', true ) )
+					? '<span class="py-1 d-block"><i class="qmicon-phone mr-3 text-primary"></i> <a href="tel:'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_land_phones', true ) .'</a></span>'
+					: null;
+$mobil_phone	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) )
+					? '<span class="py-1 d-block"><i class="qmicon-phone mr-3 text-primary"></i> <a href="tel:'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_mobil_phones', true ) .'</a></span>'
+					: null;
+$email			= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_email', true ) )
+					? '<span class="py-1 d-block"><i class="qmicon-envelope mr-3 text-primary"></i> <a href="mailto:'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_email', true ) .'</a></span>'
+					: null;
+$request_email	= ( $contact_id && get_post_meta( $contact_id, 'qm_contact_request_email', true ) )
+					? '<span class="py-1 d-block"><i class="qmicon-envelope mr-3 text-primary"></i> <a href="mailto:'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'" class="modal-contact-link">'. get_post_meta( $contact_id, 'qm_contact_request_email', true ) .'</a></span>'
+					: null;
+
 $checked		= ( isset( $_SESSION['qm_checkin_products'] ) && in_array( $post->ID, $_SESSION['qm_checkin_products'] ) ) ? 'qm-product-checked' : null;
 $checkin 		= '<a href="#" class="btn btn-secondary rounded-circle mr-3 qm-checkin-product '. $checked .'" data-product-id="'. $post->ID .'" aria-label="'. __( 'Checkin', 'quimimpex' ) .'"><i class="qmicon-car-add h6 mb-0"></i></a>';
 $data_sheet		= ( get_post_meta( $post->ID, 'qm_data_sheet_url' ) )
@@ -66,6 +80,15 @@ $data_sheet		= ( get_post_meta( $post->ID, 'qm_data_sheet_url' ) )
 		endif;
 	endforeach;
 ?>
+					<h6 class="font-weight-bold border-bottom pb-2 mt-5 text-primary"><?php _e( 'Contact Information', 'quimimpex' ) ?></h6>
+					<div class="row">
+						<div class="contact-phone <?php echo t_em_grid( 6 ) ?>">
+							<?php echo $land_phone; echo $mobil_phone ?>
+						</div>
+						<div class="contact-email <?php echo t_em_grid( 6 ) ?>">
+							<?php echo $email; echo $request_email ?>
+						</div>
+					</div>
 				</div>
 			</div><!-- .entry-content -->
 

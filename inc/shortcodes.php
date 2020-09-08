@@ -415,7 +415,7 @@ function quimimpex_shortcode_line( $atts, $content = null ){
 			$output .=				'<h3 id="line-heading-'. $product_line->term_id .'" class="card-title text-center mt-3">'. $product_line->name .'</h3>';
 			$output .=				'<p class="card-text text-center">'. $product_line->description .'</p>';
 			$output .=			'</div>';
-			$output .=			'<h5 class="mt-5 p-3 bg-light">'. __( 'List of products', 'quimimpex' ) .'</h5>';
+			$output .=			'<h5 class="mt-5 p-3 bg-light">'. __( 'Products and Services', 'quimimpex' ) .'</h5>';
 			$output .=			'<ul class="list-group list-group-flush">';
 								foreach( $products as $product ) :
 			$output .=				'<li class="list-group-item d-flex justify-content-between align-items-start">';
